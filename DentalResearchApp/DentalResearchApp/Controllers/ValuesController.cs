@@ -12,10 +12,14 @@ namespace DentalResearchApp.Controllers
     public class ValuesController : ControllerBase
     {
         // GET api/values
-        [HttpGet, Authorize]
+        [HttpGet]
         public ActionResult<IEnumerable<string>> Get()
         {
-            return new string[] { "value1", "value2" };
+            var tokenPair = HttpContext.Request.Cookies.FirstOrDefault(x => x.Key == "token");
+
+            if (tokenPair.Value == null)
+                return Unauthorized();
+            return new string[] { tokenPair.Key, tokenPair.Value };
         }
 
         //// GET api/values/5

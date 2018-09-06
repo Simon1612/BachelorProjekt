@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IdentityModel.Tokens.Jwt;
 using System.Text;
+using CookieManager;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
@@ -28,9 +29,12 @@ namespace DentalResearchApp.Controllers
             if (user != null)
             {
                 var tokenString = BuildToken(user);
+                HttpContext.Response.Cookies.Append("token", tokenString);
                 response = Ok(new { token = tokenString });
             }
 
+            //HttpCookie aCookie = new HttpCookie();
+            //aCookie.Set("username", "mario", 1);
             return response;
         }
 

@@ -1,14 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Text;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -44,6 +37,19 @@ namespace DentalResearchApp
                         IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["Jwt:Key"]))
                     };
                 });
+
+            services.AddCookieManager(options =>
+            {
+                //allow cookie data to encrypt by default it allow encryption
+                options.AllowEncryption = false;
+                //Throw if not all chunks of a cookie are available on a request for re-assembly.
+                options.ThrowForPartialCookies = true;
+                // set null if not allow to devide in chunks
+                //options.ChunkSize = null;
+                //Default Cookie expire time if expire time set to null of cookie
+                //default time is 1 day to expire cookie 
+                options.DefaultExpireTimeInDays = 10;
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
