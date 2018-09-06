@@ -1,0 +1,52 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" href="/css/Styles.css" type="text/css">
+
+    <meta charset="utf-8" />
+    <title>Kastaha Klubben</title>
+
+</head>
+<body>
+
+
+    <form method="post" id="loginform">
+        <div class="box">
+            <h1>Log in</h1>
+
+            <input type="text" placeholder="Username" name="userName" class="email" id="userName" />
+            <input type="password" placeholder="Password" name="passWord" class="email" id="passWord" />
+
+            <input type="submit" value="Sign in" form="loginform">
+        </div>
+    </form>
+
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script>
+        (function ($) {
+            function processForm(e) {
+                $.ajax({
+                    url: "token",
+                    dataType: 'json',
+                    type: 'post',
+                    contentType: 'application/json',
+                    data: JSON.stringify( { "username": $('#userName').val(), "password": $('#passWord').val() } ),
+                    processData: false,
+                    success: function( data, textStatus, jQxhr ){
+                        $('#response pre').html(JSON.stringify(data));
+                        window.location.href = "values";
+                    },
+                    error: function( jqXhr, textStatus, errorThrown ){
+                        console.log( errorThrown );
+                    }
+                });
+
+                e.preventDefault();
+            }
+
+            $('#loginform').submit(processForm);
+        })(jQuery);
+    </script>
+
+</body>
+</html>
