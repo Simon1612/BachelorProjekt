@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Text;
+﻿using System.Text;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -66,18 +65,9 @@ namespace DentalResearchApp
             }
 
             app.UseStaticFiles();
-            app.UseDefaultFiles(new DefaultFilesOptions
-            {
-                DefaultFileNames = new
-                    List<string> { "index.cshtml" }
-            });
-
-           
-
             app.UseHttpsRedirection();
             app.UseAuthentication();
             app.UseMvc();
-
         }
     }
 }

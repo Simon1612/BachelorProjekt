@@ -8,8 +8,6 @@
 
 </head>
 <body>
-
-
     <form method="post" id="loginform">
         <div class="box">
             <h1>Log in</h1>
@@ -21,7 +19,8 @@
         </div>
     </form>
 
-    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script src="/js/jquery.min.js"></script>
+
     <script>
         (function ($) {
             function processForm(e) {
@@ -30,14 +29,14 @@
                     dataType: 'json',
                     type: 'post',
                     contentType: 'application/json',
-                    data: JSON.stringify( { "username": $('#userName').val(), "password": $('#passWord').val() } ),
+                    data: JSON.stringify({ "username": $('#userName').val(), "password": $('#passWord').val() }),
                     processData: false,
-                    success: function( data, textStatus, jQxhr ){
+                    success: function (data) {
                         $('#response pre').html(JSON.stringify(data));
                         window.location.href = "values";
                     },
-                    error: function( jqXhr, textStatus, errorThrown ){
-                        console.log( errorThrown );
+                    error: function (jqXhr, textStatus, errorThrown) {
+                        console.log(errorThrown);
                     }
                 });
 
