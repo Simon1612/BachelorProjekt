@@ -4,45 +4,39 @@
     <link rel="stylesheet" href="/css/Styles.css" type="text/css">
 
     <meta charset="utf-8" />
-    <title>Kastaha Klubben</title>
+    <title>DentalResearchApp</title>
 
 </head>
 <body>
+<div class="box">
+    <h1>Log in</h1>
     <form method="post" id="loginform">
-        <div class="box">
-            <h1>Log in</h1>
-
-            <input type="text" placeholder="Username" name="userName" class="email" id="userName" />
-            <input type="password" placeholder="Password" name="passWord" class="email" id="passWord" />
-
-            <input type="submit" value="Sign in" form="loginform">
-        </div>
+        <input type="text" placeholder="Username" name="userName" class="email" id="userName"/>
+        <input type="password" placeholder="Password" name="passWord" class="email" id="passWord"/>
+        <input type="submit" value="Sign in" form="loginform">
     </form>
-
+</div>
     <script src="/js/jquery.min.js"></script>
 
     <script>
         (function ($) {
             function processForm(e) {
                 $.ajax({
-                    url: "token",
+                    url: "AuthCookie",
                     dataType: 'json',
                     type: 'post',
                     contentType: 'application/json',
                     data: JSON.stringify({ "username": $('#userName').val(), "password": $('#passWord').val() }),
                     processData: false,
-                    success: function (data) {
-                        $('#response pre').html(JSON.stringify(data));
+                    success: function(){
                         window.location.href = "values";
                     },
                     error: function (jqXhr, textStatus, errorThrown) {
                         console.log(errorThrown);
                     }
                 });
-
                 e.preventDefault();
             }
-
             $('#loginform').submit(processForm);
         })(jQuery);
     </script>
