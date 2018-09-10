@@ -10,9 +10,12 @@ namespace DentalResearchApp.Controllers
     public class ValuesController : ControllerBase
     {
         // GET api/values
-        [HttpGet, Authorize(Roles = nameof(Role.Administrator))]
+        [HttpGet]
         public ActionResult<IEnumerable<string>> Get()
         {
+
+            var test = new SurveyContext();
+
             return new [] { "We're", "in!"};
         }
     }

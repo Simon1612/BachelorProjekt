@@ -6,15 +6,38 @@
 
   <ItemGroup>
     <Content Remove="Views\Login\Index.cshtml" />
+    <Content Remove="Views\Survey\Editor.cshtml" />
+    <Content Remove="Views\Survey\Index.cshtml" />
+    <Content Remove="Views\Survey\Results.cshtml" />
+    <Content Remove="Views\Survey\Survey.cshtml" />
   </ItemGroup>
 
   <ItemGroup>
     <None Include="Views\Login\Index.cshtml" />
+    <None Include="Views\Survey\Editor.cshtml" />
+    <None Include="Views\Survey\Index.cshtml" />
+    <None Include="Views\Survey\Results.cshtml" />
+    <None Include="Views\Survey\Survey.cshtml" />
   </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="CookieManager" Version="1.0.0" />
     <PackageReference Include="Microsoft.AspNetCore.App" />
+    <PackageReference Include="MongoDB.Driver" Version="2.7.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Surveys\" />
+    <Folder Include="Views\Survey\Json\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Update="Views\Survey\Json\IncomeSurvey.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Update="Views\Survey\Json\ProductFeedbackSurvey.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
 
 </Project>

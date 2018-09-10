@@ -1,7 +1,4 @@
-﻿using System;
-using Microsoft.AspNetCore.Authorization;
-
-namespace DentalResearchApp.Models
+﻿namespace DentalResearchApp.Models
 {
     public enum Role
     {
