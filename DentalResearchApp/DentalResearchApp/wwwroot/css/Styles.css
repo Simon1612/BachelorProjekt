@@ -13,20 +13,26 @@ p{
     color:#ffffff;
 }
 
-h1{
-    font-size:1.5em;
-    color:#525252;
+.mainHeadline {
+    font-family: 'Franklin Gothic';
+    font-size: 2em;
+    color: floralwhite;
 }
 
-.box{
-    background:white;
-    width:300px;
-    border-radius:6px;
+.box {
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    background-color: white;
+    width: 400px;
+    border-radius: 100px;
     margin: 0 auto 0 auto;
-    padding:0px 0px 70px 0px;
-    border: #2980b9 4px solid; 
+    padding: 20px 0px 120px 0px;
+    border: #2980b9 25px solid;
 }
 
+.secondHeadline {
+    font-size: 1.5em;
+    color: #3498db;
+}
 .email{
     background:#ecf0f1;
     border: #ccc 1px solid;

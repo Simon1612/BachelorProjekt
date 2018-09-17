@@ -171,6 +171,7 @@ a[data-toggle="collapse"] {
     transform: translateY(-50%);
 }
 
+
 /* Til håndtering af mindre skærme*/
 @media (max-width: 768px) {
     #sidebar {
