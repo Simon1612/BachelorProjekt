@@ -21,7 +21,7 @@ namespace DentalResearchApp.Controllers
         {
             IActionResult response = Unauthorized();
 
-            var user = Authenticate(login);
+            var user = UserManager.Authenticate(login);
 
             if (user != null)
             {
@@ -69,17 +69,6 @@ namespace DentalResearchApp.Controllers
             }
 
             return response;
-        }
-
-        private UserModel Authenticate(LoginModel login)
-        {
-            UserModel user = null;
-
-            if (login.Username == "mario" && login.Password == "secret")
-            {
-                user = new UserModel { Name = "Mario Rossi", Email = "mario.rossdi@omain.com", Role = Role.Administrator};
-            }
-            return user;
         }
     }
 }

@@ -6,7 +6,7 @@ namespace DentalResearchApp.Controllers
     public class LoginController : Controller
     {
         [HttpGet]
-        public IActionResult Index()
+        public IActionResult Login()
         {
             return View();
         }
