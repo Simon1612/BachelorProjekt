@@ -1,11 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using DentalResearchApp.Models;
-using MongoDB.Bson;
-using MongoDB.Bson.Serialization;
 using MongoDB.Driver;
 
-namespace DentalResearchApp
+namespace DentalResearchApp.Code.Impl
 {
     public class SurveyContext
     {

@@ -6,6 +6,6 @@ namespace DentalResearchApp
     {
         UserModel Authenticate(LoginModel login);
 
-        void CreateUser(UserModel userModel);
+        void CreateUser(UserModel userModel, UserCredentials userCreds);
     }
 }
