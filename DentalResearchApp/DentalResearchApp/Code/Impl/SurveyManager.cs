@@ -1,8 +1,9 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
+using System.Threading.Tasks;
 using DentalResearchApp.Code.Interfaces;
 using DentalResearchApp.Models;
 using MongoDB.Driver;
+using MongoDB.Driver.Linq;
 
 namespace DentalResearchApp.Code.Impl
 {
@@ -20,20 +21,27 @@ namespace DentalResearchApp.Code.Impl
         }
 
 
-        public Dictionary<string, string> GetSurveyByName(string surveyName)
+        public async Task DeleteSurvey(string surveyName)
         {
             var coll = _db.GetCollection<Survey>("survey_collection");
 
-            var survey = coll.AsQueryable().FirstOrDefault(s => s.SurveyName == surveyName);
+            await coll.DeleteOneAsync(x => x.SurveyName == surveyName);
+        }
 
-            return new Dictionary<string, string> {{survey?.SurveyName, survey?.Json}};
+        public async Task<Dictionary<string, string>> GetSurvey(string surveyName)
+        {
+            var coll = _db.GetCollection<Survey>("survey_collection");
+
+            var survey = await coll.AsQueryable().FirstOrDefaultAsync(s => s.SurveyName == surveyName);
+
+            return new Dictionary<string, string> { { survey?.SurveyName, survey?.Json } };
         }
 
 
-        public Dictionary<string, string> GetAllSurveys()
+        public async Task<Dictionary<string, string>> GetAllSurveys()
         {
             var coll = _db.GetCollection<Survey>("survey_collection");
-            var surveys = coll.AsQueryable().ToList(); 
+            var surveys = await coll.AsQueryable().ToListAsync();
 
             Dictionary<string, string> surveysdDictionary = new Dictionary<string, string>();
 
@@ -51,11 +59,11 @@ namespace DentalResearchApp.Code.Impl
             string json2 = System.IO.File.ReadAllText(@"Views/Survey/Json/ProductFeedbackSurvey.json");
 
             //var survey1 = new Survey() {Json = json1, SurveyName = "IncomeSurvey" };
-            var survey2 = new Survey(){Json = json2, SurveyName = "ProductFeedbackSurvey" };
+            var survey2 = new Survey() { Json = json2, SurveyName = "ProductFeedbackSurvey" };
 
             var collection = _db.GetCollection<Survey>("survey_collection");
 
-            await collection.InsertManyAsync(new[] {survey2});
+            await collection.InsertManyAsync(new[] { survey2 });
         }
     }
 }

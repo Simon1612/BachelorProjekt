@@ -1,7 +1,9 @@
 ﻿using System;
-using System.Linq;
+using System.Threading.Tasks;
+using DentalResearchApp.Code.Interfaces;
 using DentalResearchApp.Models;
 using MongoDB.Driver;
+using MongoDB.Driver.Linq;
 
 namespace DentalResearchApp.Code.Impl
 {
@@ -15,36 +17,36 @@ namespace DentalResearchApp.Code.Impl
             _db = client.GetDatabase("UserDb");
 
             if (!_db.ListCollectionNames().Any())
-                SeedWithDefaultUsers();
+                 SeedWithDefaultUsers();
         }
 
-        public UserModel Authenticate(LoginModel login)
+        public async Task<UserModel> Authenticate(LoginModel login)
         {
             UserModel user = null;
 
             var credsColl = _db.GetCollection<UserCredentials>("credentials_collection");
-            var storedUserCreds = credsColl.AsQueryable().FirstOrDefault(x => x.UserName == login.Username);
-
+            var storedUserCreds = await credsColl.AsQueryable().FirstOrDefaultAsync(x => x.UserName == login.Username);
+            
             var hash = Hash.Create(login.Password, storedUserCreds?.Salt);
 
             if (hash == storedUserCreds?.Hash)
             {
-                user = GetUserModel(login.Username);
+                user = await GetUserModel(login.Username);
             }
 
             return user;
         }
 
 
-        private UserModel GetUserModel(string userName)
+        private async Task<UserModel> GetUserModel(string userName)
         {
             var userColl = _db.GetCollection<UserModel>("user_collection");
 
-            return userColl.AsQueryable().First(x => x.UserName == userName);
+            return await userColl.AsQueryable().FirstAsync(x => x.UserName == userName);
         }
 
        
-        public async void CreateUser(UserModel userModel, UserCredentials userCreds)
+        public async Task CreateUser(UserModel userModel, UserCredentials userCreds)
         {
             var userColl = _db.GetCollection<UserModel>("user_collection");
             var credsColl = _db.GetCollection<UserCredentials>("credentials_collection");
@@ -53,7 +55,7 @@ namespace DentalResearchApp.Code.Impl
             await credsColl.InsertOneAsync(userCreds);
         }
 
-        private void SeedWithDefaultUsers()
+        private async void SeedWithDefaultUsers()
         {
             var user = new UserModel()
             {
@@ -73,7 +75,7 @@ namespace DentalResearchApp.Code.Impl
 
             var login = new UserCredentials() { UserName = username, Hash = hash, Salt = salt};
 
-            CreateUser(user, login);
+            await CreateUser(user, login);
         }
     }
 }

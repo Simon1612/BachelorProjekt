@@ -1,4 +1,5 @@
-﻿using DentalResearchApp.Code.Impl;
+﻿using System.Threading.Tasks;
+using DentalResearchApp.Code.Impl;
 using DentalResearchApp.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -19,19 +20,19 @@ namespace DentalResearchApp.Controllers
 
 
         [HttpGet("getActive"), Authorize]
-            public JsonResult GetActive()
+            public async Task<JsonResult> GetActiveAsync()
             {
                 var manager = new SurveyManager();
-                var surveys = manager.GetAllSurveys();
+                var surveys = await manager.GetAllSurveys();
                 
                 return Json(surveys);
             }   
 
             [HttpGet("getSurvey"), Authorize]
-            public string GetSurvey(string surveyId)
+            public async Task<string> GetSurvey(string surveyId)
             {
                 var manager = new SurveyManager();
-                var survey = manager.GetSurveyByName(surveyId);
+                var survey = await manager.GetSurvey(surveyId);
 
                 return survey[surveyId];
             }
@@ -61,10 +62,10 @@ namespace DentalResearchApp.Controllers
             }
 
             [HttpGet("delete"), Authorize]
-            public JsonResult Delete(string id)
+            public async Task<JsonResult> Delete(string id)
             {
-                var db = new SessionStorage(HttpContext.Session);
-                db.DeleteSurvey(id);
+                await new SurveyManager().DeleteSurvey(id);
+
                 return Json("Ok");
             }
 

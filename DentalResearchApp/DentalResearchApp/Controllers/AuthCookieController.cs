@@ -22,7 +22,7 @@ namespace DentalResearchApp.Controllers
         {
             IActionResult response = Unauthorized();
 
-            var user = new UserManager().Authenticate(login);
+            var user = await new UserManager().Authenticate(login);
 
             if (user != null)
             {

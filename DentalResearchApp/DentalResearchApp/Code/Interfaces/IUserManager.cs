@@ -1,11 +1,12 @@
-﻿using DentalResearchApp.Models;
+﻿using System.Threading.Tasks;
+using DentalResearchApp.Models;
 
-namespace DentalResearchApp
+namespace DentalResearchApp.Code.Interfaces
 {
     public interface IUserManager
     {
-        UserModel Authenticate(LoginModel login);
+        Task<UserModel> Authenticate(LoginModel login);
 
-        void CreateUser(UserModel userModel, UserCredentials userCreds);
+        Task CreateUser(UserModel userModel, UserCredentials userCreds);
     }
 }
