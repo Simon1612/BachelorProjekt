@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using DentalResearchApp.Models;
-using Microsoft.Extensions.Options;
 using MongoDB.Bson;
 using MongoDB.Bson.Serialization;
 using MongoDB.Driver;
@@ -19,29 +16,47 @@ namespace DentalResearchApp
             var client = new MongoClient("mongodb+srv://test:test@2018e21-surveydb-wtdmw.mongodb.net/test?retryWrites=true");
             _db = client.GetDatabase("SurveyDb");
 
-
-            
-
-
             if (!_db.ListCollectionNames().Any())
-                FuckItUp();
-            else
-            {
-                //var coll =  _db.GetCollection<Survey>("test_collection").FindAsync();
-            }
+                SeedWithDefaultSurveys();
         }
 
-        public async void FuckItUp()
+
+        public Dictionary<string, string> GetSurveyByName(string surveyName)
         {
-            string survey1 = System.IO.File.ReadAllText(@"Views/Survey/Json/IncomeSurvey.json");
-            string survey2 = System.IO.File.ReadAllText(@"Views/Survey/Json/ProductFeedbackSurvey.json");
+            var coll = _db.GetCollection<Survey>("survey_collection");
 
-            var document1 = BsonSerializer.Deserialize<BsonDocument>(survey1);
-            var document2 = BsonSerializer.Deserialize<BsonDocument>(survey2);
+            var survey = coll.AsQueryable().FirstOrDefault(s => s.SurveyName == surveyName);
 
-            var collection = _db.GetCollection<BsonDocument>("test_collection");
+            return new Dictionary<string, string> {{survey?.SurveyName, survey?.Json}};
+        }
 
-            await collection.InsertManyAsync(new[] {document1, document2});
+
+        public Dictionary<string, string> GetAllSurveys()
+        {
+            var coll = _db.GetCollection<Survey>("survey_collection");
+            var surveys = coll.AsQueryable().ToList(); 
+
+            Dictionary<string, string> surveysdDictionary = new Dictionary<string, string>();
+
+            foreach (var survey in surveys)
+            {
+                surveysdDictionary[survey.SurveyName] = survey.Json;
+            }
+
+            return surveysdDictionary;
+        }
+
+        private async void SeedWithDefaultSurveys()
+        {
+            string json1 = System.IO.File.ReadAllText(@"Views/Survey/Json/IncomeSurvey.json");
+            string json2 = System.IO.File.ReadAllText(@"Views/Survey/Json/ProductFeedbackSurvey.json");
+
+            var survey1 = new Survey() {Json = json1, SurveyName = "IncomeSurvey" };
+            var survey2 = new Survey(){Json = json2, SurveyName = "ProductFeedbackSurvey" };
+
+            var collection = _db.GetCollection<Survey>("survey_collection");
+
+            await collection.InsertManyAsync(new[] {survey1, survey2});
         }
     }
 }

@@ -5,7 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Content Remove="Views\Login\Index.cshtml" />
+    <Content Remove="Views\Login\Login.cshtml" />
     <Content Remove="Views\Survey\Editor.cshtml" />
     <Content Remove="Views\Survey\Index.cshtml" />
     <Content Remove="Views\Survey\Results.cshtml" />
@@ -13,7 +13,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Include="Views\Login\Index.cshtml" />
+    <None Include="Views\Login\Login.cshtml" />
     <None Include="Views\Survey\Editor.cshtml" />
     <None Include="Views\Survey\Index.cshtml" />
     <None Include="Views\Survey\Results.cshtml" />
@@ -21,15 +21,12 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="bootstrap" Version="4.1.3" />
-    <PackageReference Include="CookieManager" Version="1.0.0" />
     <PackageReference Include="Microsoft.AspNetCore.App" />
     <PackageReference Include="MongoDB.Driver" Version="2.7.0" />
   </ItemGroup>
 
   <ItemGroup>
     <Folder Include="Surveys\" />
-    <Folder Include="Views\Survey\Json\" />
   </ItemGroup>
 
   <ItemGroup>

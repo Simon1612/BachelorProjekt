@@ -17,18 +17,22 @@ namespace DentalResearchApp.Controllers
             }
 
 
-            [HttpGet("getActive"), Authorize]
+        [HttpGet("getActive"), Authorize]
             public JsonResult GetActive()
             {
-                var db = new SessionStorage(HttpContext.Session);
-                return Json(db.GetSurveys());
-            }
+                var context = new SurveyContext();
+                var surveys = context.GetAllSurveys();
+                
+                return Json(surveys);
+            }   
 
             [HttpGet("getSurvey"), Authorize]
             public string GetSurvey(string surveyId)
             {
-                var db = new SessionStorage(HttpContext.Session);
-                return db.GetSurvey(surveyId);
+                var context = new SurveyContext();
+                var survey = context.GetSurveyByName(surveyId);
+
+                return survey[surveyId];
             }
 
             [HttpGet("create"), Authorize]

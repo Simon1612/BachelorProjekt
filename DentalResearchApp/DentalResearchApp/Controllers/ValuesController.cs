@@ -10,7 +10,7 @@ namespace DentalResearchApp.Controllers
     public class ValuesController : ControllerBase
     {
         // GET api/values
-        [HttpGet]
+        [HttpGet, Authorize]
         public ActionResult<IEnumerable<string>> Get()
         {
 

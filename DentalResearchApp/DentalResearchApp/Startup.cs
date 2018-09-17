@@ -55,7 +55,6 @@ namespace DentalResearchApp
                 app.UseHsts();
             }
 
-
             app.UseSession();
             app.UseStaticFiles();
             app.UseHttpsRedirection();

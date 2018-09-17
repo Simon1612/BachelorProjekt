@@ -13,5 +13,7 @@ namespace DentalResearchApp.Models
         public ObjectId Id { get; set; }
 
         public string Json { get; set; }
+
+        public string SurveyName { get; set; }
     }
 }
