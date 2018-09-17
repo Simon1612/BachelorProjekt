@@ -38,9 +38,9 @@ namespace DentalResearchApp.Code.Impl
 
         private UserModel GetUserModel(string userName)
         {
-            var loginColl = _db.GetCollection<UserModel>("user_collection");
+            var userColl = _db.GetCollection<UserModel>("user_collection");
 
-            return loginColl.AsQueryable().First(x => x.UserName == userName);
+            return userColl.AsQueryable().First(x => x.UserName == userName);
         }
 
        
