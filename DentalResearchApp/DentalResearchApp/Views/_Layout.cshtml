@@ -1,0 +1,62 @@
+﻿<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>@ViewBag.Title</title>
+
+    <link rel="stylesheet" href="~/css/Index.css">
+
+    <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/solid.js" integrity="sha384-tzzSw1/Vo+0N5UhStP3bvwWPq+uvzCMfrN1fEFe+xBmv1C/AtVX5K0uZtmcHitFZ" crossorigin="anonymous"></script>
+    <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/fontawesome.js" integrity="sha384-6OIrr52G08NpOFSZdxxz1xdNSndlD4vdcf/q2myIUVO0VsqaGHJsB0RaBE01VTOY" crossorigin="anonymous"></script>
+</head>
+<body>
+    <div class="wrapper">
+        <nav id="sidebar">
+            <div class="sidebar-header" style="text-align: center">
+                <h3>Tandlægehøjskolen Aarhus</h3>
+            </div>
+            <ul class="list-unstyled components">
+                <p>Dental Research App</p>
+                <li class="active">
+                    <a href="#surveySubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Surveys</a>
+                    <ul class="collapse list-unstyled" id="surveySubmenu">
+                        <li>
+                            <a href="#">Survey</a>
+                        </li>
+                        <li>
+                            <a href="#">All Surveys</a>
+                        </li>
+                        <li>
+                            <a href="#">All CRF's</a>
+                        </li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="#">Results</a>
+                </li>
+                <li>
+                    <a href="#patientsSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Patients</a>
+                    <ul class="collapse list-unstyled" id="patientsSubmenu">
+                        <li>
+                            <a href="#">All Patients</a>
+                        </li>
+                        <li>
+                            <a href="#">Send Links</a>
+                        </li>
+                    </ul>
+                </li>
+                <li>
+                </li>
+                <li>
+                    <a href="#">The Magnificent Pain-O-Meter!!</a>
+                </li>
+            </ul>
+        </nav>
+        <div id="content">
+            @RenderBody()
+        </div>
+    </div>
+</body>
+</html>
