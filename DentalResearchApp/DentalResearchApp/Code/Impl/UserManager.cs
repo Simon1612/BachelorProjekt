@@ -65,7 +65,6 @@ namespace DentalResearchApp.Code.Impl
                 UserName = "mario"
             };
 
-
             var username = "mario";
             var password = "secret";
 

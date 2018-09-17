@@ -1,4 +1,5 @@
 ﻿using System.Security.Cryptography;
+using DentalResearchApp.Code.Interfaces;
 
 namespace DentalResearchApp.Code.Impl
 {

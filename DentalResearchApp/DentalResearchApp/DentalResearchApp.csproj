@@ -31,9 +31,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Content Update="Views\Survey\Json\IncomeSurvey.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
     <Content Update="Views\Survey\Json\ProductFeedbackSurvey.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>

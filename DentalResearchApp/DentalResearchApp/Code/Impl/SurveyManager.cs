@@ -1,11 +1,12 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using DentalResearchApp.Code.Interfaces;
 using DentalResearchApp.Models;
 using MongoDB.Driver;
 
 namespace DentalResearchApp.Code.Impl
 {
-    public class SurveyManager
+    public class SurveyManager : ISurveyManager
     {
         private readonly IMongoDatabase _db;
 
@@ -14,8 +15,8 @@ namespace DentalResearchApp.Code.Impl
             var client = new MongoClient("mongodb+srv://test:test@2018e21-surveydb-wtdmw.mongodb.net/test?retryWrites=true");
             _db = client.GetDatabase("SurveyDb");
 
-            //if (!_db.ListCollectionNames().Any())
-            //    SeedWithDefaultSurveys();
+            if (!_db.ListCollectionNames().Any())
+                SeedWithDefaultSurveys();
         }
 
 
@@ -46,15 +47,15 @@ namespace DentalResearchApp.Code.Impl
 
         private async void SeedWithDefaultSurveys()
         {
-            string json1 = System.IO.File.ReadAllText(@"Views/Survey/Json/IncomeSurvey.json");
+            //string json1 = System.IO.File.ReadAllText(@"Views/Survey/Json/IncomeSurvey.json");
             string json2 = System.IO.File.ReadAllText(@"Views/Survey/Json/ProductFeedbackSurvey.json");
 
-            var survey1 = new Survey() {Json = json1, SurveyName = "IncomeSurvey" };
+            //var survey1 = new Survey() {Json = json1, SurveyName = "IncomeSurvey" };
             var survey2 = new Survey(){Json = json2, SurveyName = "ProductFeedbackSurvey" };
 
             var collection = _db.GetCollection<Survey>("survey_collection");
 
-            await collection.InsertManyAsync(new[] {survey1, survey2});
+            await collection.InsertManyAsync(new[] {survey2});
         }
     }
 }
