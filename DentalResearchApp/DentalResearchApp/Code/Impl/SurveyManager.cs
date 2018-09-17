@@ -5,17 +5,17 @@ using MongoDB.Driver;
 
 namespace DentalResearchApp.Code.Impl
 {
-    public class SurveyContext
+    public class SurveyManager
     {
         private readonly IMongoDatabase _db;
 
-        public SurveyContext()
+        public SurveyManager()
         {
             var client = new MongoClient("mongodb+srv://test:test@2018e21-surveydb-wtdmw.mongodb.net/test?retryWrites=true");
             _db = client.GetDatabase("SurveyDb");
 
-            if (!_db.ListCollectionNames().Any())
-                SeedWithDefaultSurveys();
+            //if (!_db.ListCollectionNames().Any())
+            //    SeedWithDefaultSurveys();
         }
 
 

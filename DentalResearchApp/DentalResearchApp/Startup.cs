@@ -31,16 +31,16 @@ namespace DentalResearchApp
                     options.Cookie.Name = "auth_cookie";
                 });
 
+            //services.AddOptions();
+            //services.Configure<Settings>(options =>
+            //{
+            //    options.ConnectionString
+            //        = Configuration.GetSection("MongoConnection:ConnectionString").Value;
+            //    options.Database
+            //        = Configuration.GetSection("MongoConnection:Database").Value;
+            //});
 
-            services.Configure<Settings>(options =>
-            {
-                options.ConnectionString
-                    = Configuration.GetSection("MongoConnection:ConnectionString").Value;
-                options.Database
-                    = Configuration.GetSection("MongoConnection:Database").Value;
-            });
-
-            services.AddSession();
+            //services.AddSession();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -55,7 +55,7 @@ namespace DentalResearchApp
                 app.UseHsts();
             }
 
-            app.UseSession();
+            //app.UseSession();
             app.UseStaticFiles();
             app.UseHttpsRedirection();
             app.UseAuthentication();

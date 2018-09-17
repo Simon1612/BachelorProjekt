@@ -27,7 +27,6 @@ namespace DentalResearchApp.Code.Impl
 
             var hash = Hash.Create(login.Password, storedUserCreds?.Salt);
 
-
             if (hash == storedUserCreds?.Hash)
             {
                 user = GetUserModel(login.Username);

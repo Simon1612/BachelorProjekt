@@ -21,8 +21,8 @@ namespace DentalResearchApp.Controllers
         [HttpGet("getActive"), Authorize]
             public JsonResult GetActive()
             {
-                var context = new SurveyContext();
-                var surveys = context.GetAllSurveys();
+                var manager = new SurveyManager();
+                var surveys = manager.GetAllSurveys();
                 
                 return Json(surveys);
             }   
@@ -30,8 +30,8 @@ namespace DentalResearchApp.Controllers
             [HttpGet("getSurvey"), Authorize]
             public string GetSurvey(string surveyId)
             {
-                var context = new SurveyContext();
-                var survey = context.GetSurveyByName(surveyId);
+                var manager = new SurveyManager();
+                var survey = manager.GetSurveyByName(surveyId);
 
                 return survey[surveyId];
             }
