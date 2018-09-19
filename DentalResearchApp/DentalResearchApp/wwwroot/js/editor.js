@@ -50,7 +50,10 @@ Survey.dxSurveyService.serviceUrl = "";
 var accessKey = "";
 var editor = new SurveyEditor.SurveyEditor("editor");
 var surveyId = decodeURI(getParams()["id"]);
+editor.baseURI = "api/editor";
 editor.loadSurvey(surveyId);
+
+
 editor.saveSurveyFunc = function(saveNo, callback) {
   var xhr = new XMLHttpRequest();
   xhr.open(

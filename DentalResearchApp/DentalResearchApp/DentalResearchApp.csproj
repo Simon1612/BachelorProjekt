@@ -14,7 +14,7 @@
 
   <ItemGroup>
     <None Include="Views\Login\Login.cshtml" />
-    <None Include="Views\Survey\Editor.cshtml" />
+    <None Include="Views\Editor\Editor.cshtml" />
     <None Include="Views\Survey\Index.cshtml" />
     <None Include="Views\Survey\Results.cshtml" />
     <None Include="Views\Survey\Survey.cshtml" />
@@ -23,7 +23,9 @@
   <ItemGroup>
     <PackageReference Include="bootstrap" Version="4.1.3" />
     <PackageReference Include="Microsoft.AspNetCore.App" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.1.1" />
     <PackageReference Include="MongoDB.Driver" Version="2.7.0" />
+    <PackageReference Include="Newtonsoft.Json" Version="11.0.2" />
   </ItemGroup>
 
   <ItemGroup>
