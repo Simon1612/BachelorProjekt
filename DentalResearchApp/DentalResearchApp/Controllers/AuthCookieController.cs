@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using DentalResearchApp.Code.Impl;
 using DentalResearchApp.Models;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
@@ -21,13 +22,13 @@ namespace DentalResearchApp.Controllers
         {
             IActionResult response = Unauthorized();
 
-            var user = UserManager.Authenticate(login);
+            var user = await new UserManager().Authenticate(login);
 
             if (user != null)
             {
                 var claims = new List<Claim>
                 {
-                    new Claim(ClaimTypes.Name, user.Name),
+                    new Claim(ClaimTypes.Name, user.UserName),
                     new Claim(ClaimTypes.Email, user.Email),
                     new Claim(ClaimTypes.Role, user.Role.ToString()),
                 };

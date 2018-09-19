@@ -3,7 +3,7 @@ using System.IO;
 using Microsoft.AspNetCore.Http;
 using Newtonsoft.Json;
 
-namespace DentalResearchApp
+namespace DentalResearchApp.Code.Impl
 {
     public class SessionStorage
     {

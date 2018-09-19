@@ -3,13 +3,12 @@ using MongoDB.Bson.Serialization.Attributes;
 
 namespace DentalResearchApp.Models
 {
-    public class Survey
+    public class UserCredentials
     {
         [BsonId]
         public ObjectId Id { get; set; }
-
-        public string Json { get; set; }
-
-        public string SurveyName { get; set; }
+        public string UserName { get; set; }
+        public string Hash { get; set; }
+        public byte[] Salt { get; set; }
     }
 }
