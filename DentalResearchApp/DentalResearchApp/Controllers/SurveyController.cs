@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace DentalResearchApp.Controllers
 {
 
-        [Route("api/[controller]")]
+        [Route("[controller]")]
         [ApiController]
         public class SurveyController : Controller
         {

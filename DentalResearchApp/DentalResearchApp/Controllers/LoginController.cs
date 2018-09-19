@@ -2,11 +2,17 @@
 
 namespace DentalResearchApp.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("[controller]")]
     public class LoginController : Controller
     {
         [HttpGet]
         public IActionResult Login()
+        {
+            return View();
+        }
+
+        [HttpGet("Signup")]
+        public IActionResult SignUp()
         {
             return View();
         }
