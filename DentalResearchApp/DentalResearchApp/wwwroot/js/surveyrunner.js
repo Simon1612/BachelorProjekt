@@ -11,7 +11,7 @@ function getParams() {
 }
 
 function init() {
-  Survey.dxSurveyService.serviceUrl = "";
+  Survey.dxSurveyService.serviceUrl = "surveyrunner";
 
   var css = {
     root: "sv_main sv_frame sv_default_css"

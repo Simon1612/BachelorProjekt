@@ -16,8 +16,8 @@ namespace DentalResearchApp.Code.Impl
             var client = new MongoClient("mongodb+srv://test:test@2018e21-surveydb-wtdmw.mongodb.net/test?retryWrites=true");
             _db = client.GetDatabase("SurveyDb");
 
-            if (!_db.ListCollectionNames().Any())
-                SeedWithDefaultSurveys();
+            //if (!_db.ListCollectionNames().Any())
+            //    SeedWithDefaultSurveys();
         }
 
 
