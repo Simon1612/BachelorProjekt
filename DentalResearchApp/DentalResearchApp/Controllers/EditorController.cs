@@ -2,13 +2,15 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using DentalResearchApp.Code.Impl;
+using DentalResearchApp.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using MongoDB.Bson.IO;
 
 namespace DentalResearchApp.Controllers
 {
-    [Route("api/[controller]")]
-    [ApiController]
+    [Route("[controller]")]
     public class EditorController : Controller
     {
         [HttpGet]
@@ -17,10 +19,34 @@ namespace DentalResearchApp.Controllers
             return View();
         }
 
-        [HttpGet("getSurvey")]
-        public JsonResult GetSurvey(string surveyId)
+        [HttpGet("getSurvey"), Authorize]
+        public async Task<string> GetSurvey(string surveyId)
         {
-            return new JsonResult(Newtonsoft.Json.JsonConvert.DeserializeObject<string>(@"C:\Users\Casper\Desktop\BachelorProjekt\repos\BachelorProjekt\DentalResearchApp\DentalResearchApp\Views\Survey\Json\ProductFeedbackSurvey.json"));
+            var manager = new SurveyManager();
+
+            var survey = await manager.GetSurvey(surveyId);
+
+            return survey[surveyId];
+        }
+
+        [HttpPost("changeJson"), Authorize]
+        public async Task<string> ChangeJson([FromBody]ChangeSurveyModel model)
+        {
+            var manager = new SurveyManager();
+
+            await manager.ChangeSurvey(model);
+
+            return ""; //wat
+        }
+
+        [HttpGet("changeName"), Authorize]
+        public async Task<JsonResult> ChangeName(string id, string name)
+        {
+            var manager = new SurveyManager();
+
+            await manager.ChangeSurveyName(id, name);
+
+            return Json("Ok");
         }
     }
 }

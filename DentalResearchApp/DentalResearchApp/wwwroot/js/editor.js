@@ -24,7 +24,7 @@ function postEdit() {
   surveyName = $titleEditor.find("input")[0].value;
   setSurveyName(surveyName);
   jQuery
-    .get("/changeName?id=" + surveyId + "&name=" + surveyName, function(data) {
+    .get("editor/changeName?id=" + surveyId + "&name=" + surveyName, function(data) {
       surveyId = data.Id;
     })
     .fail(function(error) {
@@ -46,11 +46,10 @@ function getParams() {
   return result;
 }
 
-Survey.dxSurveyService.serviceUrl = "";
+Survey.dxSurveyService.serviceUrl = "editor";
 var accessKey = "";
 var editor = new SurveyEditor.SurveyEditor("editor");
 var surveyId = decodeURI(getParams()["id"]);
-editor.baseURI = "api/editor";
 editor.loadSurvey(surveyId);
 
 
@@ -58,7 +57,7 @@ editor.saveSurveyFunc = function(saveNo, callback) {
   var xhr = new XMLHttpRequest();
   xhr.open(
     "POST",
-    Survey.dxSurveyService.serviceUrl + "/changeJson?accessKey=" + accessKey
+    Survey.dxSurveyService.serviceUrl + "editor/changeJson?accessKey=" + accessKey
   );
   xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
   xhr.onload = function() {

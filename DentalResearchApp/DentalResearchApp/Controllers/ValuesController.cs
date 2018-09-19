@@ -14,8 +14,6 @@ namespace DentalResearchApp.Controllers
         public ActionResult<IEnumerable<string>> Get()
         {
 
-            var test = new SurveyContext();
-
             return new [] { "We're", "in!"};
         }
     }

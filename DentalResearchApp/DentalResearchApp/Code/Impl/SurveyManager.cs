@@ -53,6 +53,24 @@ namespace DentalResearchApp.Code.Impl
             return surveysdDictionary;
         }
 
+        public async Task ChangeSurvey(ChangeSurveyModel model)
+        {
+            var coll = _db.GetCollection<Survey>("survey_collection");
+
+            var update = Builders<Survey>.Update.Set(s => s.Json, model.Json);
+
+            await coll.UpdateOneAsync(s => s.SurveyName == model.Id, update);
+        }
+
+        public async Task ChangeSurveyName(string id, string name)
+        {
+            var coll = _db.GetCollection<Survey>("survey_collection");
+
+            var update = Builders<Survey>.Update.Set(s => s.SurveyName, name);
+
+            await coll.UpdateOneAsync(s => s.SurveyName == id, update);
+        }
+
         private async void SeedWithDefaultSurveys()
         {
             //string json1 = System.IO.File.ReadAllText(@"Views/Survey/Json/IncomeSurvey.json");

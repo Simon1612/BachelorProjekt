@@ -45,21 +45,6 @@ namespace DentalResearchApp.Controllers
                 return Json("Ok");
             }
 
-            [HttpGet("changeName"), Authorize]
-            public JsonResult ChangeName(string id, string name)
-            {
-                var db = new SessionStorage(HttpContext.Session);
-                db.ChangeName(id, name);
-                return Json("Ok");
-            }
-
-            [HttpPost("changeJson"), Authorize]
-            public string ChangeJson([FromBody]ChangeSurveyModel model)
-            {
-                var db = new SessionStorage(HttpContext.Session);
-                db.StoreSurvey(model.Id, model.Json);
-                return db.GetSurvey(model.Id);
-            }
 
             [HttpGet("delete"), Authorize]
             public async Task<JsonResult> Delete(string id)
