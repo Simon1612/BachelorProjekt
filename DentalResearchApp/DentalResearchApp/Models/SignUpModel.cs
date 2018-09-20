@@ -1,10 +1,12 @@
 ﻿using System;
+using System.Collections;
+using System.Collections.Generic;
 using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
 
 namespace DentalResearchApp.Models
 {
-    public class UserModel
+    public class SignUpModel
     {
         [BsonId]
         public ObjectId Id { get; set; }
@@ -13,6 +15,7 @@ namespace DentalResearchApp.Models
         public string Email { get; set; }
         public Role Role { get; set; }
         public string Institution { get; set; }
-        public string Country { get; set; }
+        public List<string> Country { get; set; }
+        public string Password { get; set; }
     }
 }

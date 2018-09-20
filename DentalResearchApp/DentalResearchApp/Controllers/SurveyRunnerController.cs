@@ -12,8 +12,7 @@ namespace DentalResearchApp.Controllers
         // GET
         public IActionResult SurveyRunner()
         {
-            return
-            View();
+            return View();
         }
 
         [HttpGet("getSurvey")]

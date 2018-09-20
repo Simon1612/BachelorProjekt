@@ -5,18 +5,12 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Content Remove="Views\Login\Login.cshtml" />
     <Content Remove="Views\Survey\Editor.cshtml" />
-    <Content Remove="Views\Survey\Index.cshtml" />
-    <Content Remove="Views\Survey\Results.cshtml" />
     <Content Remove="Views\Survey\SurveyRunner.cshtml" />
   </ItemGroup>
 
   <ItemGroup>
-    <None Include="Views\Login\Login.cshtml" />
     <None Include="Views\Editor\Editor.cshtml" />
-    <None Include="Views\Survey\Index.cshtml" />
-    <None Include="Views\Survey\Results.cshtml" />
     <None Include="Views\SurveyRunner\SurveyRunner.cshtml" />
   </ItemGroup>
 

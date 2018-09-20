@@ -37,12 +37,11 @@ namespace DentalResearchApp.Code.Impl
             return user;
         }
 
-
-        private async Task<UserModel> GetUserModel(string userName)
+        private async Task<UserModel> GetUserModel(string eMail)
         {
             var userColl = _db.GetCollection<UserModel>("user_collection");
 
-            return await userColl.AsQueryable().FirstAsync(x => x.UserName == userName);
+            return await userColl.AsQueryable().FirstAsync(x => x.Email == eMail);
         }
 
        
@@ -59,21 +58,18 @@ namespace DentalResearchApp.Code.Impl
         {
             var user = new UserModel()
             {
-                Birthdate = DateTime.Now,
                 Email = "asdf@gmail.com",
                 FirstName = "Super",
                 LastName = "Mario",
                 Role = Role.Administrator,
-                UserName = "mario"
             };
 
-            var username = "mario";
             var password = "secret";
 
             var salt = Salt.Create();
             var hash = Hash.Create(password, salt);
 
-            var login = new UserCredentials() { UserName = username, Hash = hash, Salt = salt};
+            var login = new UserCredentials() { UserName = user.Email, Hash = hash, Salt = salt};
 
             await CreateUser(user, login);
         }
