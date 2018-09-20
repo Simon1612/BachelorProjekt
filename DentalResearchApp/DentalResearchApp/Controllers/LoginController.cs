@@ -1,13 +1,10 @@
 ﻿using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
-using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using DentalResearchApp.Code.Impl;
 using DentalResearchApp.Models;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using MongoDB.Bson;
 
 namespace DentalResearchApp.Controllers
 {
@@ -70,7 +67,7 @@ namespace DentalResearchApp.Controllers
             foreach (CultureInfo getCulture in getCultureInfo)
             {
                 //creating the object of RegionInfo class
-                RegionInfo getRegionInfo = new RegionInfo(getCulture.LCID);
+                RegionInfo getRegionInfo = new RegionInfo(getCulture.Name);
                 //adding each country Name into the Dictionary
                 if (!(cultureList.Contains(getRegionInfo.EnglishName)))
                 {
