@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using DentalResearchApp.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
