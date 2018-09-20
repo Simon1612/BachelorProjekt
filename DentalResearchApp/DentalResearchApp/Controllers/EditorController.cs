@@ -10,7 +10,7 @@ using MongoDB.Bson.IO;
 
 namespace DentalResearchApp.Controllers
 {
-    [Route("[controller]")]
+    [Route("[controller]"), Authorize]
     public class EditorController : Controller
     {
         [HttpGet]
@@ -19,7 +19,7 @@ namespace DentalResearchApp.Controllers
             return View();
         }
 
-        [HttpGet("getSurvey"), Authorize]
+        [HttpGet("getSurvey")]
         public async Task<string> GetSurvey(string surveyId)
         {
             var manager = new SurveyManager();
@@ -29,7 +29,7 @@ namespace DentalResearchApp.Controllers
             return survey[surveyId];
         }
 
-        [HttpPost("changeJson"), Authorize]
+        [HttpPost("changeJson")]
         public async Task<string> ChangeJson([FromBody]ChangeSurveyModel model)
         {
             var manager = new SurveyManager();
@@ -39,7 +39,7 @@ namespace DentalResearchApp.Controllers
             return ""; //wat
         }
 
-        [HttpGet("changeName"), Authorize]
+        [HttpGet("changeName")]
         public async Task<JsonResult> ChangeName(string id, string name)
         {
             var manager = new SurveyManager();

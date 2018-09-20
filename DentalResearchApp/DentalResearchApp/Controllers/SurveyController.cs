@@ -54,13 +54,7 @@ namespace DentalResearchApp.Controllers
             return Json("Ok");
         }
 
-        [HttpPost("post"), Authorize]
-        public JsonResult PostResult([FromBody]PostSurveyResultModel model)
-        {
-            var db = new SessionStorage(HttpContext.Session);
-            db.PostResults(model.PostId, model.SurveyResult);
-            return Json("Ok");
-        }
+
 
         [HttpGet("results"), Authorize]
         public JsonResult GetResults(string postId)
