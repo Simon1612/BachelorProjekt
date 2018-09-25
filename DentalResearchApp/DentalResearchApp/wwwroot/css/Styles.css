@@ -23,6 +23,14 @@ p{
     color:#ffffff;
 }
 
+input:valid {
+    border: 4px solid lightgreen
+}
+
+input:invalid {
+    border: 4px solid red
+}
+
 .mainHeadline {
     font-family: 'Franklin Gothic';
     font-size: 2em;
@@ -43,7 +51,8 @@ p{
     font-size: 1.5em;
     color: #3498db;
 }
-.email{
+
+.inputField {
     background:#ecf0f1;
     border: #ccc 1px solid;
     border-bottom: #ccc 2px solid;
