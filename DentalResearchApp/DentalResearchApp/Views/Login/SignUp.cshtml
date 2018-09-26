@@ -9,23 +9,25 @@
 <head>
     <meta charset="utf-8" />
     <link rel="stylesheet" href="/css/Styles.css" type="text/css" />
+    <script type="text/javascript" src="/js/PasswordValidation.js"></script>
+    <script src="/js/jquery.min.js"></script>
     <title>Dental Research App - Sign Up</title>
 </head>
 <body>
-    <div class="box">
-        <h1 class="secondHeadline">Sign Up</h1>
-        @using (Html.BeginForm("CreateUser", "login", FormMethod.Post))
-        {
-        @Html.TextBoxFor(x => x.FirstName, "Firstname", new { @class = "email", @id = "firstName", @placeholder = "First Name" })
-        @Html.TextBoxFor(x => x.LastName, "Lastname", new { @class = "email", @id = "lastName", @placeholder = "Last Name" })
-        @Html.TextBoxFor(x => x.Email, "E-mail", new { @class = "email", @id = "email", @placeholder = "E-mail" })
-        @Html.TextBoxFor(x => x.Institution, "Instiitution", new { @class = "email", @id = "institution", @placeholder = "Institution" })
-        @Html.PasswordFor(x => x.Password, new { @class = "email", @id = "passWord", @placeholder = "Password" })
-        @Html.DropDownListFor(x => x.Country, new SelectList(Model.Country), new { @class = "email", @id = "country", style="width:270px"})
+<div class="box">
+    <h1 class="secondHeadline">Sign Up</h1>
+    @using (Html.BeginForm("CreateUser", "login", FormMethod.Post, new {onsubmit = "return checkForm(this)"}))
+    {
+        @Html.TextBoxFor(x => x.FirstName, "Firstname", new { @class = "inputField", @id = "firstName", @placeholder = "First Name", @required = true, @maxlength = "20" })
+        @Html.TextBoxFor(x => x.LastName, "Lastname", new { @class = "inputField", @id = "lastName", @placeholder = "Last Name", @required = true, @maxlength = "50" })
+        @Html.TextBoxFor(x => x.Email, "E-mail", new { @class = "inputField", @id = "email", @placeholder = "E-mail", @required= true, @type= "email", @maxlength = "60"})
+        @Html.TextBoxFor(x => x.Institution, "Instiitution", new { @class = "inputField", @id = "institution", @placeholder = "Institution", @required = true, @maxlength = "100" })
+        @Html.PasswordFor(x => x.Password, new { @class = "inputField", @id = "pwd1", @name = "pwd1", @placeholder = "Password", @type = "password", @required = true})
+        @Html.PasswordFor(x => x.Password, new { @class = "inputField", @id="pwd2", @name = "pwd2", @placeholder = "Confirm Password", @type = "password", @required = true })
+        @Html.DropDownListFor(x => x.Country, new SelectList(Model.Country), new { @class = "inputField", @id = "country", @required = true, style ="width:270px"})
         <br />
-        <input type="submit" value="Sign up" style="margin-left: 140px; margin-top: 10px">
-        }
-    </div>
-        <script src="/js/jquery.min.js"></script>
-    </body>
+        <input type="submit" onclick="return checkForm(this)" value="Sign up" id="UserDataSubmit" style="margin-left: 140px; margin-top: 10px">
+    }
+</div>
+</body>
 </html>
