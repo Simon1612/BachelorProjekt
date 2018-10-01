@@ -6,6 +6,6 @@ script:
 solution: DentalResearchApp.sln
 
 deploy:
-  api_key: "$HEROKU_AUTH_TOKEN"
+  api_key: $HEROKU_AUTH_TOKEN
   app: bachelor2018e21
   provider: heroku
