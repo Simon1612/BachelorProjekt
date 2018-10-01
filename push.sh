@@ -1,6 +1,6 @@
 setup_git() {
-  git config --global user.email "travis@travis-ci.org"
-  git config --global user.name "Travis CI"
+  git config --global user.email "sp.16@hotmail.com"
+  git config --global user.name ${GH_USERNAME}
 }
 
 commit_website_files() {
@@ -10,7 +10,6 @@ commit_website_files() {
 }
 
 upload_files() {
-  echo ${GH_USERNAME}
   git remote add origin-deploy https://${GH_USERNAME}:${GH_PASSWORD}@github.com/Simon1612/BachelorProjekt.git
   git push --quiet --set-upstream origin DeployBranch
 }
