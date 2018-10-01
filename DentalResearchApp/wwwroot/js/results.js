@@ -14,7 +14,7 @@ function SurveyManager(baseUrl, accessKey) {
   var self = this;
   self.surveyId = decodeURI(getParams()["id"]);
   self.results = ko.observableArray();
-  Survey.dxSurveyService.serviceUrl = "";
+  Survey.dxSurveyService.serviceUrl = "/survey";
   var survey = new Survey.Model({
     surveyId: self.surveyId,
     surveyPostId: self.surveyId
@@ -23,7 +23,7 @@ function SurveyManager(baseUrl, accessKey) {
 
   self.loadResults = function() {
     var xhr = new XMLHttpRequest();
-    xhr.open("GET", baseUrl + "/results?postId=" + self.surveyId);
+    xhr.open("GET", baseUrl + "/survey/getResults?postId=" + self.surveyId);
     xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
     xhr.onload = function() {
       var result = xhr.response ? JSON.parse(xhr.response) : [];

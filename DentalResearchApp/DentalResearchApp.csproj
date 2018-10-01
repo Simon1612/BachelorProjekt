@@ -5,6 +5,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Surveys\**" />
+    <Content Remove="Surveys\**" />
+    <EmbeddedResource Remove="Surveys\**" />
+    <None Remove="Surveys\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Content Remove="Views\Survey\Editor.cshtml" />
     <Content Remove="Views\Survey\SurveyRunner.cshtml" />
   </ItemGroup>
@@ -20,10 +27,6 @@
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.1.1" />
     <PackageReference Include="MongoDB.Driver" Version="2.7.0" />
     <PackageReference Include="Newtonsoft.Json" Version="11.0.2" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Surveys\" />
   </ItemGroup>
 
   <ItemGroup>

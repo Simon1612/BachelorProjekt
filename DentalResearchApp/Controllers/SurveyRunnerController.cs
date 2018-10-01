@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using DentalResearchApp.Code.Impl;
 using DentalResearchApp.Models;
 using Microsoft.AspNetCore.Authorization;
@@ -25,11 +26,25 @@ namespace DentalResearchApp.Controllers
             return survey[surveyId];
         }
 
+
         [HttpPost("post")]
-        public JsonResult PostResult([FromBody]PostSurveyResultModel model)
+        public async Task<JsonResult> PostResult([FromBody]PostSurveyResultModel model)
         {
-            var db = new SessionStorage(HttpContext.Session);
-            db.PostResults(model.PostId, model.SurveyResult);
+            var manager = new SurveyManager();
+
+            //Get participantId from url?
+            var id = Guid.NewGuid().ToString();
+
+            var result = new SurveyResult
+            {
+                SurveyName = model.PostId,
+                JsonResult = model.SurveyResult,
+                ParticipantId = id,
+                TimeStamp = DateTime.Now
+            };
+
+            await manager.SaveSurveyResult(result);
+
             return Json("Ok");
         }
     }
