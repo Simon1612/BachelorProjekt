@@ -11,6 +11,7 @@ commit_website_files() {
 
 upload_files() {
   git remote add origin-deploy https://${GH_USERNAME}:${GH_PASSWORD}@github.com/Simon1612/BachelorProjekt.git #> /dev/null 2>&1
+  git pull https://${GH_USERNAME}:${GH_PASSWORD}@github.com/Simon1612/BachelorProjekt.git --quiet
   git push https://${GH_USERNAME}:${GH_PASSWORD}@github.com/Simon1612/BachelorProjekt.git --quiet # > /dev/null 2>&1
 }
 
