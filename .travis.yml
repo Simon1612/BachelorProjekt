@@ -6,9 +6,9 @@ script:
 solution: DentalResearchApp.sln
 deploy:
   username: simon@pleidrup.net
-  password: Virknu123!
-  app: bachelor2018e21
   provider: heroku
   strategy: git
+  password: Virknu123!
+  app: bachelor2018e21
   on:
     branch: master
