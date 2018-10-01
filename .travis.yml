@@ -4,7 +4,8 @@ dotnet: 2.1
 script:
 - dotnet restore
 after_success:
-- push.sh
+- pwd
+- .travis/push.sh
 solution: DentalResearchApp.sln
 # deploy:
 #   provider: heroku
