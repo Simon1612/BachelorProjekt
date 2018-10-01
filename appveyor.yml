@@ -17,7 +17,11 @@ build_script:
   # output will be in ./src/bin/debug/netcoreapp1.1/publish
   - cmd: dotnet publish ./DentalResearchApp/DentalResearchApp.csproj
 after_build:
-  # For once the build has completed
+  - cmd: git init
+  - cmd: git add .
+  - cmd: git commit -m "Deploy"
+  - cmd: git remote add heroku https://git.heroku.com/bachelor2018e21.git
+  - cmd: git push heroku master
 artifacts:
  - path: '\DentalResearchApp\bin\Debug\netcoreapp2.1\publish'
    name: DentalResearchApp
@@ -31,4 +35,4 @@ clone_depth: 1
 #   - cmd: dotnet xunit
 on_finish :
   # any cleanup in here
-deploy: off
+deploy: on
