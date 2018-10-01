@@ -10,10 +10,10 @@ commit_website_files() {
 }
 
 upload_files() {
-  git remote add origin-deploy https://github.com/Simon1612/BachelorProjekt.git
+  git remote add origin-deploy https://Bachelor2018E21:deployuser123@github.com/Simon1612/BachelorProjekt.git
   git push --quiet --set-upstream origin DeployBranch
 }
 
-#setup_git
+setup_git
 commit_website_files
 upload_files
