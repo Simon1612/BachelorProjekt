@@ -4,6 +4,7 @@ dotnet: 2.1
 script:
 - dotnet restore
 after_success:
+- chmod +x push.sh
 - ./push.sh
 solution: DentalResearchApp.sln
 # deploy:
