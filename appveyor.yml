@@ -17,6 +17,8 @@ build_script:
   # output will be in ./src/bin/debug/netcoreapp1.1/publish
   - cmd: dotnet publish ./DentalResearchApp/DentalResearchApp.csproj
 after_build:
+  - cmd: git config --global user.email "simon@pleidrup.net"
+  - cmd: git config --global user.name "Simon"
   - cmd: git init
   - cmd: git add .
   - cmd: git commit -m "Deploy"
