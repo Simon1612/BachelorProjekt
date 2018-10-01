@@ -17,6 +17,12 @@ namespace DentalResearchApp.Controllers
             return View();
         }
 
+        [HttpGet("results"), Authorize]
+        public ActionResult Results()
+        {
+            return View();
+        }
+
 
         [HttpGet("getActive"), Authorize]
         public async Task<JsonResult> GetActiveAsync()
@@ -28,12 +34,12 @@ namespace DentalResearchApp.Controllers
         }
 
         [HttpGet("getSurvey"), Authorize]
-        public async Task<string> GetSurvey(string id)
+        public async Task<string> GetSurvey(string surveyId)
         {
             var manager = new SurveyManager();
-            var survey = await manager.GetSurvey(id);
+            var survey = await manager.GetSurvey(surveyId);
 
-            return survey[id];
+            return survey[surveyId];
         }
 
         [HttpGet("create"), Authorize]
@@ -53,13 +59,14 @@ namespace DentalResearchApp.Controllers
             return Json("Ok");
         }
 
-
-
-        [HttpGet("results"), Authorize]
-        public JsonResult GetResults(string postId)
+        [HttpGet("getResults"), Authorize]
+        public async Task<JsonResult> GetResults(string postId)
         {
-            var db = new SessionStorage(HttpContext.Session);
-            return Json(db.GetResults(postId));
+            var manager = new SurveyManager();
+
+            var survey = await manager.GetResults(postId);
+
+            return Json(survey);
         }
     }
 }

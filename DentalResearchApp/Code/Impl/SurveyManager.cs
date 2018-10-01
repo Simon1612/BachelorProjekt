@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using DentalResearchApp.Code.Interfaces;
 using DentalResearchApp.Models;
@@ -70,6 +71,30 @@ namespace DentalResearchApp.Code.Impl
 
             await coll.UpdateOneAsync(s => s.SurveyName == id, update);
         }
+
+        public async Task SaveSurveyResult(SurveyResult result)
+        {
+            var coll = _db.GetCollection<SurveyResult>("surveyResult_collection");
+
+            await coll.InsertOneAsync(result);
+        }
+
+
+        public async Task<List<string>> GetResults(string postId)
+        {
+            var coll = _db.GetCollection<SurveyResult>("surveyResult_collection");
+            var results = await coll.FindAsync(x => x.SurveyName == postId);
+
+            var resultList = new List<string>();
+
+            foreach (var result in results.ToList())
+            {
+                resultList.Add(result.JsonResult);
+            }
+
+            return resultList;
+        }
+
 
         private async void SeedWithDefaultSurveys()
         {
