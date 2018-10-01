@@ -19,7 +19,7 @@ build_script:
 after_build:
   - cmd: git config --global user.email "simon@pleidrup.net"
   - cmd: git config --global user.name "Simon"
-  #- cmd: git init
+  - cmd: pwd
   - cmd: git add .
   - cmd: git commit -m "Deploy"
   - cmd: git remote add heroku https://git.heroku.com/bachelor2018e21.git
