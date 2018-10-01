@@ -9,8 +9,8 @@ deploy:
   strategy: git
   api_key:
     secret: RgDtYIJU5W46Q2ZbnAYhtjUJ0ezryPfs/9cMfVFYuYfYIsUfWsqpk+PN6hXqGKxO2/UBi+FGPxCRIPj4mnnllMZ0cdVlCMmAhY5gBlZtr7FoD+Mv31BXPRj1X+iVYD8zPtMnIWnDlnbIy5Z7k5HFKSpSIqfQ8X+B+rUu9FbAIoPv7bNb89xREqoeZ8dCpkaDCCmTHelK6MD5n2q28rZnRpZZTOtRZNWXG3rEDNfP/1lEJhr/FadjpPeor31skAA41l8rLG6CzFHsbU9osCVMp3gW+Xdi9Rsm37FsZHwf4Lawo9TVeh4hEFibFi0XzjVhsm1pdgwqTszq8EGz3xAJYaXHJ69/w8uiX2W3t4jNgfPA0uVIfffYrAz//sbnGPVDuLzrQMHtrtLbezgMCLkX3p76vfzGfy2+0W0nGD/67e/9JoN0ZMH2cPEpOJfoqHKHu0pB9Ffp3VE4RT9NQ2rcFWOIzuGn1wUrMzpbdE2IuxgUrzCyzOyHR8Ru2tz5bGkrr4xxI1Fey9d6f4daBIY5cPN9kzccmEcH83C68M8k9TX08749lg/dV6zedR54Z1Lix6Y+Yf3QrIUyZVFX2C5Dx/uI7hu7x/bQ4FIKx7XQtRishMx8tRq/3SacAz+NKbhPOdZI47o4VEW8hnw/8Vm06dWdPIff2Roo044l2Pwxn0g=
-  username: simon@pleidrup.net
-  password: Virknu123!
+  #username: simon@pleidrup.net
+  #password: Virknu123!
 app: bachelor2018e21
   on:
     branch: master
