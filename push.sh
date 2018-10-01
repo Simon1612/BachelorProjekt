@@ -10,8 +10,8 @@ commit_website_files() {
 }
 
 upload_files() {
-  #git remote add origin-deploy https://${GH_USERNAME}:${GH_PASSWORD}@github.com/Simon1612/BachelorProjekt.git
-  git push https://${GH_USERNAME}:${GH_PASSWORD}@github.com/Simon1612/BachelorProjekt.git --quiet --set-upstream origin deploy
+  git remote add origin-deploy https://${GH_USERNAME}:${GH_PASSWORD}@github.com/Simon1612/BachelorProjekt.git
+  git push https://${GH_USERNAME}:${GH_PASSWORD}@github.com/Simon1612/BachelorProjekt.git #--quiet --set-upstream origin deploy
 }
 
 setup_git
