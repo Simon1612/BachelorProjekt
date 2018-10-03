@@ -16,6 +16,9 @@ namespace DentalResearchApp.Controllers
             return View();
         }
 
+
+
+
         [HttpGet("getSurvey")]
         public async Task<string> GetSurvey(string surveyId)
         {

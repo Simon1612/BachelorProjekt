@@ -4,14 +4,12 @@ using MongoDB.Bson.Serialization.Attributes;
 
 namespace DentalResearchApp.Models
 {
-    public class SurveyResult
+    public class LinkModel
     {
         [BsonId]
         public ObjectId Id { get; set; }
-
+        public string Email { get; set; }
+        public Guid LinkId { get; set; }
         public string SurveyName { get; set; }
-        public string JsonResult { get; set; }
-        public string ParticipantId { get; set; }
-        public DateTime TimeStamp { get; set; }
     }
 }

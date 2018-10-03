@@ -138,6 +138,7 @@ a, a:hover, a:focus {
 }
 
 #sidebar ul li a {
+    color: #fff;
     padding: 10px;
     font-size: 1.1em;
     display: block;
@@ -163,7 +164,7 @@ a[data-toggle="collapse"] {
     position: relative;
 }
 
-.dropdown-toggle::after {
+.dropdown-toggle:after {
     display: block;
     position: absolute;
     top: 50%;
