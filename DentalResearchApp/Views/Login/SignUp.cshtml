@@ -26,7 +26,7 @@
         @Html.PasswordFor(x => x.Password, new { @class = "inputField", @id="pwd2", @name = "pwd2", @placeholder = "Confirm Password", @type = "password", @required = true })
         @Html.DropDownListFor(x => x.Country, new SelectList(Model.Country), new { @class = "inputField", @id = "country", @required = true, style ="width:270px"})
         <br />
-        <input type="submit" onclick="return checkForm(this)" value="Sign up" id="UserDataSubmit" style="margin-left: 140px; margin-top: 10px">
+        <input type="submit" value="Sign up" id="UserDataSubmit" style="margin-left: 140px; margin-top: 10px">
     }
 </div>
 </body>
