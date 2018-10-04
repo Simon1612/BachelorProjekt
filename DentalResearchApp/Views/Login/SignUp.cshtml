@@ -7,7 +7,7 @@
 }
 <html>
 <head>
-    <meta charset="utf-8" />
+    <meta charset="utf-8" />    
     <link rel="stylesheet" href="/css/Styles.css" type="text/css" />
     <script type="text/javascript" src="/js/PasswordValidation.js"></script>
     <script src="/js/jquery.min.js"></script>
@@ -21,7 +21,7 @@
         @Html.TextBoxFor(x => x.FirstName, "Firstname", new { @class = "inputField", @id = "firstName", @placeholder = "First Name", @required = true, @maxlength = "20" })
         @Html.TextBoxFor(x => x.LastName, "Lastname", new { @class = "inputField", @id = "lastName", @placeholder = "Last Name", @required = true, @maxlength = "50" })
         @Html.TextBoxFor(x => x.Email, "E-mail", new { @class = "inputField", @id = "email", @placeholder = "E-mail", @required= true, @type= "email", @maxlength = "60"})
-        @Html.TextBoxFor(x => x.Institution, "Instiitution", new { @class = "inputField", @id = "institution", @placeholder = "Institution", @required = true, @maxlength = "100" })
+        @Html.TextBoxFor(x => x.Institution, "Institution", new { @class = "inputField", @id = "institution", @placeholder = "Institution", @required = true, @maxlength = "100" })
         @Html.PasswordFor(x => x.Password, new { @class = "inputField", @id = "pwd1", @name = "pwd1", @placeholder = "Password", @type = "password", @required = true})
         @Html.PasswordFor(x => x.Password, new { @class = "inputField", @id="pwd2", @name = "pwd2", @placeholder = "Confirm Password", @type = "password", @required = true })
         @Html.DropDownListFor(x => x.Country, new SelectList(Model.Country), new { @class = "inputField", @id = "country", @required = true, style ="width:270px"})

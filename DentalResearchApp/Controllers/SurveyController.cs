@@ -1,12 +1,13 @@
 ﻿using System.Threading.Tasks;
 using DentalResearchApp.Code.Impl;
+using DentalResearchApp.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace DentalResearchApp.Controllers
 {
 
-    [Route("[controller]")]
+    [Route("[controller]"), Authorize(Roles = "Admin, Researcher")]
     [ApiController]
     public class SurveyController : Controller
     {

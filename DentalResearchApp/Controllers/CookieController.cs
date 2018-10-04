@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using DentalResearchApp.Code.Impl;
@@ -13,12 +14,40 @@ namespace DentalResearchApp.Controllers
 
     [Route("[controller]")]
     [ApiController]
-    public class AuthCookieController : Controller
+    public class CookieController : Controller
     {
+        [AllowAnonymous]
+        [HttpPost("VerifyLinkId")]
+        public async Task<IActionResult> VerifyLinkId([FromBody] VerifyLinkIdModel model)
+        {
+            IActionResult response = Unauthorized();
+
+            var link = await new LinkManager().GetSurveyLink(model.LinkId);
+
+            if (link != null) // if link is verified
+            {
+                var claims = new List<Claim>
+                {
+                    new Claim(ClaimTypes.Role, Role.Volunteer.ToString()),
+                    new Claim(ClaimTypes.Name, link.VolunteerId)
+                };
+
+                var claimsIdentity = new ClaimsIdentity(
+                    claims, CookieAuthenticationDefaults.AuthenticationScheme);
+
+                await HttpContext.SignInAsync(
+                    CookieAuthenticationDefaults.AuthenticationScheme,
+                    new ClaimsPrincipal(claimsIdentity));
+
+                response = Ok(new { message = link.SurveyName }); //Read response in view and redirect to survey url
+            }
+
+            return response;
+        }
 
         [AllowAnonymous]
-        [HttpPost]
-        public async Task<IActionResult> CreateAuthCookie([FromBody]LoginModel login)
+        [HttpPost("Login")]
+        public async Task<IActionResult> Login([FromBody]LoginModel login)
         {
             IActionResult response = Unauthorized();
 
