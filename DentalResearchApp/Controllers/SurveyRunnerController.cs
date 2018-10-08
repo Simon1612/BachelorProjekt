@@ -1,11 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using DentalResearchApp.Code.Impl;
 using DentalResearchApp.Models;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace DentalResearchApp.Controllers
@@ -41,11 +44,10 @@ namespace DentalResearchApp.Controllers
         [HttpPost("post")]
         public async Task<JsonResult> PostResult([FromBody]PostSurveyResultModel model)
         {
-            var manager = new SurveyManager();
+            var surveyManager = new SurveyManager();
 
             //Get participantId from cookie!
-
-            var id = Guid.NewGuid().ToString();
+            var id = HttpContext.User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.NameIdentifier)?.Value;
 
             var result = new SurveyResult
             {
@@ -55,7 +57,15 @@ namespace DentalResearchApp.Controllers
                 TimeStamp = DateTime.Now
             };
 
-            await manager.SaveSurveyResult(result);
+            await surveyManager.SaveSurveyResult(result);
+
+            //Remove auth cookie
+            await HttpContext.SignOutAsync();
+            
+            //Delete linkmodel from DB
+            var linkManager = new LinkManager();
+            //linkManager.DeleteSurveyLink() //Need linkId from somewhere.. maybe put in cookie?
+            
 
             return Json("Ok");
         }

@@ -27,7 +27,7 @@ function verifyLink() {
           // alert(data.message);
         },
         error: function (xhr) {
-            alert(xhr.responseText);
+            alert("Invalid link");
         }
     });
 }

@@ -28,11 +28,33 @@ namespace DentalResearchApp.Code.Impl
             return await collection.AsQueryable().FirstOrDefaultAsync(x => x.LinkId == linkId);
         }
 
+        public async Task GenerateSurveyLink(string surveyName, string volunteerId)
+        {
+            var collection = _db.GetCollection<SurveyLinkModel>("surveyLink_collection");
+
+            var link = new SurveyLinkModel()
+            {
+                LinkId = Guid.NewGuid().ToString("N"),
+                SurveyName = surveyName,
+                VolunteerId = volunteerId
+            };
+
+            await collection.InsertOneAsync(link);
+        }
+
+        public async Task DeleteSurveyLink(string linkId)
+        {
+            var collection = _db.GetCollection<SurveyLinkModel>("surveyLink_collection");
+
+            await collection.DeleteOneAsync(x => x.LinkId == linkId);
+        }
+
+
         public void SeedWithDefaultLinks()
         {
             var collection = _db.GetCollection<SurveyLinkModel>("surveyLink_collection");
 
-            var defaultLink = new SurveyLinkModel(){LinkId = Guid.Empty.ToString(), SurveyName = "IncomeSurvey", VolunteerId = "asdf"};
+            var defaultLink = new SurveyLinkModel() { LinkId = Guid.Empty.ToString(), SurveyName = "IncomeSurvey", VolunteerId = "asdf" };
 
             collection.InsertOne(defaultLink);
         }
