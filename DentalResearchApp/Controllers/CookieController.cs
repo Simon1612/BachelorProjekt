@@ -29,7 +29,9 @@ namespace DentalResearchApp.Controllers
                 var claims = new List<Claim>
                 {
                     new Claim(ClaimTypes.Role, Role.Volunteer.ToString()),
-                    new Claim(ClaimTypes.NameIdentifier, link.VolunteerId)
+                    new Claim(ClaimTypes.NameIdentifier, link.ParticipantId),
+                    new Claim(ClaimTypes.Uri, link.LinkId),
+                    new Claim(ClaimTypes.Name, link.SurveyName)
                 };
 
                 var claimsIdentity = new ClaimsIdentity(

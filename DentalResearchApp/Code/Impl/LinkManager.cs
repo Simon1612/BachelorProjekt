@@ -8,7 +8,7 @@ using MongoDB.Driver.Linq;
 
 namespace DentalResearchApp.Code.Impl
 {
-    public class LinkManager
+    public class LinkManager : ILinkManager
     {
         private readonly IMongoDatabase _db;
 
@@ -28,18 +28,28 @@ namespace DentalResearchApp.Code.Impl
             return await collection.AsQueryable().FirstOrDefaultAsync(x => x.LinkId == linkId);
         }
 
-        public async Task GenerateSurveyLink(string surveyName, string volunteerId)
+        public async Task SendSurveyLink(string surveyName, string participantId, string baseUrl)
         {
             var collection = _db.GetCollection<SurveyLinkModel>("surveyLink_collection");
 
+            var linkId = Guid.NewGuid().ToString("N");
+
             var link = new SurveyLinkModel()
             {
-                LinkId = Guid.NewGuid().ToString("N"),
+                LinkId = linkId,
                 SurveyName = surveyName,
-                VolunteerId = volunteerId
+                ParticipantId = participantId
             };
 
             await collection.InsertOneAsync(link);
+
+
+            //Send emails here?
+            var actionUrl = "/surveyrunner/index?id=";
+            var surveyLink = baseUrl + actionUrl + linkId;
+
+            //Create and send email?
+
         }
 
         public async Task DeleteSurveyLink(string linkId)
@@ -54,7 +64,12 @@ namespace DentalResearchApp.Code.Impl
         {
             var collection = _db.GetCollection<SurveyLinkModel>("surveyLink_collection");
 
-            var defaultLink = new SurveyLinkModel() { LinkId = Guid.Empty.ToString(), SurveyName = "IncomeSurvey", VolunteerId = "asdf" };
+            var defaultLink = new SurveyLinkModel()
+            {
+                LinkId = Guid.Empty.ToString(),
+                SurveyName = "IncomeSurvey",
+                ParticipantId = Guid.NewGuid().ToString()
+            };
 
             collection.InsertOne(defaultLink);
         }

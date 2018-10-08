@@ -8,7 +8,7 @@ namespace DentalResearchApp.Models
     {
         [BsonId]
         public ObjectId Id { get; set; }
-        public string VolunteerId { get; set; }
+        public string ParticipantId { get; set; }
         public string LinkId { get; set; }
         public string SurveyName { get; set; }
     }
