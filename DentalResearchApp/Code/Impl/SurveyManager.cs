@@ -20,6 +20,14 @@ namespace DentalResearchApp.Code.Impl
             //    SeedWithDefaultSurveys();
         }
 
+        public async Task CreateSurvey(string surveyName)
+        {
+            var survey = new Survey { Json = "{}", SurveyName = surveyName };
+
+            var collection = _db.GetCollection<Survey>("survey_collection");
+
+            await collection.InsertOneAsync(survey);
+        }
 
         public async Task DeleteSurvey(string surveyName)
         {

@@ -44,10 +44,11 @@ namespace DentalResearchApp.Controllers
         }
 
         [HttpGet("create")]
-        public JsonResult Create(string name)
+        public async Task<JsonResult> Create(string name)
         {
-            var db = new SessionStorage(HttpContext.Session);
-            db.StoreSurvey(name, "{}");
+            var manager = new SurveyManager();
+            await manager.CreateSurvey(name);
+            
             return Json("Ok");
         }
 
