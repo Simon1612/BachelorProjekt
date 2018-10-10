@@ -15,13 +15,14 @@ namespace DentalResearchApp.Controllers
         [HttpPost("sendSurveyLink")]
         public async Task<JsonResult> SendSurveyLink([FromBody] SendSurveyLinkModel model)
         {
-            var manager = new LinkManager();
             var host = Request.Host.Host;
 
             if (host == "localhost")
                 host += ":" + Request.Host.Port;
 
             var baseUrl = "https://" + host;
+
+            var manager = new LinkManager();
 
             await manager.SendSurveyLink(model.SurveyName, model.ParticipantId, baseUrl);
 

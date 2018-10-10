@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
+using System.Net.Http;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using DentalResearchApp.Code.Impl;
@@ -31,12 +33,12 @@ namespace DentalResearchApp.Controllers
 
 
         [HttpGet("getSurvey")]
-        public async Task<string> GetSurvey(string surveyId)
+        public async Task<ActionResult<string>> GetSurvey(string surveyId)
         {
             var surveyNameFromCookie = HttpContext.User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.Name)?.Value;
 
-            if(surveyNameFromCookie != surveyId) //Participant is trying to change the name of survey in url?
-                throw new InvalidOperationException();
+            if (surveyNameFromCookie != surveyId) //Participant is trying to change the name of survey in url?
+                return BadRequest();
 
             var manager = new SurveyManager();
             var survey = await manager.GetSurvey(surveyId);
