@@ -29,7 +29,7 @@
             <div>
                 @Html.LabelFor(x => x.Patients, "Select Volunteers: ")
                 <br/>
-                @Html.ListBox("Patients List", new MultiSelectList(Model.Patients).,new {@class = "inputField", @ShowCheckbox = true, @Multiple = "Multiple"})
+                @Html.ListBox("Patients List", new MultiSelectList(Model.Patients), new {@class = "inputField", @ShowCheckbox = true, @Multiple = "Multiple"})
             </div>
             <br />
             <div>
