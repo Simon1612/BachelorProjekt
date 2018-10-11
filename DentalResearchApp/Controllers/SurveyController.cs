@@ -1,30 +1,31 @@
 ﻿using System.Threading.Tasks;
 using DentalResearchApp.Code.Impl;
+using DentalResearchApp.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace DentalResearchApp.Controllers
 {
 
-    [Route("[controller]")]
+    [Route("[controller]"), Authorize(Roles = "Administrator, Researcher")]
     [ApiController]
     public class SurveyController : Controller
     {
 
-        [HttpGet, Authorize]
+        [HttpGet]
         public ActionResult Index()
         {
             return View();
         }
 
-        [HttpGet("results"), Authorize]
+        [HttpGet("results")]
         public ActionResult Results()
         {
             return View();
         }
 
 
-        [HttpGet("getActive"), Authorize]
+        [HttpGet("getActive")]
         public async Task<JsonResult> GetActiveAsync()
         {
             var manager = new SurveyManager();
@@ -33,7 +34,7 @@ namespace DentalResearchApp.Controllers
             return Json(surveys);
         }
 
-        [HttpGet("getSurvey"), Authorize]
+        [HttpGet("getSurvey")]
         public async Task<string> GetSurvey(string surveyId)
         {
             var manager = new SurveyManager();
@@ -42,16 +43,17 @@ namespace DentalResearchApp.Controllers
             return survey[surveyId];
         }
 
-        [HttpGet("create"), Authorize]
-        public JsonResult Create(string name)
+        [HttpGet("create")]
+        public async Task<JsonResult> Create(string name)
         {
-            var db = new SessionStorage(HttpContext.Session);
-            db.StoreSurvey(name, "{}");
+            var manager = new SurveyManager();
+            await manager.CreateSurvey(name);
+            
             return Json("Ok");
         }
 
 
-        [HttpGet("delete"), Authorize]
+        [HttpGet("delete")]
         public async Task<JsonResult> Delete(string id)
         {
             await new SurveyManager().DeleteSurvey(id);
@@ -59,7 +61,7 @@ namespace DentalResearchApp.Controllers
             return Json("Ok");
         }
 
-        [HttpGet("getResults"), Authorize]
+        [HttpGet("getResults")]
         public async Task<JsonResult> GetResults(string postId)
         {
             var manager = new SurveyManager();

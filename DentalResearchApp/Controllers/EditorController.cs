@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace DentalResearchApp.Controllers
 {
-    [Route("[controller]"), Authorize]
+    [Route("[controller]"), Authorize(Roles = "Administrator, Researcher")]
     public class EditorController : Controller
     {
         [HttpGet]

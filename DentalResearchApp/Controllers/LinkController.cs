@@ -4,11 +4,13 @@ using System.Linq;
 using System.Threading.Tasks;
 using DentalResearchApp.Code.Impl;
 using DentalResearchApp.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace DentalResearchApp.Controllers
 {
-    [Route("[controller]")]
+
+    [Route("[controller]"), Authorize(Roles = "Administrator, Researcher")]
     public class LinkController : Controller
     {
         [HttpGet("/SendSurvey")]
@@ -39,9 +41,21 @@ namespace DentalResearchApp.Controllers
             return View(sendSurveyModel);
         }
 
-        [HttpPost("CreateLink")]
-        public JsonResult CreateLink(string surveyName, List<string> patientsList)
+    
+        [HttpPost("sendSurveyLink")]
+        public async Task<JsonResult> SendSurveyLink([FromBody] SendSurveyLinkModel model)
         {
+            var host = Request.Host.Host;
+
+            if (host == "localhost")
+                host += ":" + Request.Host.Port;
+
+            var baseUrl = "https://" + host;
+
+            var manager = new LinkManager();
+
+            await manager.SendSurveyLink(model.SurveyName, model.ParticipantId, baseUrl);
+
             return Json("Ok");
         }
     }

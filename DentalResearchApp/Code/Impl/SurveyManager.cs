@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using DentalResearchApp.Code.Interfaces;
 using DentalResearchApp.Models;
@@ -21,6 +20,14 @@ namespace DentalResearchApp.Code.Impl
             //    SeedWithDefaultSurveys();
         }
 
+        public async Task CreateSurvey(string surveyName)
+        {
+            var survey = new Survey { Json = "{}", SurveyName = surveyName };
+
+            var collection = _db.GetCollection<Survey>("survey_collection");
+
+            await collection.InsertOneAsync(survey);
+        }
 
         public async Task DeleteSurvey(string surveyName)
         {
