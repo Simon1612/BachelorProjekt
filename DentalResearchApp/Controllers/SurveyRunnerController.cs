@@ -35,7 +35,7 @@ namespace DentalResearchApp.Controllers
         [HttpGet("getSurvey")]
         public async Task<ActionResult<string>> GetSurvey(string surveyId)
         {
-            var surveyNameFromCookie = HttpContext.User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.Name)?.Value;
+            var surveyNameFromCookie = HttpContext.User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.Name && x.Type != null).Value;
 
             if (surveyNameFromCookie != surveyId) //Participant is trying to change the name of survey in url?
                 return BadRequest();
@@ -51,8 +51,8 @@ namespace DentalResearchApp.Controllers
         public async Task<JsonResult> PostResult([FromBody]PostSurveyResultModel model)
         {
             //Get ids from cookie!
-            var participantId = HttpContext.User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.NameIdentifier)?.Value;
-            var linkId = HttpContext.User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.Uri)?.Value;
+            var participantId = HttpContext.User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.NameIdentifier && x.Type != null).Value;
+            var linkId = HttpContext.User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.Uri && x.Type != null).Value;
 
             var result = new SurveyResult
             {
