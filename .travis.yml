@@ -3,15 +3,9 @@ mono: none
 dotnet: 2.1
 script:
 - dotnet restore
+- dotnet test UnitTests/UnitTests.csproj
+- dotnet test IntegrationTests/IntegrationTests.csproj
+# after_success:
+# - chmod +x push.sh
+# - ./push.sh
 solution: DentalResearchApp.sln
-deploy:
-  api_key:
-    secure: nwN0lZGRJy01WElU8R8dXh2rp19LIubqRHKIe8pBF9NcMyc7WkTsEdEwZa3lvkuV+MWUbnxwS2RqUDrl/dLQb9cBKBpM2gatcQaqOZqbbJ0TA+fArk7Dkzzb5qCwrQupVe+Xc/1dfCxMKwkTcbs7NqHVq25+WTEJyZy8rYvJ64frgI4GK/oZINgQg0eeinuqi+AEUEfmVFoLdcGy07wLnrsolq6to1aGu3SEc235umyYHtsvEEy486w3Ldo8C0T27s9Hktl4jDKer5oUzBzi5Dfqf/mdHQOwE6JncXHZbSWR2IUn/m33vUXlhCQQyQzQaNz/isK7e3Pk+YnFuLkI320On6reBlBqckueeiJ7B2A2v4DH3hWu0iKqmrxYySwnYR9jJlk39a1t5ZhgXPWl8CQ9TWuLM+X1JY/oP4xGom7/3yXuZgGwAN/rGl722WAbyUmt6zfpBQUdmg5Ld8NrWaxtLzScdsq6TZ+9StLXG+WnlXSMav21Bgg7JwbUpO91higM7hjtq7g4zI+ugEy+w17j5QQ/r0VgQlAd0tFto7Co5QsUJrTJlcjLnuvmvjhSdThBvoJiQ1tMvinghOuzpUMdI+28Dn7N5qq8Wb4cO+j2ilKvlRnX2y5GBq17qm52I3SE8FxeJv/6DgWo6r85WTDpaYlfuld9QnzsKXo1uuI=
-  app: bachelor2018e21
-  provider: heroku
-  strategy: git
-  on:
-    branch: master
-env:
-  global:
-    secure: nwN0lZGRJy01WElU8R8dXh2rp19LIubqRHKIe8pBF9NcMyc7WkTsEdEwZa3lvkuV+MWUbnxwS2RqUDrl/dLQb9cBKBpM2gatcQaqOZqbbJ0TA+fArk7Dkzzb5qCwrQupVe+Xc/1dfCxMKwkTcbs7NqHVq25+WTEJyZy8rYvJ64frgI4GK/oZINgQg0eeinuqi+AEUEfmVFoLdcGy07wLnrsolq6to1aGu3SEc235umyYHtsvEEy486w3Ldo8C0T27s9Hktl4jDKer5oUzBzi5Dfqf/mdHQOwE6JncXHZbSWR2IUn/m33vUXlhCQQyQzQaNz/isK7e3Pk+YnFuLkI320On6reBlBqckueeiJ7B2A2v4DH3hWu0iKqmrxYySwnYR9jJlk39a1t5ZhgXPWl8CQ9TWuLM+X1JY/oP4xGom7/3yXuZgGwAN/rGl722WAbyUmt6zfpBQUdmg5Ld8NrWaxtLzScdsq6TZ+9StLXG+WnlXSMav21Bgg7JwbUpO91higM7hjtq7g4zI+ugEy+w17j5QQ/r0VgQlAd0tFto7Co5QsUJrTJlcjLnuvmvjhSdThBvoJiQ1tMvinghOuzpUMdI+28Dn7N5qq8Wb4cO+j2ilKvlRnX2y5GBq17qm52I3SE8FxeJv/6DgWo6r85WTDpaYlfuld9QnzsKXo1uuI=

@@ -1,0 +1,45 @@
+﻿@using DentalResearchApp.Models
+@model SendSurveyModel
+@{
+    Layout = "~/Views/_Layout.cshtml";
+    ViewBag.Title = "Dental Research App";
+}
+
+<html>
+<head>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" />
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="/css/Index.css" type="text/css">
+    <title>Dental Research App - Send Survey</title>
+</head>
+<body>
+<div class="box">
+    <h2 class="secondHeadline" style="text-align: center">Send Survey</h2>
+    <br/>
+    @using (Html.BeginForm("CreateLink", "Link", FormMethod.Post))
+    {
+        <div style="text-align: center">
+            <div>
+                @Html.LabelFor(x => x.Studies, "Select a Study: ")
+                @Html.DropDownListFor(x => x.Studies, new SelectList(Model.Studies), new { @class = "inputField", @id = "studies", @required = false, style = "width:270px" })
+            </div>
+            <br />
+            <div>
+                @Html.LabelFor(x => x.Patients, "Select Volunteers: ")
+                <br/>
+                @Html.ListBox("Patients List", new MultiSelectList(Model.Patients), new {@class = "inputField", @ShowCheckbox = true, @Multiple = "Multiple"})
+            </div>
+            <br />
+            <div>
+                @Html.LabelFor(x => x.Survey, "Select a Survey: ")
+                @Html.DropDownListFor(x => x.Survey, new SelectList(Model.Survey), new { @class = "inputField", @id = "SurveyName", @required = true, style = "width:270px" })
+            </div>
+            <br />
+            <input type="submit" , value="Send Links" class="btn btn-success"/>
+        </div>
+    }
+</div>
+</body>
+</html>
