@@ -89,7 +89,7 @@ input[type=button], input[type=submit], input[type=reset] {
     font-size: 0.8em;
 }
 
-.btn{
+.button{
     background:#2ecc71;
     width:125px;
     padding-top:5px;
@@ -106,7 +106,7 @@ input[type=button], input[type=submit], input[type=reset] {
     font-size:0.8em;
 }
 
-.btn:hover{
+.button:hover{
     background:#2CC06B; 
 }
 

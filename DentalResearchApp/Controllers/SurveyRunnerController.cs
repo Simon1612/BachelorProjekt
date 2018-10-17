@@ -1,26 +1,46 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Net;
+using System.Net.Http;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using DentalResearchApp.Code.Impl;
 using DentalResearchApp.Models;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace DentalResearchApp.Controllers
 {
-    [Route("[controller]"), Authorize]
+    [Route("[controller]"), Authorize(Roles = nameof(Role.Volunteer))]
     public class SurveyRunnerController : Controller
     {
-        // GET
+        [Authorize]
         public IActionResult SurveyRunner()
         {
             return View();
         }
 
-        [HttpGet("getSurvey")]
-        public async Task<string> GetSurvey(string surveyId)
+        [AllowAnonymous]
+        [HttpGet("index")]
+        public IActionResult SurveyRunnerIndex()
         {
-            var manager = new SurveyManager();
+            return View();
+        }
 
+
+        [HttpGet("getSurvey")]
+        public async Task<ActionResult<string>> GetSurvey(string surveyId)
+        {
+            var surveyNameFromCookie = HttpContext.User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.Name && x.Type != null).Value;
+
+            if (surveyNameFromCookie != surveyId) //Participant is trying to change the name of survey in url?
+                return BadRequest();
+
+            var manager = new SurveyManager();
             var survey = await manager.GetSurvey(surveyId);
 
             return survey[surveyId];
@@ -30,20 +50,29 @@ namespace DentalResearchApp.Controllers
         [HttpPost("post")]
         public async Task<JsonResult> PostResult([FromBody]PostSurveyResultModel model)
         {
-            var manager = new SurveyManager();
-
-            //Get participantId from url?
-            var id = Guid.NewGuid().ToString();
+            //Get ids from cookie!
+            var participantId = HttpContext.User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.NameIdentifier && x.Type != null).Value;
+            var linkId = HttpContext.User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.Uri && x.Type != null).Value;
 
             var result = new SurveyResult
             {
                 SurveyName = model.PostId,
                 JsonResult = model.SurveyResult,
-                ParticipantId = id,
-                TimeStamp = DateTime.Now
+                ParticipantId = participantId,
+                TimeStamp = DateTime.Now,
             };
 
-            await manager.SaveSurveyResult(result);
+            //Save result to DB
+            var surveyManager = new SurveyManager();
+            await surveyManager.SaveSurveyResult(result);
+
+            //This kills the cookie
+            await HttpContext.SignOutAsync();
+            
+            //Delete link from DB
+            var linkManager = new LinkManager();
+            await linkManager.DeleteSurveyLink(linkId);
+
 
             return Json("Ok");
         }
