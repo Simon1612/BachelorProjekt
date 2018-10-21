@@ -1,7 +1,10 @@
 ﻿using System;
+using DentalResearchApp.Models;
+using DentalResearchApp.Models.Context;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Hosting.Internal;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
@@ -11,12 +14,14 @@ namespace DentalResearchApp
 {
     public class Startup
     {
-        public Startup(IConfiguration configuration)
+        public Startup(IConfiguration configuration, IHostingEnvironment env)
         {
             Configuration = configuration;
+            Environment = env;
         }
 
         public IConfiguration Configuration { get; set; }
+        public IHostingEnvironment Environment { get; set; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
@@ -32,15 +37,15 @@ namespace DentalResearchApp
                     options.Cookie.Name = "auth_cookie";
                 });
 
-            //services.AddOptions();
-            //services.Configure<Settings>(options =>
-            //{
-            //    options.ConnectionString
-            //        = Configuration.GetSection("MongoConnection:ConnectionString").Value;
-            //    options.Database
-            //        = Configuration.GetSection("MongoConnection:Database").Value;
-            //});
 
+            if (Environment.IsEnvironment("IntegrationTest"))
+            {
+                services.AddTransient<IContext, TestContext>();
+            }
+            else
+            {
+                services.AddTransient<IContext, ProdContext>();
+            }
             //services.AddSession();
         }
 
@@ -51,12 +56,16 @@ namespace DentalResearchApp
             {
                 app.UseDeveloperExceptionPage();
             }
+            else if (env.IsEnvironment("IntegrationTest"))
+            {
+
+            }
             else
             {
                 app.UseHsts();
             }
-
             //app.UseSession();
+            
             app.UseStaticFiles();
             app.UseHttpsRedirection();
             app.UseAuthentication();

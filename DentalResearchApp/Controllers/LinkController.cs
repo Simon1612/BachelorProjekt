@@ -4,8 +4,10 @@ using System.Linq;
 using System.Threading.Tasks;
 using DentalResearchApp.Code.Impl;
 using DentalResearchApp.Models;
+using DentalResearchApp.Models.Context;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using MongoDB.Driver;
 
 namespace DentalResearchApp.Controllers
 {
@@ -13,6 +15,12 @@ namespace DentalResearchApp.Controllers
     [Route("[controller]"), Authorize(Roles = "Administrator, Researcher")]
     public class LinkController : Controller
     {
+        private IContext _context;
+        public LinkController(IContext context)
+        {
+            _context = context;
+        }
+
         [HttpGet("/SendSurvey")]
         public IActionResult SendSurvey()
         {
@@ -27,7 +35,7 @@ namespace DentalResearchApp.Controllers
                 "Henning",
                 "Ham den underlige der altid sidder i hjørnet til møderne"
             };
-            var manager = new SurveyManager();
+            var manager = _context.ManagerFactory.CreateSurveyManager();
             var surveyList = new List<string>();
             foreach (var survey in manager.GetAllSurveys().Result)
             {
@@ -52,7 +60,7 @@ namespace DentalResearchApp.Controllers
 
             var baseUrl = "https://" + host;
 
-            var manager = new LinkManager();
+            var manager = _context.ManagerFactory.CreateLinkManager();
 
             await manager.SendSurveyLink(model.SurveyName, model.ParticipantId, baseUrl);
 

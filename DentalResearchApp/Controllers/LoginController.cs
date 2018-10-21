@@ -4,6 +4,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using DentalResearchApp.Code.Impl;
 using DentalResearchApp.Models;
+using DentalResearchApp.Models.Context;
+using Microsoft.AspNetCore.Identity.UI.Pages.Internal.Account;
 using Microsoft.AspNetCore.Mvc;
 
 namespace DentalResearchApp.Controllers
@@ -11,6 +13,12 @@ namespace DentalResearchApp.Controllers
     [Route("[controller]")]
     public class LoginController : Controller
     {
+        private readonly IContext _context;
+        public LoginController(IContext context)
+        {
+            _context = context;
+        }
+
         [HttpGet]
         public IActionResult Login()
         {
@@ -31,7 +39,7 @@ namespace DentalResearchApp.Controllers
         [HttpPost("CreateUser")]
         public async Task<IActionResult> CreateUser(SignUpModel signupModel)
         {
-            var userManager = new UserManager();
+            var userManager = _context.ManagerFactory.CreateUserManager();
 
             var usermodel = new UserModel()
             {
