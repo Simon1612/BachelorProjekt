@@ -37,15 +37,25 @@ namespace DentalResearchApp
                     options.Cookie.Name = "auth_cookie";
                 });
 
+            
 
-            if (Environment.IsEnvironment("IntegrationTest"))
-            {
-                services.AddTransient<IContext, TestContext>();
-            }
-            else
-            {
-                services.AddTransient<IContext, ProdContext>();
-            }
+            var connectionString = Configuration.GetSection("MongoConnection:ConnectionString").Value;
+            IContext context = new Context(connectionString);
+
+
+            services.AddSingleton(context);
+
+            //if (Environment.IsEnvironment("IntegrationTest"))
+            //{
+            //    IContext context = new TestContext();
+
+            //    services.AddSingleton(context);
+            //   // services.AddTransient<IContext, TestContext>();
+            //}
+            //else
+            //{
+            //    //services.AddTransient<IContext, ProdContext>();
+            //}
             //services.AddSession();
         }
 

@@ -9,24 +9,13 @@ namespace DentalResearchApp.Models.Context
         //IConfig Config { get; set; }
     }
 
-    public class TestContext : IContext
+    public class Context : IContext
     {
         public IManagerFactory ManagerFactory { get; set; }
 
-        public TestContext()
+        public Context(string connectionString)
         {
-            ManagerFactory = new ManagerFactory(new TestConfig().MongoConnectionString);
-        }
-    }
-
-
-    public class ProdContext : IContext
-    {
-        public IManagerFactory ManagerFactory { get; set; }
-
-        public ProdContext()
-        {
-            ManagerFactory = new ManagerFactory(new ProdConfig().MongoConnectionString);
+            ManagerFactory = new ManagerFactory(connectionString);
         }
     }
 }

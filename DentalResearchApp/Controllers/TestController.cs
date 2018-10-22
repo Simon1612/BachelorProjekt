@@ -20,7 +20,10 @@ namespace DentalResearchApp.Controllers
         [HttpGet]
         public string Get()
         {
-            return "ayy";
+
+            var count = HttpContext.Request.Cookies.Count.ToString();
+
+            return count;
         }
     }
 }
