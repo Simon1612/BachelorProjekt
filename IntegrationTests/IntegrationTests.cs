@@ -1,14 +1,13 @@
-using NUnit.Framework;
+using Xunit;
 
 namespace IntegrationTests
 {
-    [TestFixture(Category = "Integration Tests")]
     public class IntegrationTests
     {
-        [Test]
+        [Fact]
         public void IntegrationTest1()
         {
-            Assert.AreEqual(1, 1);
+            Assert.Equal(1, 1);
         }
     }
 }

@@ -12,15 +12,15 @@ namespace DentalResearchApp.Controllers
     [ApiController]
     public class TestController : Controller
     {
-        private IConfig _config;
-        public TestController(IConfig config)
+        private IContext _context;
+        public TestController(IContext context)
         {
-            _config = config;
+            _context = context;
         }
         [HttpGet]
         public string Get()
         {
-            return "Ayy";
+            return "ayy";
         }
     }
 }
