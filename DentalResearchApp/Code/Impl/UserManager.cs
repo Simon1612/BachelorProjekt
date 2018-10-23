@@ -22,9 +22,9 @@ namespace DentalResearchApp.Code.Impl
             var credsColl = _db.GetCollection<UserCredentials>("credentials_collection");
             var storedUserCreds = await credsColl.AsQueryable().FirstOrDefaultAsync(x => x.UserName == login.Username);
             
-            var hash = Hash.Create(login.Password, storedUserCreds?.Salt);
+            var hash = Hash.Create(login.Password, storedUserCreds.Salt);
 
-            if (hash == storedUserCreds?.Hash)
+            if (hash == storedUserCreds.Hash)
             {
                 user = await GetUserModel(login.Username);
             }
