@@ -1,5 +1,4 @@
-﻿using DentalResearchApp.Code.Impl;
-using DentalResearchApp.Code.Interfaces;
+﻿using DentalResearchApp.Code.Interfaces;
 
 namespace DentalResearchApp.Models.Context
 {
@@ -7,15 +6,5 @@ namespace DentalResearchApp.Models.Context
     {
         IManagerFactory ManagerFactory { get; set; }
         //IConfig Config { get; set; }
-    }
-
-    public class Context : IContext
-    {
-        public IManagerFactory ManagerFactory { get; set; }
-
-        public Context(string connectionString, string linkDbName, string surveyDbName, string userDbName)
-        {
-            ManagerFactory = new ManagerFactory(connectionString, linkDbName, surveyDbName, userDbName);
-        }
     }
 }
