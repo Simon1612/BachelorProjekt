@@ -28,7 +28,7 @@ namespace DentalResearchApp.Controllers
         [HttpGet("Signup")]
         public IActionResult SignUp()
         {
-            var countryList = countries.CountryList();
+            var countryList = Countries.CountryList();
             var model = new SignUpModel
             {
                 Country = countryList.OrderBy(a => a).ToList()
@@ -61,30 +61,4 @@ namespace DentalResearchApp.Controllers
             return RedirectToAction("Login");
         }
     }
-
-    public class countries
-    {
-        public static List<string> CountryList()
-        {
-            //Creating Dictionary
-            var cultureList = new List<string>();
-
-            //getting the specific CultureInfo from CultureInfo class
-            CultureInfo[] getCultureInfo = CultureInfo.GetCultures(CultureTypes.SpecificCultures);
-
-            foreach (CultureInfo getCulture in getCultureInfo)
-            {
-                //creating the object of RegionInfo class
-                RegionInfo getRegionInfo = new RegionInfo(getCulture.Name);
-                //adding each country Name into the Dictionary
-                if (!(cultureList.Contains(getRegionInfo.EnglishName)))
-                {
-                    cultureList.Add(getRegionInfo.EnglishName);
-                }
-            }
-            //returning country list
-            return cultureList;
-        }
-    }
-
 }
