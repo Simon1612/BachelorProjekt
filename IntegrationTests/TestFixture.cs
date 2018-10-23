@@ -24,7 +24,6 @@ namespace IntegrationTests
 {
     public class TestFixture : IDisposable
     {
-        //public readonly CookieContainer Cookies = new CookieContainer();
         private MongoDbRunner _dbRunner;
         private readonly TestServer _testServer;
         private readonly IMongoClient _mongoClient;
