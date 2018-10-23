@@ -1,20 +1,20 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Net;
 using System.Net.Http;
-using System.Net.Http.Headers;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using DentalResearchApp;
 using DentalResearchApp.Code.Impl;
+using DentalResearchApp.Code.Interfaces;
 using DentalResearchApp.Models;
+using IntegrationTests.Helpers;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.TestHost;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.PlatformAbstractions;
-using Microsoft.Net.Http.Headers;
+using Microsoft.IdentityModel.Xml;
 using Mongo2Go;
 using MongoDB.Driver;
 using Newtonsoft.Json;
@@ -24,13 +24,20 @@ namespace IntegrationTests
 {
     public class TestFixture : IDisposable
     {
-        public readonly CookieContainer Cookies = new CookieContainer();
-        public readonly TestServer _testServer;
-        public HttpClient HttpClient { get; }
-
-        public MongoClient MongoClient { get; set; }
-
+        //public readonly CookieContainer Cookies = new CookieContainer();
         private MongoDbRunner _dbRunner;
+        private readonly TestServer _testServer;
+        private readonly IMongoClient _mongoClient;
+
+        public IHttpClientWrapper HttpClient { get; }
+
+        public IManagerFactory ManagerFactory { get; set; }
+
+
+        private readonly string _userDbName;
+        private readonly string _surveyDbName;
+        private readonly string _linkDbName;
+
 
         public TestFixture()
         {
@@ -44,6 +51,16 @@ namespace IntegrationTests
             mongoConnection.ConnectionString = connString;
             rootObject.MongoConnection = mongoConnection;
 
+
+            _userDbName = "testUserDb";
+            _surveyDbName = "testSurveyDb"; 
+            _linkDbName = "testLinkDb"; 
+
+            mongoConnection.UserDbName = _userDbName;
+            mongoConnection.SurveyDbName = _surveyDbName;
+            mongoConnection.LinkDbName = _linkDbName;
+
+
             var testConfig = rootObject.ToString();
             File.WriteAllText("appsettings.IntegrationTest.json", testConfig);
 
@@ -55,67 +72,50 @@ namespace IntegrationTests
                     config.AddJsonFile("appsettings.IntegrationTest.json", optional: false, reloadOnChange: true))
                 .UseStartup<Startup>();
 
+
             _testServer = new TestServer(builder);
-            MongoClient = new MongoClient(connString);
-
-
-            HttpClient = _testServer.CreateClient();
-   
-            SeedWithUsers();
+            _mongoClient = new MongoClient(connString);
+            ManagerFactory = new ManagerFactory(connString, _linkDbName, _surveyDbName, _userDbName);
+            HttpClient = new HttpClientWrapper(_testServer.CreateClient());
         }
 
-        private async Task SeedWithUsers()
+
+        public void DropDatabases()
         {
-            var userManager = new UserManager(MongoClient);
+            var databaseNames = new List<string>() { _userDbName, _surveyDbName, _linkDbName };
 
-            var user = new UserModel()
-            {
-                Email = "admin@test.test",
-                FirstName = "admin",
-                LastName = "admin",
-                Role = Role.Administrator,
-            };
-
-            var password = "admin";
-
-            var salt = Salt.Create();
-            var hash = Hash.Create(password, salt);
-
-            var login = new UserCredentials() { UserName = user.Email, Hash = hash, Salt = salt };
-
-
-            await userManager.CreateUser(user, login);
+            Parallel.ForEach(databaseNames, name => { _mongoClient.DropDatabaseAsync(name); });
         }
 
-        public async Task SignInAsAdmin()
+        private async Task SignIn(string email, string password)
         {
-            var login = new LoginModel() {Username = "admin@test.test",Password = "admin"};
+            var login = new LoginModel {Username = email ,Password = password};
 
             var json = JsonConvert.SerializeObject(login);
             var content = new StringContent(json, Encoding.UTF8, "application/json");
 
 
-            //"OLD"
             var response = await HttpClient.PostAsync("cookie/login", content);
             var message = await response.Content.ReadAsStringAsync();
 
             if (!message.Contains("Success"))
-                throw new UnauthorizedAccessException("Unable to login with admin user");
-
-
-            if (response.Headers.TryGetValues("Set-Cookie", out var newCookies))
-            {
-                foreach (var item in SetCookieHeaderValue.ParseList(newCookies.ToList()))
-                {
-                    Cookies.Add(response.RequestMessage.RequestUri, new Cookie(item.Name.Value, item.Value.Value, item.Path.Value));
-                }
-            }
-
+                throw new UnauthorizedAccessException("Unable to login with user");
         }
 
-        public string CreateConnection()
+
+        public async Task SignInAsResearcher()
         {
-            _dbRunner = MongoDbRunner.Start(singleNodeReplSet: false); // true??
+            await SignIn("researcher@test.test", "researcher");
+        }
+
+        public async Task SignInAsAdmin()
+        {
+            await SignIn("admin@test.test", "admin");
+        }
+
+        private string CreateConnection()
+        {
+            _dbRunner = MongoDbRunner.Start(); 
 
             return _dbRunner.ConnectionString;
         }
@@ -125,6 +125,42 @@ namespace IntegrationTests
             HttpClient.Dispose();
             _testServer.Dispose();
             _dbRunner.Dispose();
+        }
+
+        public async Task SeedWithUsers()
+        {
+            var userManager = ManagerFactory.CreateUserManager();
+
+            var admin = new UserModel()
+            {
+                Email = "admin@test.test",
+                FirstName = "admin",
+                LastName = "admin",
+                Role = Role.Administrator,
+            };
+            var adminPassword = "admin";
+            var adminSalt = Salt.Create();
+            var adminHash = Hash.Create(adminPassword, adminSalt);
+
+            var adminCredentials = new UserCredentials() { UserName = admin.Email, Hash = adminHash, Salt = adminSalt };
+
+
+            var researcher = new UserModel()
+            {
+                Email = "researcher@test.test",
+                FirstName = "researcher",
+                LastName = "researcher",
+                Role = Role.Researcher,
+            };
+            var researcherPassword = "researcher";
+            var researcherSalt = Salt.Create();
+            var researcherHash = Hash.Create(researcherPassword, researcherSalt);
+
+            var researcherCredentials = new UserCredentials() { UserName = researcher.Email, Hash = researcherHash, Salt = researcherSalt };
+
+
+            await userManager.CreateUser(researcher, researcherCredentials);
+            await userManager.CreateUser(admin, adminCredentials);
         }
     }
 }

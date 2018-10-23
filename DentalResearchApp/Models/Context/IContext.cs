@@ -13,9 +13,9 @@ namespace DentalResearchApp.Models.Context
     {
         public IManagerFactory ManagerFactory { get; set; }
 
-        public Context(string connectionString)
+        public Context(string connectionString, string linkDbName, string surveyDbName, string userDbName)
         {
-            ManagerFactory = new ManagerFactory(connectionString);
+            ManagerFactory = new ManagerFactory(connectionString, linkDbName, surveyDbName, userDbName);
         }
     }
 }

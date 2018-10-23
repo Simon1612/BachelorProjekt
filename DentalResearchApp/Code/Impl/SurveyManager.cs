@@ -11,12 +11,9 @@ namespace DentalResearchApp.Code.Impl
     {
         private readonly IMongoDatabase _db;
 
-        public SurveyManager(IMongoClient client)
+        public SurveyManager(IMongoClient client, string databaseName)
         {
-            _db = client.GetDatabase("SurveyDb");
-
-            //if (!_db.ListCollectionNames().Any())
-            //    SeedWithDefaultSurveys();
+            _db = client.GetDatabase(databaseName);
         }
 
         public async Task CreateSurvey(string surveyName)

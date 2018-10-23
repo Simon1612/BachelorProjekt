@@ -12,7 +12,7 @@ namespace DentalResearchApp.Controllers
     [ApiController]
     public class TestController : Controller
     {
-        private IContext _context;
+        private readonly IContext _context;
         public TestController(IContext context)
         {
             _context = context;

@@ -1,19 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Net.Http;
-using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
-using DentalResearchApp.Code.Impl;
-using DentalResearchApp.Models;
-using Microsoft.Net.Http.Headers;
-using Microsoft.VisualStudio.TestPlatform.ObjectModel.Client;
-using MongoDB.Driver;
+using Newtonsoft.Json;
 using Xunit;
 
 namespace IntegrationTests
 {
-    public class SurveyControllerTests : IClassFixture<TestFixture>
+    public class SurveyControllerTests : IClassFixture<TestFixture>, IDisposable
     {
         private readonly TestFixture _fixture;
 
@@ -22,30 +17,32 @@ namespace IntegrationTests
             _fixture = fixture;
         }
 
+        public void Dispose()
+        {
+            _fixture.DropDatabases();
+        }
 
         [Fact]
         public async Task SurveyController_CreateSurvey_EmptySurveyCreated()
         {
-            await _fixture.SignInAsAdmin();
-
-           
-            var cookies = _fixture.Cookies.GetCookies(new Uri("http://localhost/cookie/login"));
-            var authCookie = cookies["auth_cookie"];
-            
+            await _fixture.SeedWithUsers();
+            await _fixture.SignInAsResearcher();
 
             var surveyName = "testSurvey";
 
-            var request = new HttpRequestMessage();
-            request.Method = HttpMethod.Get;
-            request.RequestUri = new Uri($"Survey/Create?name={surveyName}", UriKind.Relative);
-            request.Headers.Add("Cookie", new CookieHeaderValue(authCookie.Name, authCookie.Value).ToString());
+            var request = new HttpRequestMessage
+            {
+                Method = HttpMethod.Get,
+                RequestUri = new Uri($"Survey/Create?name={surveyName}", UriKind.Relative)
+            };
 
 
-            var response = await _fixture.HttpClient.SendAsync(request);
+            await _fixture.HttpClient.SendAsyncWithCookie(request, "login");
 
 
-            var surveyManager = new SurveyManager(_fixture.MongoClient);
+            var surveyManager = _fixture.ManagerFactory.CreateSurveyManager();
             var createdSurvey = await surveyManager.GetSurvey("testSurvey");
+
 
             Assert.NotNull(createdSurvey);
             Assert.Single(createdSurvey);
@@ -53,5 +50,37 @@ namespace IntegrationTests
             Assert.True(createdSurvey.ContainsValue("{}"));
         }
 
+
+        [Fact]
+        public async Task SurveyController_GetActiveAsync_AllSurveysReturned()
+        {
+            await _fixture.SeedWithUsers();
+            await _fixture.SignInAsResearcher();
+
+            var surveyName1 = "testSurvey1";
+            var surveyName2 = "testSurvey2";
+
+            var manager = _fixture.ManagerFactory.CreateSurveyManager();
+            await manager.CreateSurvey(surveyName1);
+            await manager.CreateSurvey(surveyName2);
+
+            var request = new HttpRequestMessage
+            {
+                Method = HttpMethod.Get,
+                RequestUri = new Uri("Survey/getActive", UriKind.Relative)
+            };
+
+
+            var response = await _fixture.HttpClient.SendAsyncWithCookie(request, "login");
+
+            var content = await response.Content.ReadAsStringAsync();
+            var surveys = JsonConvert.DeserializeObject<Dictionary<string, string>>(content);
+
+
+            Assert.NotNull(surveys);
+            Assert.Equal(2, surveys.Count);
+            Assert.Contains("{}", surveys[surveyName1]);
+            Assert.Contains("{}", surveys[surveyName2]);
+        }
     }
 }

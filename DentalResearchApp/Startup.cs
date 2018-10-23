@@ -39,24 +39,16 @@ namespace DentalResearchApp
 
             
 
+            var linkDbName = Configuration.GetSection("MongoConnection:LinkDbName").Value;
+            var surveyDbName = Configuration.GetSection("MongoConnection:SurveyDbName").Value;
+            var userDbName = Configuration.GetSection("MongoConnection:UserDbName").Value;
+
             var connectionString = Configuration.GetSection("MongoConnection:ConnectionString").Value;
-            IContext context = new Context(connectionString);
+
+            IContext context = new Context(connectionString, linkDbName, surveyDbName, userDbName);
 
 
             services.AddSingleton(context);
-
-            //if (Environment.IsEnvironment("IntegrationTest"))
-            //{
-            //    IContext context = new TestContext();
-
-            //    services.AddSingleton(context);
-            //   // services.AddTransient<IContext, TestContext>();
-            //}
-            //else
-            //{
-            //    //services.AddTransient<IContext, ProdContext>();
-            //}
-            //services.AddSession();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -66,15 +58,10 @@ namespace DentalResearchApp
             {
                 app.UseDeveloperExceptionPage();
             }
-            else if (env.IsEnvironment("IntegrationTest"))
-            {
-
-            }
             else
             {
                 app.UseHsts();
             }
-            //app.UseSession();
             
             app.UseStaticFiles();
             app.UseHttpsRedirection();

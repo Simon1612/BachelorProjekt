@@ -20,7 +20,7 @@ namespace DentalResearchApp.Controllers
     [Route("[controller]"), Authorize(Roles = nameof(Role.Volunteer))]
     public class SurveyRunnerController : Controller
     {
-        private IContext _context;
+        private readonly IContext _context;
 
         public SurveyRunnerController(IContext context)
         {

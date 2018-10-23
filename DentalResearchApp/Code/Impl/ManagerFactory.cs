@@ -3,38 +3,40 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using DentalResearchApp.Code.Interfaces;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
 using MongoDB.Driver;
 
 namespace DentalResearchApp.Code.Impl
 {
-    public class ManagerFactory : IManagerFactory
+    public class ManagerFactory : IManagerFactory 
     {
-        private readonly string _connectionString;
+        private readonly IMongoClient _client;
+        private readonly string _linkDbName;
+        private readonly string _surveyDbName;
+        private readonly string _userDbName;
 
-        public ManagerFactory(string connectionString)
+
+        public ManagerFactory(string connectionString, string linkDbName, string surveyDbName, string userDbName)
         {
-            _connectionString = connectionString;
+            _client = new MongoClient(connectionString);
+            _linkDbName = linkDbName;
+            _surveyDbName = surveyDbName;
+            _userDbName = userDbName;
         }
 
         public ILinkManager CreateLinkManager()
         {
-            var client = new MongoClient(_connectionString);
-
-            return new LinkManager(client);
+            return new LinkManager(_client, _linkDbName);
         }
 
         public ISurveyManager CreateSurveyManager()
         {
-            var client = new MongoClient(_connectionString);
-
-            return new SurveyManager(client);
+            return new SurveyManager(_client, _surveyDbName);
         }
 
         public IUserManager CreateUserManager()
         {
-            var client = new MongoClient(_connectionString);
-
-            return new UserManager(client);
+            return new UserManager(_client, _userDbName);
         }
     }
 }

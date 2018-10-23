@@ -7,7 +7,6 @@ namespace DentalResearchApp.Code.Interfaces
     {
         Task DeleteSurveyLink(string linkId);
         Task<SurveyLinkModel> GetSurveyLink(string linkId);
-        void SeedWithDefaultLinks();
         Task SendSurveyLink(string surveyName, string participantId, string baseUrl);
     }
 }

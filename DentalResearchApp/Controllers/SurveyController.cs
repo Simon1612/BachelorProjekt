@@ -12,7 +12,7 @@ namespace DentalResearchApp.Controllers
     [ApiController]
     public class SurveyController : Controller
     {
-        private IContext _context;
+        private readonly IContext _context;
 
         public SurveyController(IContext context)
         {

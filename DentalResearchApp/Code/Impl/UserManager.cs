@@ -10,12 +10,9 @@ namespace DentalResearchApp.Code.Impl
     {
         private readonly IMongoDatabase _db;
 
-        public UserManager(IMongoClient client)
+        public UserManager(IMongoClient client, string databaseName)
         {
-            _db = client.GetDatabase("UserDb");
-
-            //if (!_db.ListCollectionNames().Any())
-            //     SeedWithDefaultUsers();
+            _db = client.GetDatabase(databaseName);
         }
 
         public async Task<UserModel> Authenticate(LoginModel login)
@@ -39,7 +36,7 @@ namespace DentalResearchApp.Code.Impl
         {
             var userColl = _db.GetCollection<UserModel>("user_collection");
 
-            return await userColl.AsQueryable().FirstAsync(x => x.Email == eMail);
+            return await userColl.AsQueryable().FirstOrDefaultAsync(x => x.Email == eMail);
         }
 
        

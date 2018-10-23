@@ -15,7 +15,7 @@ namespace DentalResearchApp.Controllers
     [Route("[controller]"), Authorize(Roles = "Administrator, Researcher")]
     public class LinkController : Controller
     {
-        private IContext _context;
+        private readonly IContext _context;
         public LinkController(IContext context)
         {
             _context = context;
