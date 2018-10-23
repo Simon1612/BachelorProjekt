@@ -40,8 +40,8 @@ namespace IntegrationTests
 
         public TestFixture()
         {
-            // Connect to local mongodb
-            var connString = CreateConnection();
+            // Start local database
+            var connString = StartMongoServer();
 
             // Create and overwrite appsettings.Json
             dynamic rootObject = new JObject();
@@ -112,7 +112,7 @@ namespace IntegrationTests
             await SignIn("admin@test.test", "admin");
         }
 
-        private string CreateConnection()
+        private string StartMongoServer()
         {
             _dbRunner = MongoDbRunner.Start(); 
 
