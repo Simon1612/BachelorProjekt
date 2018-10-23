@@ -45,7 +45,6 @@ namespace DentalResearchApp.Code.Impl
             var userColl = _db.GetCollection<UserModel>("user_collection");
 
             return await userColl.AsQueryable().ToListAsync();
-
         }
 
         public async Task CreateUser(UserModel userModel, UserCredentials userCreds)
