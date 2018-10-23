@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
@@ -6,6 +7,7 @@ using DentalResearchApp.Code.Impl;
 using DentalResearchApp.Models;
 using DentalResearchApp.Models.Context;
 using Microsoft.AspNetCore.Identity.UI.Pages.Internal.Account;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace DentalResearchApp.Controllers
@@ -31,8 +33,10 @@ namespace DentalResearchApp.Controllers
             var countryList = Countries.CountryList();
             var model = new SignUpModel
             {
-                Country = countryList.OrderBy(a => a).ToList()
+                Country = countryList.OrderBy(a => a).ToList(),
+                Errors = false
             };
+
             return View(model);
         }
 
@@ -40,6 +44,11 @@ namespace DentalResearchApp.Controllers
         public async Task<IActionResult> CreateUser(SignUpModel signupModel)
         {
             var userManager = _context.ManagerFactory.CreateUserManager();
+            if (userManager.GetAllUsers().Result.Select(x => x.Email).Contains(signupModel.Email))
+            {
+                signupModel.Errors = true;
+                return View("SignUp", signupModel);
+            }
 
             var usermodel = new UserModel()
             {
@@ -50,6 +59,8 @@ namespace DentalResearchApp.Controllers
                 Institution = signupModel.Institution,
                 Role = Role.Researcher
             };
+
+            signupModel.Errors = false;
 
             var salt = Salt.Create();
             var hash = Hash.Create(signupModel.Password, salt);

@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using DentalResearchApp.Code.Interfaces;
 using DentalResearchApp.Models;
 using MongoDB.Driver;
@@ -39,7 +40,14 @@ namespace DentalResearchApp.Code.Impl
             return await userColl.AsQueryable().FirstOrDefaultAsync(x => x.Email == eMail);
         }
 
-       
+        public async Task<List<UserModel>> GetAllUsers()
+        {
+            var userColl = _db.GetCollection<UserModel>("user_collection");
+
+            return await userColl.AsQueryable().ToListAsync();
+
+        }
+
         public async Task CreateUser(UserModel userModel, UserCredentials userCreds)
         {
             var userColl = _db.GetCollection<UserModel>("user_collection");
