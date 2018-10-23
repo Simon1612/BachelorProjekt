@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -45,8 +45,7 @@ namespace DentalResearchApp.Code.Impl
             var actionUrl = "/surveyrunner/index?id=";
             var surveyLink = baseUrl + actionUrl + linkId;
 
-            //Create and send email?
-
+            //TODO: Create and send email?
         }
 
         public async Task DeleteSurveyLink(string linkId)
