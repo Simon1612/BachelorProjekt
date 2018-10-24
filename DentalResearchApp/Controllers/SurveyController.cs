@@ -5,6 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using DentalResearchApp.Code.Impl;
 using DentalResearchApp.Models;
+using DentalResearchApp.Models.Context;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
@@ -15,6 +16,10 @@ namespace DentalResearchApp.Controllers
     [ApiController]
     public class SurveyController : Controller
     {
+        public SurveyController(IContext context)
+        {
+            _context = context;
+        }
         [HttpGet]
         public ActionResult Index()
         {
@@ -47,7 +52,7 @@ namespace DentalResearchApp.Controllers
         [HttpGet("getActive")]
         public async Task<JsonResult> GetActiveAsync()
         {
-            var manager = new SurveyManager();
+            var manager = _context.ManagerFactory.CreateSurveyManager();
             var surveys = await manager.GetAllSurveys();
 
             return Json(surveys);
@@ -56,7 +61,7 @@ namespace DentalResearchApp.Controllers
         [HttpGet("getSurvey")]
         public async Task<string> GetSurvey(string surveyId)
         {
-            var manager = new SurveyManager();
+            var manager = _context.ManagerFactory.CreateSurveyManager();
             var survey = await manager.GetSurvey(surveyId);
 
             return survey[surveyId];
@@ -65,7 +70,7 @@ namespace DentalResearchApp.Controllers
         [HttpGet("create")]
         public async Task<JsonResult> Create(string name)
         {
-            var manager = new SurveyManager();
+            var manager = _context.ManagerFactory.CreateSurveyManager();
             await manager.CreateSurvey(name);
 
             return Json("Ok");
@@ -75,7 +80,8 @@ namespace DentalResearchApp.Controllers
         [HttpGet("delete")]
         public async Task<JsonResult> Delete(string id)
         {
-            await new SurveyManager().DeleteSurvey(id);
+            var manager = _context.ManagerFactory.CreateSurveyManager();
+            await manager.DeleteSurvey(id);
 
             return Json("Ok");
         }
@@ -83,8 +89,7 @@ namespace DentalResearchApp.Controllers
         [HttpGet("getResults")]
         public async Task<JsonResult> GetResults(string postId)
         {
-            var manager = new SurveyManager();
-
+            var manager = _context.ManagerFactory.CreateSurveyManager();
             var survey = await manager.GetResults(postId);
 
             return Json(survey);
