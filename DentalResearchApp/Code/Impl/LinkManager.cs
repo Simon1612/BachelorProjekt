@@ -15,7 +15,7 @@ namespace DentalResearchApp.Code.Impl
 
         public LinkManager(IMongoClient client, string databaseName)
         {
-            _db = client.GetDatabase("LinkDb");
+            _db = client.GetDatabase(databaseName);
         }
 
         public async Task<SurveyLinkModel> GetSurveyLink(string linkId)
