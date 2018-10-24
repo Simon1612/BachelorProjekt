@@ -11,13 +11,9 @@ namespace DentalResearchApp.Code.Impl
     {
         private readonly IMongoDatabase _db;
 
-        public SurveyManager()
+        public SurveyManager(IMongoClient client, string databaseName)
         {
-            var client = new MongoClient("mongodb+srv://test:test@2018e21-surveydb-wtdmw.mongodb.net/test?retryWrites=true");
-            _db = client.GetDatabase("SurveyDb");
-
-            //if (!_db.ListCollectionNames().Any())
-            //    SeedWithDefaultSurveys();
+            _db = client.GetDatabase(databaseName);
         }
 
         public async Task CreateSurvey(string surveyName)

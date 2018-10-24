@@ -7,17 +7,26 @@ using System.Security.Claims;
 using System.Threading.Tasks;
 using DentalResearchApp.Code.Impl;
 using DentalResearchApp.Models;
+using DentalResearchApp.Models.Context;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using MongoDB.Driver;
 
 namespace DentalResearchApp.Controllers
 {
     [Route("[controller]"), Authorize(Roles = nameof(Role.Volunteer))]
     public class SurveyRunnerController : Controller
     {
+        private readonly IContext _context;
+
+        public SurveyRunnerController(IContext context)
+        {
+            _context = context;
+        }
+
         [Authorize]
         public IActionResult SurveyRunner()
         {
@@ -40,7 +49,7 @@ namespace DentalResearchApp.Controllers
             if (surveyNameFromCookie != surveyId) //Participant is trying to change the name of survey in url?
                 return BadRequest();
 
-            var manager = new SurveyManager();
+            var manager = _context.ManagerFactory.CreateSurveyManager();
             var survey = await manager.GetSurvey(surveyId);
 
             return survey[surveyId];
@@ -63,14 +72,14 @@ namespace DentalResearchApp.Controllers
             };
 
             //Save result to DB
-            var surveyManager = new SurveyManager();
+            var surveyManager = _context.ManagerFactory.CreateSurveyManager();
             await surveyManager.SaveSurveyResult(result);
 
             //This kills the cookie
             await HttpContext.SignOutAsync();
             
             //Delete link from DB
-            var linkManager = new LinkManager();
+            var linkManager = _context.ManagerFactory.CreateLinkManager();
             await linkManager.DeleteSurveyLink(linkId);
 
 
