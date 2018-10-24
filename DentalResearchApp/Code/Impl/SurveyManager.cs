@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using DentalResearchApp.Code.Interfaces;
 using DentalResearchApp.Models;
@@ -100,6 +101,20 @@ namespace DentalResearchApp.Code.Impl
             }
 
             return resultList;
+        }
+
+        public async Task<List<string>> GetAllNames()
+        {
+            var coll = _db.GetCollection<Survey>("survey_collection");
+            var surveys = await coll.AsQueryable().ToListAsync();
+            var surveyNamesList = new List<string>();
+
+            foreach (var survey in surveys)
+            {
+                surveyNamesList.Add(survey.SurveyName);
+            }
+
+            return surveyNamesList;
         }
 
 

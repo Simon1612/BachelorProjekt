@@ -18,6 +18,7 @@ namespace DentalResearchApp.Controllers
         {
             var sendSurveyModel = new SendSurveyModel();
             var studiesList = new List<string>() {"study 1", "study 2", "study 3", "study 4"};
+            
             var patientsList = new List<string>()
             {
                 "Bob",
