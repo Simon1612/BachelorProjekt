@@ -20,5 +20,6 @@ namespace DentalResearchApp.Code.Interfaces
 
         Task<List<string>> GetResults(string postId);
         Task CreateSurvey(string surveyName);
+        Task<List<string>> GetAllNames();
     }
 }
