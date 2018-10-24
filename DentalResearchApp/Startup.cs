@@ -37,16 +37,28 @@ namespace DentalResearchApp
                     options.Cookie.Name = "auth_cookie";
                 });
 
-            
 
-            var linkDbName = Configuration.GetSection("MongoConnection:LinkDbName").Value;
-            var surveyDbName = Configuration.GetSection("MongoConnection:SurveyDbName").Value;
-            var userDbName = Configuration.GetSection("MongoConnection:UserDbName").Value;
+            string linkDbName;
+            string surveyDbName;
+            string userDbName;
+            string connectionString;
 
-            var connectionString = Configuration.GetSection("MongoConnection:ConnectionString").Value;
+            if (Environment.IsEnvironment("IntegrationTest"))
+            {
+                linkDbName = Configuration.GetSection("LinkDbName").Value;
+                surveyDbName = Configuration.GetSection("SurveyDbName").Value;
+                userDbName = Configuration.GetSection("UserDbName").Value;
+                connectionString = Configuration.GetSection("ConnectionString").Value;
+            }
+            else
+            {
+                linkDbName = Configuration.GetSection("MongoConnection:LinkDbName").Value;
+                surveyDbName = Configuration.GetSection("MongoConnection:SurveyDbName").Value;
+                userDbName = Configuration.GetSection("MongoConnection:UserDbName").Value;
+                connectionString = Configuration.GetSection("MongoConnection:ConnectionString").Value;
+            }
 
             IContext context = new Context(connectionString, linkDbName, surveyDbName, userDbName);
-
 
             services.AddSingleton(context);
         }

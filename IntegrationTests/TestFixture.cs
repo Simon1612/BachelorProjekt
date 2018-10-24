@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Net.Http;
 using System.Text;
 using System.Threading;
@@ -43,32 +44,27 @@ namespace IntegrationTests
             // Start local database
             var connString = StartMongoServer();
 
-            // Create and overwrite appsettings.Json
-            dynamic rootObject = new JObject();
-            dynamic mongoConnection = new JObject();
-
-            mongoConnection.ConnectionString = connString;
-            rootObject.MongoConnection = mongoConnection;
-
-
+            // Create config
             _userDbName = "testUserDb";
-            _surveyDbName = "testSurveyDb"; 
-            _linkDbName = "testLinkDb"; 
-
-            mongoConnection.UserDbName = _userDbName;
-            mongoConnection.SurveyDbName = _surveyDbName;
-            mongoConnection.LinkDbName = _linkDbName;
+            _surveyDbName = "testSurveyDb";
+            _linkDbName = "testLinkDb";
 
 
-            var testConfig = rootObject.ToString();
-            File.WriteAllText("appsettings.IntegrationTest.json", testConfig);
+            var dictionary = new Dictionary<string, string>
+            {
+                ["UserDbName"] = _userDbName,
+                ["SurveyDbName"] = _surveyDbName,
+                ["LinkDbName"] = _linkDbName,
+                ["ConnectionString"] = connString
+            };
 
 
             //Host + app setup
             var builder = new WebHostBuilder()
                 .UseEnvironment("IntegrationTest")
                 .ConfigureAppConfiguration((hostingContext, config) =>
-                    config.AddJsonFile("appsettings.IntegrationTest.json", optional: false, reloadOnChange: true))
+                    //config.AddJsonFile("appsettings.IntegrationTest.json", optional: false, reloadOnChange: true))
+                    config.AddInMemoryCollection(dictionary))
                 .UseStartup<Startup>();
 
 
