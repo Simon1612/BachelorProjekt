@@ -1,11 +1,8 @@
 language: csharp
 mono: none
-dotnet: 2.2
+dotnet: 2.1
 script:
 - dotnet restore
 - dotnet test UnitTests/UnitTests.csproj
 - dotnet test IntegrationTests/IntegrationTests.csproj
-# after_success:
-# - chmod +x push.sh
-# - ./push.sh
 solution: DentalResearchApp.sln
