@@ -1,13 +1,17 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Collections.Generic;
+using System.IdentityModel.Tokens.Jwt;
+using System.Linq;
+using System.Threading.Tasks;
 using DentalResearchApp.Code.Impl;
 using DentalResearchApp.Models;
 using DentalResearchApp.Models.Context;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 
 namespace DentalResearchApp.Controllers
 {
-
     [Route("[controller]"), Authorize(Roles = "Administrator, Researcher")]
     [ApiController]
     public class SurveyController : Controller
@@ -29,7 +33,23 @@ namespace DentalResearchApp.Controllers
         {
             return View();
         }
+        
+        [HttpGet("SurveyResults")]
+        public async Task<ActionResult> SurveyResults()
+        {
+            var surveyResultsViewModel = new SurveyResultsViewModel
+            {
+                AllSurveyNames = await GetAllSurveyNames()
+            };
 
+            return View(surveyResultsViewModel);
+        }
+
+        public Task<List<string>> GetAllSurveyNames()
+        {
+            var manager = _context.ManagerFactory.CreateSurveyManager();
+            return Task.Run(() => manager.GetAllNames());
+        }
 
         [HttpGet("getActive")]
         public async Task<JsonResult> GetActiveAsync()
@@ -54,7 +74,7 @@ namespace DentalResearchApp.Controllers
         {
             var manager = _context.ManagerFactory.CreateSurveyManager();
             await manager.CreateSurvey(name);
-            
+
             return Json("Ok");
         }
 

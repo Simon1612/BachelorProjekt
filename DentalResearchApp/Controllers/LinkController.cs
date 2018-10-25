@@ -25,18 +25,13 @@ namespace DentalResearchApp.Controllers
         public IActionResult SendSurvey()
         {
             var sendSurveyModel = new SendSurveyModel();
-            var studiesList = new List<string>() {"study 1", "study 2", "study 3", "study 4"};
-            var patientsList = new List<string>()
-            {
-                "Bob",
-                "Ole",
-                "Jens",
-                "Pia",
-                "Henning",
-                "Ham den underlige der altid sidder i hjørnet til møderne"
-            };
+            var studiesList = new List<string>();
+
+            var patientsList = new List<string>();
+
             var manager = _context.ManagerFactory.CreateSurveyManager();
             var surveyList = new List<string>();
+
             foreach (var survey in manager.GetAllSurveys().Result)
             {
                 surveyList.Add(survey.Key);
