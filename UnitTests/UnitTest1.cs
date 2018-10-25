@@ -1,14 +1,13 @@
-using NUnit.Framework;
+using Xunit;
 
 namespace UnitTests
 {
-    [TestFixture(Category = "Unit Tests")]
     public class UnitTestClass1
     {
-        [Test]
+        [Fact]
         public void UnitTest1()
         {
-            Assert.AreEqual(1, 1);
+            Assert.Equal(1, 1);
         }
     }
 }

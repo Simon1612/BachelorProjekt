@@ -12,15 +12,19 @@ namespace DentalResearchApp.Code.Impl
     {
         private readonly IMongoDatabase _db;
 
-        public SurveyManager()
+        public SurveyManager(IMongoClient client, string databaseName)
         {
-            var client = new MongoClient("mongodb+srv://test:test@2018e21-surveydb-wtdmw.mongodb.net/test?retryWrites=true");
-            _db = client.GetDatabase("SurveyDb");
-
-            //if (!_db.ListCollectionNames().Any())
-            //    SeedWithDefaultSurveys();
+            _db = client.GetDatabase(databaseName);
         }
 
+        public async Task CreateSurvey(string surveyName)
+        {
+            var survey = new Survey { Json = "{}", SurveyName = surveyName };
+
+            var collection = _db.GetCollection<Survey>("survey_collection");
+
+            await collection.InsertOneAsync(survey);
+        }
 
         public async Task DeleteSurvey(string surveyName)
         {
@@ -93,6 +97,20 @@ namespace DentalResearchApp.Code.Impl
             }
 
             return resultList;
+        }
+
+        public async Task<List<string>> GetAllNames()
+        {
+            var coll = _db.GetCollection<Survey>("survey_collection");
+            var surveys = await coll.AsQueryable().ToListAsync();
+            var surveyNamesList = new List<string>();
+
+            foreach (var survey in surveys)
+            {
+                surveyNamesList.Add(survey.SurveyName);
+            }
+
+            return surveyNamesList;
         }
 
 

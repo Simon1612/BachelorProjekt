@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using DentalResearchApp.Code.Interfaces;
 using DentalResearchApp.Models;
 using MongoDB.Driver;
@@ -10,13 +11,9 @@ namespace DentalResearchApp.Code.Impl
     {
         private readonly IMongoDatabase _db;
 
-        public UserManager()
+        public UserManager(IMongoClient client, string databaseName)
         {
-            var client = new MongoClient("mongodb+srv://test:test@2018e21-surveydb-wtdmw.mongodb.net/test?retryWrites=true");
-            _db = client.GetDatabase("UserDb");
-
-            //if (!_db.ListCollectionNames().Any())
-            //     SeedWithDefaultUsers();
+            _db = client.GetDatabase(databaseName);
         }
 
         public async Task<UserModel> Authenticate(LoginModel login)
@@ -26,9 +23,9 @@ namespace DentalResearchApp.Code.Impl
             var credsColl = _db.GetCollection<UserCredentials>("credentials_collection");
             var storedUserCreds = await credsColl.AsQueryable().FirstOrDefaultAsync(x => x.UserName == login.Username);
             
-            var hash = Hash.Create(login.Password, storedUserCreds?.Salt);
+            var hash = Hash.Create(login.Password, storedUserCreds.Salt);
 
-            if (hash == storedUserCreds?.Hash)
+            if (hash == storedUserCreds.Hash)
             {
                 user = await GetUserModel(login.Username);
             }
@@ -40,10 +37,16 @@ namespace DentalResearchApp.Code.Impl
         {
             var userColl = _db.GetCollection<UserModel>("user_collection");
 
-            return await userColl.AsQueryable().FirstAsync(x => x.Email == eMail);
+            return await userColl.AsQueryable().FirstOrDefaultAsync(x => x.Email == eMail);
         }
 
-       
+        public async Task<List<UserModel>> GetAllUsers()
+        {
+            var userColl = _db.GetCollection<UserModel>("user_collection");
+
+            return await userColl.AsQueryable().ToListAsync();
+        }
+
         public async Task CreateUser(UserModel userModel, UserCredentials userCreds)
         {
             var userColl = _db.GetCollection<UserModel>("user_collection");

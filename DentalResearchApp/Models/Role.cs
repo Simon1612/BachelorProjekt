@@ -3,6 +3,7 @@
     public enum Role
     {
         Administrator,
-        Researcher
+        Researcher,
+        Volunteer
     }
 }

@@ -8,52 +8,54 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>@ViewBag.Title</title>
 
-    <link rel="stylesheet" href="~/css/Index.css">
+    <link rel="stylesheet" href="/css/Index.css">
 
-    <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/solid.js" integrity="sha384-tzzSw1/Vo+0N5UhStP3bvwWPq+uvzCMfrN1fEFe+xBmv1C/AtVX5K0uZtmcHitFZ" crossorigin="anonymous"></script>
-    <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/fontawesome.js" integrity="sha384-6OIrr52G08NpOFSZdxxz1xdNSndlD4vdcf/q2myIUVO0VsqaGHJsB0RaBE01VTOY" crossorigin="anonymous"></script>
-</head>
+   </head>
 <body>
     <div class="wrapper">
         <nav id="sidebar">
-            <div class="sidebar-header" style="text-align: center">
-                <h3>Tandlægehøjskolen Aarhus</h3>
+            <div class="" style="text-align: center">
+                <h4>Tandlægehøjskolen Aarhus</h4>
             </div>
-            <ul class="list-unstyled components">
-                <p>Dental Research App</p>
-                <li class="active">
+            <hr/>
+            <ul class="list-unstyled">
+                <li>
+                    @Html.ActionLink("Home", "Index", "Survey")
+                </li>
+            </ul>
+            <hr/>
+            <ul class="list-unstyled">
+                    <li>
                     <a href="#surveySubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Surveys <span class="caret"></span></a>
                     <ul class="collapse list-unstyled" id="surveySubmenu">
                         <li>
-                            <a href="#">Survey</a>
-                        </li>
-                        <li>
-                            <a href="#">All Surveys</a>
-                        </li>
-                        <li>
-                            <a href="#">All CRF's</a>
+                            @Html.ActionLink("All Results", "SurveyResults", "Survey")
+                            @Html.ActionLink("Survey Editor", "Editor", "Editor")
+                            @Html.ActionLink("Send Survey", "SendSurvey", "Link")
                         </li>
                     </ul>
                 </li>
+            </ul>
+            <hr/>
+            <ul class="list-unstyled">
                 <li>
-                    <a href="#">Results</a>
+                    @Html.ActionLink("All Studies", "Studies", "Study")
                 </li>
                 <li>
-                    @Html.ActionLink("Send Survey", "SendSurvey", "Link")
+                    @Html.ActionLink("All Patients", "Patients", "Patient")
                 </li>
+            </ul>
+            <hr/>
+            <ul class="list-unstyled">
                 <li>
-                    <a href="#patientsSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Patients <span class="caret"></span></a>
-                    <ul class="collapse list-unstyled" id="patientsSubmenu">
-                        <li>
-                            <a href="#">All Patients</a>
-                        </li>
-                    </ul>
+                    @Html.ActionLink("Profile", "Profile", "User")
                 </li>
+                @if(Context.User.IsInRole("Administrator")) //Todo: User-Role skal findes, laver admin tjek for navbar
+                {
                 <li>
+                    @Html.ActionLink("Admin", "Admin", "User")
                 </li>
-                <li>
-                    <a href="#">The Magnificent Pain-O-Meter!!</a>
-                </li>
+                }
             </ul>
         </nav>
         <div id="content" style="width:inherit; height:inherit">

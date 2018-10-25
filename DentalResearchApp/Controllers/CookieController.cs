@@ -1,28 +1,71 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using DentalResearchApp.Code.Impl;
 using DentalResearchApp.Models;
+using DentalResearchApp.Models.Context;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity.UI.Pages.Internal.Account;
 using Microsoft.AspNetCore.Mvc;
+using MongoDB.Driver;
 
 namespace DentalResearchApp.Controllers
 {
 
     [Route("[controller]")]
     [ApiController]
-    public class AuthCookieController : Controller
+    public class CookieController : Controller
     {
+        private readonly IContext _context;
+        public CookieController(IContext context)
+        {
+            _context = context;
+        }
 
         [AllowAnonymous]
-        [HttpPost]
-        public async Task<IActionResult> CreateAuthCookie([FromBody]LoginModel login)
+        [HttpPost("VerifyLinkId")]
+        public async Task<IActionResult> VerifyLinkId([FromBody] VerifyLinkIdModel model)
         {
             IActionResult response = Unauthorized();
 
-            var user = await new UserManager().Authenticate(login);
+            var manager = _context.ManagerFactory.CreateLinkManager();
+            var link = await manager.GetSurveyLink(model.LinkId);
+
+            if (link != null) // if link is verified
+            {
+                var claims = new List<Claim>
+                {
+                    new Claim(ClaimTypes.Role, Role.Volunteer.ToString()),
+                    new Claim(ClaimTypes.NameIdentifier, link.ParticipantId),
+                    new Claim(ClaimTypes.Uri, link.LinkId),
+                    new Claim(ClaimTypes.Name, link.SurveyName)
+                };
+
+                var claimsIdentity = new ClaimsIdentity(
+                    claims, CookieAuthenticationDefaults.AuthenticationScheme);
+
+                await HttpContext.SignInAsync(
+                    CookieAuthenticationDefaults.AuthenticationScheme,
+                    new ClaimsPrincipal(claimsIdentity));
+
+                response = Ok(new { message = link.SurveyName }); //Read response in view and redirect to survey url
+            }
+
+            return response;
+        }
+
+        [AllowAnonymous]
+        [HttpPost("Login")]
+        public async Task<IActionResult> Login([FromBody]LoginModel login)
+        {
+            IActionResult response = Unauthorized();
+
+            var manager = _context.ManagerFactory.CreateUserManager();
+
+            var user = await manager.Authenticate(login);
 
             if (user != null)
             {

@@ -4,6 +4,7 @@
 @model SignUpModel
 @{
     ViewBag.Title = "Dental Research App - Sign Up";
+ 
 }
 <html>
 <head>
@@ -14,20 +15,30 @@
     <title>Dental Research App - Sign Up</title>
 </head>
 <body>
-<div class="box">
-    <h1 class="secondHeadline">Sign Up</h1>
-    @using (Html.BeginForm("CreateUser", "login", FormMethod.Post, new {onsubmit = "return checkForm(this)"}))
-    {
-        @Html.TextBoxFor(x => x.FirstName, "Firstname", new { @class = "inputField", @id = "firstName", @placeholder = "First Name", @required = true, @maxlength = "20" })
-        @Html.TextBoxFor(x => x.LastName, "Lastname", new { @class = "inputField", @id = "lastName", @placeholder = "Last Name", @required = true, @maxlength = "50" })
-        @Html.TextBoxFor(x => x.Email, "E-mail", new { @class = "inputField", @id = "email", @placeholder = "E-mail", @required= true, @type= "email", @maxlength = "60"})
-        @Html.TextBoxFor(x => x.Institution, "Instiitution", new { @class = "inputField", @id = "institution", @placeholder = "Institution", @required = true, @maxlength = "100" })
-        @Html.PasswordFor(x => x.Password, new { @class = "inputField", @id = "pwd1", @name = "pwd1", @placeholder = "Password", @type = "password", @required = true})
-        @Html.PasswordFor(x => x.Password, new { @class = "inputField", @id="pwd2", @name = "pwd2", @placeholder = "Confirm Password", @type = "password", @required = true })
-        @Html.DropDownListFor(x => x.Country, new SelectList(Model.Country), new { @class = "inputField", @id = "country", @required = true, style ="width:270px"})
-        <br />
-        <input type="submit" value="Sign up" id="UserDataSubmit" style="margin-left: 140px; margin-top: 10px">
+    <div class="box">
+        <h1 class="secondHeadline">Sign Up</h1>
+        @Html.Hidden("errors", Model.Errors)
+        @using (Html.BeginForm("CreateUser", "login", FormMethod.Post, new { onsubmit = "return checkForm(this)"}))
+        {
+            @Html.TextBoxFor(x => x.FirstName, "Firstname", new { @class = "inputField", @id = "firstName", @placeholder = "First Name", @required = true, @maxlength = "20" })
+            @Html.TextBoxFor(x => x.LastName, "Lastname", new { @class = "inputField", @id = "lastName", @placeholder = "Last Name", @required = true, @maxlength = "50" })
+            @Html.TextBoxFor(x => x.Email, "E-mail", new { @class = "inputField", @id = "email", @placeholder = "E-mail", @required = true, @type = "email", @maxlength = "60" })
+            @Html.TextBoxFor(x => x.Institution, "Institution", new { @class = "inputField", @id = "institution", @placeholder = "Institution", @required = true, @maxlength = "100" })
+            @Html.PasswordFor(x => x.Password, new { @class = "inputField", @id = "pwd1", @name = "pwd1", @placeholder = "Password", @type = "password", @required = true })
+            @Html.PasswordFor(x => x.Password, new { @class = "inputField", @id = "pwd2", @name = "pwd2", @placeholder = "Confirm Password", @type = "password", @required = true })
+            @Html.DropDownListFor(x => x.Country, new SelectList(Model.Country), new { @class = "inputField", @id = "country", @required = true, style = "width:270px" })
+            <br />
+            <input type="submit" value="Sign up" id="UserDataSubmit" style="margin-left: 140px; margin-top: 10px">
+        }
+    </div>
+<script type="text/javascript">
+    window.onload = () => {
+        var errors = @Model.Errors.ToString().ToLower();
+        if(errors === true) {
+            var errorMsg = "There already exist a user with the E-mail: @Model.Email";
+            window.alert(errorMsg);
+        }
     }
-</div>
+</script>
 </body>
 </html>
