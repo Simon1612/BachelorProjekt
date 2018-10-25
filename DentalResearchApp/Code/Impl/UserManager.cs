@@ -33,6 +33,7 @@ namespace DentalResearchApp.Code.Impl
             return user;
         }
 
+
         private async Task<UserModel> GetUserModel(string eMail)
         {
             var userColl = _db.GetCollection<UserModel>("user_collection");
