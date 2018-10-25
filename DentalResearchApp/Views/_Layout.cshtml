@@ -23,8 +23,8 @@
                     @Html.ActionLink("Home", "Index", "Survey")
                 </li>
             </ul>
+            <hr/>
             <ul class="list-unstyled">
-                    <hr/>
                     <li>
                     <a href="#surveySubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Surveys <span class="caret"></span></a>
                     <ul class="collapse list-unstyled" id="surveySubmenu">
@@ -50,7 +50,7 @@
                 <li>
                     @Html.ActionLink("Profile", "Profile", "User")
                 </li>
-                @if(Context.User.IsInRole("Admin")) //Virker nok ikke
+                @if(Context.User.IsInRole("Administrator")) //Todo: User-Role skal findes, laver admin tjek for navbar
                 {
                 <li>
                     @Html.ActionLink("Admin", "Admin", "User")

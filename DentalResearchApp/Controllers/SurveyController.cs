@@ -47,7 +47,7 @@ namespace DentalResearchApp.Controllers
 
         public Task<List<string>> GetAllSurveyNames()
         {
-            var manager = new SurveyManager();
+            var manager = _context.ManagerFactory.CreateSurveyManager();
             return Task.Run(() => manager.GetAllNames());
         }
 
