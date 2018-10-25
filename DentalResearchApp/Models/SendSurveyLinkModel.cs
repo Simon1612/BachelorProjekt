@@ -1,13 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace DentalResearchApp.Models
+﻿namespace DentalResearchApp.Models
 {
     public class SendSurveyLinkModel
     {
         public string ParticipantId { get; set; }
+        public string ParticipantEmail { get; set; }
         public string SurveyName { get; set; }
     }
 }

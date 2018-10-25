@@ -1,13 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
 using DentalResearchApp.Code.Impl;
 using DentalResearchApp.Models;
 using DentalResearchApp.Models.Context;
-using Microsoft.AspNetCore.Identity.UI.Pages.Internal.Account;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace DentalResearchApp.Controllers

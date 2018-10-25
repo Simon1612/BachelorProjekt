@@ -1,10 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
-using System.Linq;
 using System.Net.Http;
 using System.Text;
-using System.Threading;
 using System.Threading.Tasks;
 using DentalResearchApp;
 using DentalResearchApp.Code.Impl;
@@ -13,13 +10,10 @@ using DentalResearchApp.Models;
 using IntegrationTests.Helpers;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.TestHost;
-using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.Extensions.Configuration;
-using Microsoft.IdentityModel.Xml;
 using Mongo2Go;
 using MongoDB.Driver;
 using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
 
 namespace IntegrationTests
 {

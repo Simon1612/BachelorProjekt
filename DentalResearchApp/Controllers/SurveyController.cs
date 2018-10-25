@@ -1,14 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IdentityModel.Tokens.Jwt;
-using System.Linq;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
-using DentalResearchApp.Code.Impl;
 using DentalResearchApp.Models;
 using DentalResearchApp.Models.Context;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Newtonsoft.Json;
 
 namespace DentalResearchApp.Controllers
 {

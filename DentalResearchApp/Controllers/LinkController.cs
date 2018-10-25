@@ -1,11 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
-using DentalResearchApp.Code.Impl;
 using DentalResearchApp.Models;
 using DentalResearchApp.Models.Context;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using MongoDB.Driver;
 
 namespace DentalResearchApp.Controllers
 {
@@ -53,9 +51,16 @@ namespace DentalResearchApp.Controllers
 
             var baseUrl = "https://" + host;
 
-            var manager = _context.ManagerFactory.CreateLinkManager();
+            var manager = _context.ManagerFactory.CreateSurveyLinkManager();
 
-            await manager.SendSurveyLink(model.SurveyName, model.ParticipantId, baseUrl);
+            await manager.SendLink(model.SurveyName, model.ParticipantEmail, model.ParticipantId, baseUrl);
+
+            return Json("Ok");
+        }
+
+        public async Task<JsonResult> SendSignupLink([FromBody] string emailToInvite)
+        {
+
 
             return Json("Ok");
         }
