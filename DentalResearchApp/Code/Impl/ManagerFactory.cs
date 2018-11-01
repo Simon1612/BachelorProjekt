@@ -24,9 +24,9 @@ namespace DentalResearchApp.Code.Impl
             return new SurveyLinkManager(_client, _linkDbName);
         }
 
-        public ISurveyLinkManager CreateSignupLinkManager()
+        public ISignupLinkManager CreateSignupLinkManager()
         {
-            return new SurveyLinkManager(_client, _linkDbName);
+            return new SignupLinkManager(_client, _linkDbName);
         }
 
         public ISurveyManager CreateSurveyManager()

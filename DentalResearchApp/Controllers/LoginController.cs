@@ -24,7 +24,7 @@ namespace DentalResearchApp.Controllers
         }
 
         [HttpGet("Signup")]
-        public IActionResult SignUp()
+        public async Task<IActionResult> SignUp(string Id)
         {
             var countryList = Countries.CountryList();
             var model = new SignUpModel
@@ -33,13 +33,21 @@ namespace DentalResearchApp.Controllers
                 Errors = false
             };
 
-            return View(model);
+            var manager = _context.ManagerFactory.CreateSignupLinkManager();
+            var linkModel = await manager.GetLink(Id);
+
+            if(linkModel != null)
+                return View(model);
+            else
+                return Unauthorized();
         }
 
         [HttpPost("CreateUser")]
         public async Task<IActionResult> CreateUser(SignUpModel signupModel)
         {
             var userManager = _context.ManagerFactory.CreateUserManager();
+            var signupLinkManager = _context.ManagerFactory.CreateSignupLinkManager();
+
             if (userManager.GetAllUsers().Result.Select(x => x.Email).Contains(signupModel.Email))
             {
                 signupModel.Errors = true;
@@ -64,6 +72,8 @@ namespace DentalResearchApp.Controllers
             var login = new UserCredentials() {UserName = signupModel.Email, Hash = hash, Salt = salt};
 
             await userManager.CreateUser(usermodel, login);
+
+            await signupLinkManager.DeleteLink(signupModel.LinkId);
 
             return RedirectToAction("Login");
         }
