@@ -18,7 +18,7 @@
         <h1 class="secondHeadline">Log in</h1>
         <form method="post" id="loginform">
             <input type="text" placeholder="Username" name="userName" class="inputField" id="userName" />
-            <input type="password" placeholder="Password" name="passWord" class="inputField" id="passWord" />
+            <input type="password" placeholder="Password" name="passWord" class="inputField" id="passWord" style="margin-left: 5px" />
             <br />
             <input type="submit" value="Sign in" form="loginform" style="margin-left: 140px; margin-top: 40px">
         </form>
@@ -36,7 +36,7 @@
                     data: JSON.stringify({ "username": $('#userName').val(), "password": $('#passWord').val() }),
                     processData: false,
                     success: function () {
-                        window.location.href = "survey";
+                        window.location.href = "HomePage";
                     },
                     error: function (jqXhr, textStatus, errorThrown) {
                         console.log(errorThrown);

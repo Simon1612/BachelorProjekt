@@ -20,7 +20,7 @@
             <hr/>
             <ul class="list-unstyled">
                 <li>
-                    @Html.ActionLink("Home", "Index", "Survey")
+                    @Html.ActionLink("Home", "HomePage", "HomePage")
                 </li>
             </ul>
             <hr/>
@@ -29,9 +29,9 @@
                     <a href="#surveySubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Surveys <span class="caret"></span></a>
                     <ul class="collapse list-unstyled" id="surveySubmenu">
                         <li>
-                            @Html.ActionLink("All Results", "SurveyResults", "Survey")
-                            @Html.ActionLink("Survey Editor", "Editor", "Editor")
+                            @Html.ActionLink("Survey Editor", "Index", "Survey")
                             @Html.ActionLink("Send Survey", "SendSurvey", "Link")
+                            @Html.ActionLink("All Results", "SurveyResults", "Survey")
                         </li>
                     </ul>
                 </li>
@@ -39,21 +39,21 @@
             <hr/>
             <ul class="list-unstyled">
                 <li>
-                    @Html.ActionLink("All Studies", "Studies", "Study")
+                    @Html.ActionLink("All Studies", "AllStudies", "Study")
                 </li>
                 <li>
-                    @Html.ActionLink("All Patients", "Patients", "Patient")
+                    @Html.ActionLink("All Patients", "AllPatients", "Patient")
                 </li>
             </ul>
             <hr/>
             <ul class="list-unstyled">
                 <li>
-                    @Html.ActionLink("Profile", "Profile", "User")
+                    @Html.ActionLink("Profile", "Profile", "Profile")
                 </li>
                 @if(Context.User.IsInRole("Administrator")) //Todo: User-Role skal findes, laver admin tjek for navbar
                 {
                 <li>
-                    @Html.ActionLink("Admin", "Admin", "User")
+                    @Html.ActionLink("Admin", "Admin", "Profile")
                 </li>
                 }
             </ul>
