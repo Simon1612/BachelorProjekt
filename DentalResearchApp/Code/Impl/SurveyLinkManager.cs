@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using DentalResearchApp.Code.Interfaces;
@@ -9,25 +8,25 @@ using MongoDB.Driver.Linq;
 
 namespace DentalResearchApp.Code.Impl
 {
-    public class LinkManager : ILinkManager
+    public class SurveyLinkManager : ISurveyLinkManager
     {
         private readonly IMongoDatabase _db;
 
-        public LinkManager(IMongoClient client, string databaseName)
+        public SurveyLinkManager(IMongoClient client, string databaseName)
         {
             _db = client.GetDatabase(databaseName);
         }
 
-        public async Task<SurveyLinkModel> GetSurveyLink(string linkId)
+        public async Task<SurveyLinkModel> GetLink(string linkId)
         {
             var collection = _db.GetCollection<SurveyLinkModel>("surveyLink_collection");
 
             return await collection.AsQueryable().FirstOrDefaultAsync(x => x.LinkId == linkId);
         }
 
-        public async Task SendSurveyLink(string surveyName, string participantId, string baseUrl)
+        public async Task SendLink(string surveyName, string participantEmail, string participantId, string baseUrl)
         {
-            var collection = _db.GetCollection<SurveyLinkModel>("surveyLink_collection");
+            var surveyCollection = _db.GetCollection<SurveyLinkModel>("surveyLink_collection");
 
             var linkId = Guid.NewGuid().ToString("N");
 
@@ -35,10 +34,11 @@ namespace DentalResearchApp.Code.Impl
             {
                 LinkId = linkId,
                 SurveyName = surveyName,
+                ParticipantEmail = participantEmail,
                 ParticipantId = participantId
             };
 
-            await collection.InsertOneAsync(link);
+            await surveyCollection.InsertOneAsync(link);
 
 
             //Send emails here?
@@ -46,9 +46,15 @@ namespace DentalResearchApp.Code.Impl
             var surveyLink = baseUrl + actionUrl + linkId;
 
             //TODO: Create and send email?
+            var mailHelper = new MailHelper();
+
+            var mailSubject = "Some not-so-random subject here";
+            var mailBody = $"Some text and then a link: {surveyLink}";
+
+            mailHelper.SendMail(link.ParticipantEmail, mailSubject, mailBody);
         }
 
-        public async Task DeleteSurveyLink(string linkId)
+        public async Task DeleteLink(string linkId)
         {
             var collection = _db.GetCollection<SurveyLinkModel>("surveyLink_collection");
 
@@ -64,7 +70,8 @@ namespace DentalResearchApp.Code.Impl
             {
                 LinkId = Guid.Empty.ToString(),
                 SurveyName = "IncomeSurvey",
-                ParticipantId = Guid.NewGuid().ToString()
+                ParticipantId = Guid.NewGuid().ToString(),
+                ParticipantEmail = DateTime.Now.ToString("fffffff") + "@fakemail.com"
             };
 
             collection.InsertOne(defaultLink);

@@ -1,10 +1,8 @@
-﻿using DentalResearchApp.Code.Impl;
-
-namespace DentalResearchApp.Code.Interfaces
+﻿namespace DentalResearchApp.Code.Interfaces
 {
     public interface IManagerFactory
     {
-        ILinkManager CreateLinkManager();
+        ISurveyLinkManager CreateSurveyLinkManager();
 
         ISurveyManager CreateSurveyManager();
 

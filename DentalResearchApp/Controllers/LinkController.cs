@@ -1,13 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
-using DentalResearchApp.Code.Impl;
 using DentalResearchApp.Models;
 using DentalResearchApp.Models.Context;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using MongoDB.Driver;
 
 namespace DentalResearchApp.Controllers
 {
@@ -25,18 +21,13 @@ namespace DentalResearchApp.Controllers
         public IActionResult SendSurvey()
         {
             var sendSurveyModel = new SendSurveyModel();
-            var studiesList = new List<string>() {"study 1", "study 2", "study 3", "study 4"};
-            var patientsList = new List<string>()
-            {
-                "Bob",
-                "Ole",
-                "Jens",
-                "Pia",
-                "Henning",
-                "Ham den underlige der altid sidder i hjørnet til møderne"
-            };
+            var studiesList = new List<string>();
+
+            var patientsList = new List<string>();
+
             var manager = _context.ManagerFactory.CreateSurveyManager();
             var surveyList = new List<string>();
+
             foreach (var survey in manager.GetAllSurveys().Result)
             {
                 surveyList.Add(survey.Key);
@@ -60,9 +51,16 @@ namespace DentalResearchApp.Controllers
 
             var baseUrl = "https://" + host;
 
-            var manager = _context.ManagerFactory.CreateLinkManager();
+            var manager = _context.ManagerFactory.CreateSurveyLinkManager();
 
-            await manager.SendSurveyLink(model.SurveyName, model.ParticipantId, baseUrl);
+            await manager.SendLink(model.SurveyName, model.ParticipantEmail, model.ParticipantId, baseUrl);
+
+            return Json("Ok");
+        }
+
+        public async Task<JsonResult> SendSignupLink([FromBody] string emailToInvite)
+        {
+
 
             return Json("Ok");
         }
