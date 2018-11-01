@@ -16,9 +16,9 @@ namespace DentalResearchApp.Code.Impl
         private readonly string _userDbName;
 
 
-        public ManagerFactory(string connectionString, string linkDbName, string surveyDbName, string userDbName)
+        public ManagerFactory(IMongoClient client, string linkDbName, string surveyDbName, string userDbName)
         {
-            _client = new MongoClient(connectionString);
+            _client = client;
             _linkDbName = linkDbName;
             _surveyDbName = surveyDbName;
             _userDbName = userDbName;

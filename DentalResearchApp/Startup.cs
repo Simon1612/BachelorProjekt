@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using MongoDB.Driver;
 
 namespace DentalResearchApp
 {
@@ -58,7 +59,8 @@ namespace DentalResearchApp
                 connectionString = Configuration.GetSection("MongoConnection:ConnectionString").Value;
             }
 
-            IContext context = new Context(connectionString, linkDbName, surveyDbName, userDbName);
+            var client = new MongoClient(connectionString);
+            IContext context = new Context(client, linkDbName, surveyDbName, userDbName);
 
             services.AddSingleton(context);
         }

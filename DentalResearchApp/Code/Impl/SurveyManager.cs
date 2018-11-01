@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using DentalResearchApp.Code.Interfaces;
 using DentalResearchApp.Models;
@@ -38,23 +39,24 @@ namespace DentalResearchApp.Code.Impl
 
             var survey = await coll.AsQueryable().FirstOrDefaultAsync(s => s.SurveyName == surveyName);
 
-            return new Dictionary<string, string> { { survey?.SurveyName, survey?.Json } };
+            return new Dictionary<string, string> { { survey.SurveyName, survey.Json } };
         }
 
 
         public async Task<Dictionary<string, string>> GetAllSurveys()
         {
             var coll = _db.GetCollection<Survey>("survey_collection");
+            
             var surveys = await coll.AsQueryable().ToListAsync();
 
-            Dictionary<string, string> surveysdDictionary = new Dictionary<string, string>();
+            Dictionary<string, string> surveysDictionary = new Dictionary<string, string>();
 
             foreach (var survey in surveys)
             {
-                surveysdDictionary[survey.SurveyName] = survey.Json;
+                surveysDictionary[survey.SurveyName] = survey.Json;
             }
 
-            return surveysdDictionary;
+            return surveysDictionary;
         }
 
         public async Task ChangeSurvey(ChangeSurveyModel model)

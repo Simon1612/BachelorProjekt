@@ -70,7 +70,7 @@ namespace IntegrationTests
 
             _testServer = new TestServer(builder);
             _mongoClient = new MongoClient(connString);
-            ManagerFactory = new ManagerFactory(connString, _linkDbName, _surveyDbName, _userDbName);
+            ManagerFactory = new ManagerFactory(_mongoClient, _linkDbName, _surveyDbName, _userDbName);
             HttpClient = new HttpClientWrapper(_testServer.CreateClient());
         }
 
