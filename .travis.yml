@@ -5,7 +5,4 @@ script:
 - dotnet restore
 - dotnet test UnitTests/UnitTests.csproj
 - dotnet test IntegrationTests/IntegrationTests.csproj
-# after_success:
-# - chmod +x push.sh
-# - ./push.sh
 solution: DentalResearchApp.sln

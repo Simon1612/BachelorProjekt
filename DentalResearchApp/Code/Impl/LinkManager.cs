@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using DentalResearchApp.Code.Interfaces;
 using DentalResearchApp.Models;
 using MongoDB.Driver;
 using MongoDB.Driver.Linq;
@@ -12,13 +13,9 @@ namespace DentalResearchApp.Code.Impl
     {
         private readonly IMongoDatabase _db;
 
-        public LinkManager()
+        public LinkManager(IMongoClient client, string databaseName)
         {
-            var client = new MongoClient("mongodb+srv://test:test@2018e21-surveydb-wtdmw.mongodb.net/test?retryWrites=true");
-            _db = client.GetDatabase("LinkDb");
-
-            //if (!_db.ListCollectionNames().Any())
-            //    SeedWithDefaultLinks();
+            _db = client.GetDatabase(databaseName);
         }
 
         public async Task<SurveyLinkModel> GetSurveyLink(string linkId)
