@@ -1,15 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Net;
-using System.Net.Http;
 using System.Security.Claims;
 using System.Threading.Tasks;
-using DentalResearchApp.Code.Impl;
 using DentalResearchApp.Models;
 using DentalResearchApp.Models.Context;
 using Microsoft.AspNetCore.Authentication;
-using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -79,8 +74,8 @@ namespace DentalResearchApp.Controllers
             await HttpContext.SignOutAsync();
             
             //Delete link from DB
-            var linkManager = _context.ManagerFactory.CreateLinkManager();
-            await linkManager.DeleteSurveyLink(linkId);
+            var linkManager = _context.ManagerFactory.CreateSurveyLinkManager();
+            await linkManager.DeleteLink(linkId);
 
 
             return Json("Ok");

@@ -15,6 +15,7 @@ namespace DentalResearchApp.Models
         public string Institution { get; set; }
         public List<string> Country { get; set; }
         public string Password { get; set; }
+        public string LinkId { get; set; }
         public bool Errors { get; set; }
     }
 }

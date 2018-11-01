@@ -1,11 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
-using DentalResearchApp.Code.Impl;
 using DentalResearchApp.Models;
 using DentalResearchApp.Models.Context;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using MongoDB.Driver;
 
 namespace DentalResearchApp.Controllers
 {
@@ -19,7 +17,7 @@ namespace DentalResearchApp.Controllers
             _context = context;
         }
 
-        [HttpGet("/SendSurvey")]
+        [HttpGet("SendSurvey")]
         public IActionResult SendSurvey()
         {
             var sendSurveyModel = new SendSurveyModel();
@@ -47,15 +45,28 @@ namespace DentalResearchApp.Controllers
         public async Task<JsonResult> SendSurveyLink([FromBody] SendSurveyLinkModel model)
         {
             var host = Request.Host.Host;
-
             if (host == "localhost")
                 host += ":" + Request.Host.Port;
-
             var baseUrl = "https://" + host;
 
-            var manager = _context.ManagerFactory.CreateLinkManager();
+            var manager = _context.ManagerFactory.CreateSurveyLinkManager();
 
-            await manager.SendSurveyLink(model.SurveyName, model.ParticipantId, baseUrl);
+            await manager.SendLink(model.SurveyName, model.ParticipantEmail, model.ParticipantId, baseUrl);
+
+            return Json("Ok");
+        }
+
+        [HttpPost("sendSignupLink")]
+        public async Task<JsonResult> SendSignupLink([FromBody] SendSignupLinkModel model)
+        {
+            var host = Request.Host.Host;
+            if (host == "localhost")
+                host += ":" + Request.Host.Port;
+            var baseUrl = "https://" + host;
+
+            var manager = _context.ManagerFactory.CreateSignupLinkManager();
+
+            await manager.SendLink(model.RecipiantEmail, baseUrl);
 
             return Json("Ok");
         }

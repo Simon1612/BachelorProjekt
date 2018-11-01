@@ -1,16 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Security.Claims;
 using System.Threading.Tasks;
-using DentalResearchApp.Code.Impl;
 using DentalResearchApp.Models;
 using DentalResearchApp.Models.Context;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Identity.UI.Pages.Internal.Account;
 using Microsoft.AspNetCore.Mvc;
-using MongoDB.Driver;
 
 namespace DentalResearchApp.Controllers
 {
@@ -31,8 +27,8 @@ namespace DentalResearchApp.Controllers
         {
             IActionResult response = Unauthorized();
 
-            var manager = _context.ManagerFactory.CreateLinkManager();
-            var link = await manager.GetSurveyLink(model.LinkId);
+            var manager = _context.ManagerFactory.CreateSurveyLinkManager();
+            var link = await manager.GetLink(model.LinkId);
 
             if (link != null) // if link is verified
             {
