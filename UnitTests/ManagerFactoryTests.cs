@@ -48,11 +48,11 @@ namespace UnitTests
 
             _factory = new ManagerFactory(client, "linkDbName", "surveyDbName", "userDbName");
 
-            var manager = _factory.CreateLinkManager();
+            var manager = _factory.CreateSurveyLinkManager();
 
             Assert.NotNull(manager);
-            Assert.IsAssignableFrom<ILinkManager>(manager);
-            Assert.IsType<LinkManager>(manager);
+            Assert.IsAssignableFrom<ISurveyLinkManager>(manager);
+            Assert.IsType<SurveyLinkManager>(manager);
         }
     }
 }
