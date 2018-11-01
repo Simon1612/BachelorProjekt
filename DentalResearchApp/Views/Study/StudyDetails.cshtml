@@ -1,0 +1,80 @@
+﻿@using DentalResearchApp.Models
+@model DentalResearchApp.Models.StudyModel
+@{
+    ViewBag.Title = "Study Details";
+    Layout = "~/Views/_Layout.cshtml";
+}
+
+<div class="modal-body">
+    <h1 class="secondHeadline" style="text-align: center">Study Details</h1>
+    <div>
+    <hr />
+    <ul class="list-unstyled" style="text-align: center">
+        <li class="col-lg-12 col-md-12 col-sm-12">
+            <div class="col-lg-2 col-md-2 col-sm-2">
+                @Html.Label("Study Name: ")
+            </div>
+            <div class="col-lg-10 col-md-10 col-sm-10" style="text-align: left">
+                @Html.DisplayFor(model => model.StudyName)
+            </div>
+        </li>
+        <li class="col-lg-12 col-md-12 col-sm-12">
+            <div class="col-lg-2 col-md-2 col-sm-2">
+                @Html.Label("Description: ")
+            </div>
+            <div class="col-lg-10 col-md-10 col-sm-10" style="text-align: left">
+                @Html.DisplayFor(model => model.StudyDescription)
+            </div>
+        </li>
+    </ul>
+    <hr/>
+        <div class="col-lg-12, col-md-12, col-xs-12">
+            <h1 class="secondHeadline" style="text-align: center">Patients</h1>
+            <hr />
+            <table class="customTable">
+                <thead>
+                <tr>
+                    <th class="customTh">Patient</th>
+                </tr>
+                </thead>
+                <tbody>
+                @foreach (var item in Model.Patients)
+                {
+                    <tr>
+                        <td class="customTd">
+                            @item.Id
+                        </td>
+                    </tr>
+                }
+                </tbody>
+            </table>
+        </div>
+        <hr/>
+        <div class="col-lg-12, col-md-12, col-xs-12">
+            <h1 class="secondHeadline" style="text-align: center">Surveys</h1>
+            <hr />
+            <table class="customTable">
+                <thead>
+                <tr>
+                    <th class="customTh">Survey Names</th>
+                </tr>
+                </thead>
+                <tbody>
+                @foreach (var item in Model.Surveys)
+                {
+                    <tr>
+                        <td class="customTd">
+                            @item.SurveyName
+                        </td>
+                    </tr>
+                }
+                </tbody>
+            </table>
+        </div>
+        <hr/>
+        <div style="text-align: center">
+            <input type="button" class="btn btn-primary" value="Create new Study" href="Study/CreateStudy"/>
+            <input type="button" class="btn btn-danger" value="Back to list" href="Study/AllStudiess"/>
+        </div>
+    </div>
+</div>
