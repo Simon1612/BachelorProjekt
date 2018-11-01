@@ -63,6 +63,8 @@ namespace DentalResearchApp.Code.Impl
         {
             var collection = _db.GetCollection<SurveyLinkModel>("surveyLink_collection");
 
+            var list = await collection.AsQueryable().ToListAsync();
+
             await collection.DeleteOneAsync(x => x.LinkId == linkId);
         }
 

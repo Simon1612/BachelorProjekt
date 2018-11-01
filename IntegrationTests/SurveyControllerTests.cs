@@ -4,6 +4,7 @@ using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
 using DentalResearchApp.Models;
+using IntegrationTests.Helpers;
 using Newtonsoft.Json;
 using Xunit;
 
@@ -11,7 +12,7 @@ namespace IntegrationTests
 {
     public class SurveyControllerTests : IClassFixture<TestFixture>, IDisposable
     {
-        private readonly TestFixture _fixture;
+        private readonly ITestFixture _fixture;
 
         public SurveyControllerTests(TestFixture fixture)
         {
