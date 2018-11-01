@@ -7,6 +7,6 @@ namespace DentalResearchApp.Code.Interfaces
     {
         Task DeleteLink(string linkId);
         Task<SignupLinkModel> GetLink(string linkId);
-        Task SendLink(string recipiantEmail, string recipiantId, string baseUrl);
+        Task SendLink(string recipiantEmail, string baseUrl);
     }
 }

@@ -1,13 +1,15 @@
-﻿using MongoDB.Bson;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
 
 namespace DentalResearchApp.Models
 {
-    public class SignupLinkModel
+    public class PatientModel
     {
         [BsonId]
         public ObjectId Id { get; set; }
-        public string RecipiantEmail { get; set; }
-        public string LinkId { get; set; }
     }
 }

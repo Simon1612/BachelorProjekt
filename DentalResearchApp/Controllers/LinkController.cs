@@ -17,7 +17,7 @@ namespace DentalResearchApp.Controllers
             _context = context;
         }
 
-        [HttpGet("/SendSurvey")]
+        [HttpGet("SendSurvey")]
         public IActionResult SendSurvey()
         {
             var sendSurveyModel = new SendSurveyModel();
@@ -45,10 +45,8 @@ namespace DentalResearchApp.Controllers
         public async Task<JsonResult> SendSurveyLink([FromBody] SendSurveyLinkModel model)
         {
             var host = Request.Host.Host;
-
             if (host == "localhost")
                 host += ":" + Request.Host.Port;
-
             var baseUrl = "https://" + host;
 
             var manager = _context.ManagerFactory.CreateSurveyLinkManager();
@@ -58,9 +56,17 @@ namespace DentalResearchApp.Controllers
             return Json("Ok");
         }
 
-        public async Task<JsonResult> SendSignupLink([FromBody] string emailToInvite)
+        [HttpPost("sendSignupLink")]
+        public async Task<JsonResult> SendSignupLink([FromBody] SendSignupLinkModel model)
         {
+            var host = Request.Host.Host;
+            if (host == "localhost")
+                host += ":" + Request.Host.Port;
+            var baseUrl = "https://" + host;
 
+            var manager = _context.ManagerFactory.CreateSignupLinkManager();
+
+            await manager.SendLink(model.RecipiantEmail, baseUrl);
 
             return Json("Ok");
         }
