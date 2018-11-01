@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using DentalResearchApp.Code.Interfaces;
-using Microsoft.CodeAnalysis.CSharp.Syntax;
+﻿using DentalResearchApp.Code.Interfaces;
 using MongoDB.Driver;
 
 namespace DentalResearchApp.Code.Impl
@@ -24,9 +19,14 @@ namespace DentalResearchApp.Code.Impl
             _userDbName = userDbName;
         }
 
-        public ILinkManager CreateLinkManager()
+        public ISurveyLinkManager CreateSurveyLinkManager()
         {
-            return new LinkManager(_client, _linkDbName);
+            return new SurveyLinkManager(_client, _linkDbName);
+        }
+
+        public ISignupLinkManager CreateSignupLinkManager()
+        {
+            return new SignupLinkManager(_client, _linkDbName);
         }
 
         public ISurveyManager CreateSurveyManager()
