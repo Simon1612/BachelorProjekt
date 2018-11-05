@@ -1,42 +1,41 @@
-﻿@using DentalResearchApp.Models
-@model DentalResearchApp.Models.StudyModel
-@{
-    ViewBag.Title = "Study Details";
-    Layout = "~/Views/_Layout.cshtml";
-}
+﻿@model DentalResearchApp.Models.StudyModel
 
+<div class="modal-header">
+    <link rel="stylesheet" href="/css/Index.css" type="text/css" />
+    <h2 class="modal-title secondHeadline" style="text-align: center">Study Details</h2>
+</div>
 <div class="modal-body">
-    <h1 class="secondHeadline" style="text-align: center">Study Details</h1>
-    <div>
-    <hr />
-    <ul class="list-unstyled" style="text-align: center">
-        <li class="col-lg-12 col-md-12 col-sm-12">
-            <div class="col-lg-2 col-md-2 col-sm-2">
-                @Html.Label("Study Name: ")
+    <ul class="list-unstyled">
+        <li class="row">
+            <div class="col-lg-1 col-md-1 col-sm-1" style="text-align: left"></div>
+            <div class="col-lg-3 col-md-3 col-sm-3" style="text-align: left">
+                @Html.Label("Study Name:")
             </div>
-            <div class="col-lg-10 col-md-10 col-sm-10" style="text-align: left">
+            <div class="col-lg-8 col-md-8 col-sm-8" style="text-align: left">
                 @Html.DisplayFor(model => model.StudyName)
             </div>
         </li>
-        <li class="col-lg-12 col-md-12 col-sm-12">
-            <div class="col-lg-2 col-md-2 col-sm-2">
-                @Html.Label("Description: ")
+        <li class="row">
+            <div class="col-lg-1 col-md-1 col-sm-1" style="text-align: left"></div>
+            <div class="col-lg-3 col-md-3 col-sm-3" style="text-align: left">
+                @Html.Label("Description:")
             </div>
-            <div class="col-lg-10 col-md-10 col-sm-10" style="text-align: left">
+            <div class="col-lg-8 col-md-8 col-sm-8" style="text-align: left">
                 @Html.DisplayFor(model => model.StudyDescription)
             </div>
         </li>
     </ul>
     <hr/>
-        <div class="col-lg-12, col-md-12, col-xs-12">
-            <h1 class="secondHeadline" style="text-align: center">Patients</h1>
-            <hr />
-            <table class="customTable">
-                <thead>
-                <tr>
-                    <th class="customTh">Patient</th>
-                </tr>
-                </thead>
+    <div class="row">
+        <h4 class="secondHeadline" style="font-weight:bold">Patients</h4>
+        <table class="customTable">
+            <thead>
+            <tr>
+                <th class="customTh">Patient</th>
+            </tr>
+            </thead>
+            @if (Model.Surveys.Any())
+            {
                 <tbody>
                 @foreach (var item in Model.Patients)
                 {
@@ -46,19 +45,20 @@
                         </td>
                     </tr>
                 }
-                </tbody>
-            </table>
-        </div>
-        <hr/>
-        <div class="col-lg-12, col-md-12, col-xs-12">
-            <h1 class="secondHeadline" style="text-align: center">Surveys</h1>
-            <hr />
-            <table class="customTable">
-                <thead>
-                <tr>
-                    <th class="customTh">Survey Names</th>
-                </tr>
-                </thead>
+                </tbody>}
+        </table>
+    </div> 
+    <hr/>
+    <div class="row">
+        <h3 class="secondHeadline" style="font-weight:bold">Surveys</h3>
+        <table class="customTable">
+            <thead>
+            <tr>
+                <th class="customTh">Survey Names</th>
+            </tr>
+            </thead>
+            @if (Model.Surveys.Any())
+            {
                 <tbody>
                 @foreach (var item in Model.Surveys)
                 {
@@ -69,12 +69,13 @@
                     </tr>
                 }
                 </tbody>
-            </table>
-        </div>
-        <hr/>
-        <div style="text-align: center">
-            <input type="button" class="btn btn-primary" value="Create new Study" href="Study/CreateStudy"/>
-            <input type="button" class="btn btn-danger" value="Back to list" href="Study/AllStudiess"/>
-        </div>
+            }
+        </table>
     </div>
 </div>
+<br/>
+<div class="modal-footer" style="text-align: center">
+    <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+    <input type="button" class="btn btn-success" value="Edit Study" href="Study/EditStudy"/>
+</div>
+<div class="clearfix"></div>
