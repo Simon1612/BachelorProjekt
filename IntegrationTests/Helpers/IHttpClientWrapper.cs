@@ -9,5 +9,7 @@ namespace IntegrationTests.Helpers
         Task<HttpResponseMessage> SendAsyncWithCookie(HttpRequestMessage request, string cookiePath);
         Task<HttpResponseMessage> PostAsync(string urlString, HttpContent content);
         Task<HttpResponseMessage> GetAsync(string urlString);
+        Task<HttpResponseMessage> SendAsync(HttpRequestMessage request);
+
     }
 }

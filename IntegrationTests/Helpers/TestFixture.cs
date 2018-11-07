@@ -7,7 +7,6 @@ using DentalResearchApp;
 using DentalResearchApp.Code.Impl;
 using DentalResearchApp.Code.Interfaces;
 using DentalResearchApp.Models;
-using IntegrationTests.Helpers;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.TestHost;
 using Microsoft.Extensions.Configuration;
@@ -15,9 +14,9 @@ using Mongo2Go;
 using MongoDB.Driver;
 using Newtonsoft.Json;
 
-namespace IntegrationTests
+namespace IntegrationTests.Helpers
 {
-    public class TestFixture : IDisposable
+    public class TestFixture : IDisposable, ITestFixture
     {
         private MongoDbRunner _dbRunner;
         private readonly TestServer _testServer;
@@ -57,14 +56,13 @@ namespace IntegrationTests
             var builder = new WebHostBuilder()
                 .UseEnvironment("IntegrationTest")
                 .ConfigureAppConfiguration((hostingContext, config) =>
-                    //config.AddJsonFile("appsettings.IntegrationTest.json", optional: false, reloadOnChange: true))
                     config.AddInMemoryCollection(dictionary))
                 .UseStartup<Startup>();
 
 
             _testServer = new TestServer(builder);
             _mongoClient = new MongoClient(connString);
-            ManagerFactory = new ManagerFactory(connString, _linkDbName, _surveyDbName, _userDbName);
+            ManagerFactory = new ManagerFactory(_mongoClient, _linkDbName, _surveyDbName, _userDbName);
             HttpClient = new HttpClientWrapper(_testServer.CreateClient());
         }
 
@@ -91,6 +89,34 @@ namespace IntegrationTests
                 throw new UnauthorizedAccessException("Unable to login with user");
         }
 
+        public async Task SignInAsVolunteer(string surveyName, string linkId, string participantEmail, string participantId)
+        {
+            var linkModel = new SurveyLinkModel()
+            {
+                LinkId = linkId,
+                SurveyName = surveyName,
+                ParticipantId = participantId,
+                ParticipantEmail = participantEmail
+            };
+
+            var manager = ManagerFactory.CreateSurveyLinkManager();
+            await manager.SaveSurveyLink(linkModel);
+
+
+            var verifyLinkIdModel = new VerifyLinkIdModel() { LinkId = linkId };
+            var content = JsonConvert.SerializeObject(verifyLinkIdModel);
+
+            var request = new HttpRequestMessage
+            {
+                Method = HttpMethod.Post,
+                RequestUri = new Uri("Cookie/VerifyLinkId", UriKind.Relative),
+                Content = new StringContent(content, Encoding.UTF8, "application/json")
+            };
+
+
+            var response = await HttpClient.SendAsync(request);
+            response.EnsureSuccessStatusCode();
+        }
 
         public async Task SignInAsResearcher()
         {
