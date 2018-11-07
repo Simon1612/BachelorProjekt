@@ -17,7 +17,7 @@
 </head>
 <body>
 <div class="col-lg-12, col-md-12, col-xs-12">
-<h1 class="secondHeadline" style="text-align: center">All Studies</h1>
+    <h1 class="secondHeadline" style="text-align: center">All Studies</h1>
     <hr />
     <div style="text-align: center">
         <input type="button" class="btn btn-success" onclick="" value="Create new Study"/>
@@ -34,12 +34,27 @@
         {
             <tr>
                 <td class="customTd">
-                    <a href="Studies?id=@item">@item</a>
+                    <a href="StudyDetails" data-studyId="@item" class="studyDetails-modal">@item</a>
+                    <!--Html.ActionLink(item, "StudyDetails", "Study", item, new {'data-target' = "#StudyDetailsModal"})-->
                 </td>
             </tr>
         }
         </tbody>
     </table>
+    <div class="modal fade text-center" id="StudyDetailsModal" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+            </div>
+        </div>
+    </div>
 </div>
+<script type="text/javascript">
+    $('.studyDetails-modal').on('click', function(e){
+        e.preventDefault();
+        var studyId = $(e.relatedTarget).data('studyId');
+
+        $('#StudyDetailsModal').modal('show').find('.modal-content').val(studyId).load($(this).attr('href'));
+    });
+</script>
 </body>
 </html>
