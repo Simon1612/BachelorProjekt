@@ -1,4 +1,4 @@
-﻿@using DentalResearchApp.Models
+﻿@*@using DentalResearchApp.Models
 @model DentalResearchApp.Models.StudyViewModel
 @{
     ViewBag.Title = "Edit Study";
@@ -88,10 +88,10 @@
                             <th class="customTh">@Html.Label("Surveys: ")</th>
                         </tr>
                     </thead>
-                    @if (Model.SurveysList.Any())
+                    @if (Model.SessionList.Any())
                     {
                         <tbody>
-                            @foreach (var item in Model.SurveysList)
+                            @foreach (var item in Model.SessionList)
                             {
                                 <tr>
                                     <td class="customTd">
@@ -109,13 +109,13 @@
                 @using (Html.BeginForm("AddSurvey", "Study", FormMethod.Post))
                 {
                     @Html.Hidden("Model", Model)
-                    @Html.ListBoxFor(x => x.SurveysList, Model.SurveysList)
+                    @Html.ListBoxFor(x => x.SelectedSession, Model.SessionList)
                     <button type="submit" class="btn btn-primary">Add new Survey</button>
                 }
             </li>
         </ul>
     </div>
 </body>
-</html>
+</html>*@
 
 

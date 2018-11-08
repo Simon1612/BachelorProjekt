@@ -49,22 +49,22 @@ namespace DentalResearchApp.Controllers
             return View(studyDetails);
         }
 
-        //Todo: Find ud af om dette skal bruges
-        [HttpGet("EditStudy")]
-        public ActionResult EditStudy()
-        {
+        ////Todo: Find ud af om dette skal bruges
+        //[HttpGet("EditStudy")]
+        //public ActionResult EditStudy()
+        //{
 
-            var study = new StudyViewModel()
-            {
-                StudyName = "A study of My Little Pony and their dental hygiene",
-                StudyDescription =
-                    "Never thought i would spent that much time inside a horses mouth when i studied as a dentist",
-                SurveysList = new SelectList(new List<Survey>()),
-                PatientsList = new SelectList(new List<PatientModel>())
-            };
-            //Todo: Populer modellen med de rigtige study Data
+        //    var study = new StudyViewModel()
+        //    {
+        //        StudyName = "A study of My Little Pony and their dental hygiene",
+        //        StudyDescription =
+        //            "Never thought i would spent that much time inside a horses mouth when i studied as a dentist",
+        //        SurveysList = new SelectList(new List<Survey>()),
+        //        PatientsList = new SelectList(new List<PatientModel>())
+        //    };
+        //    //Todo: Populer modellen med de rigtige study Data
 
-            return View(study);
-        }
+        //    return View(study);
+        //}
     }
 }
