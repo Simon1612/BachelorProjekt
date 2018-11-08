@@ -27,14 +27,14 @@
     </ul>
     <hr/>
     <div class="row">
-        <h4 class="secondHeadline" style="font-weight:bold">Patients</h4>
+        <h4 class="secondHeadline" style="font-weight:bold">Participants</h4>
         <table class="customTable">
             <thead>
             <tr>
-                <th class="customTh">Patient</th>
+                <th class="customTh">Participants</th>
             </tr>
             </thead>
-            @if (Model.Surveys.Any())
+            @if (Model.Patients.Any())
             {
                 <tbody>
                 @foreach (var item in Model.Patients)
@@ -47,24 +47,22 @@
                 }
                 </tbody>}
         </table>
-    </div> 
     <hr/>
-    <div class="row">
-        <h3 class="secondHeadline" style="font-weight:bold">Surveys</h3>
+        <h4 class="secondHeadline" style="font-weight:bold">Surveys</h4>
         <table class="customTable">
             <thead>
             <tr>
                 <th class="customTh">Survey Names</th>
             </tr>
             </thead>
-            @if (Model.Surveys.Any())
+            @if (Model.Sessions.Any())
             {
                 <tbody>
-                @foreach (var item in Model.Surveys)
+                @foreach (var item in Model.Sessions)
                 {
                     <tr>
                         <td class="customTd">
-                            @item.SurveyName
+                            @item.Id
                         </td>
                     </tr>
                 }
@@ -76,6 +74,5 @@
 <br/>
 <div class="modal-footer" style="text-align: center">
     <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
-    <input type="button" class="btn btn-success" value="Edit Study" href="Study/EditStudy"/>
 </div>
 <div class="clearfix"></div>

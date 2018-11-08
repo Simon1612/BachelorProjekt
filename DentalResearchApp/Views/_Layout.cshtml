@@ -1,4 +1,5 @@
-﻿@using Microsoft.AspNetCore.Rewrite.Internal.UrlActions
+﻿@using DentalResearchApp.Models
+@using Microsoft.AspNetCore.Rewrite.Internal.UrlActions
 <!DOCTYPE html>
 
 <html>
@@ -42,7 +43,7 @@
                     @Html.ActionLink("All Studies", "AllStudies", "Study")
                 </li>
                 <li>
-                    @Html.ActionLink("All Patients", "AllPatients", "Patient")
+                    @Html.ActionLink("Find Results", "FindResults", "Results")
                 </li>
             </ul>
             <hr/>
@@ -50,12 +51,6 @@
                 <li>
                     @Html.ActionLink("Profile", "Profile", "Profile")
                 </li>
-                @if(Context.User.IsInRole("Administrator")) //Todo: User-Role skal findes, laver admin tjek for navbar
-                {
-                <li>
-                    @Html.ActionLink("Admin", "Admin", "Profile")
-                </li>
-                }
             </ul>
         </nav>
         <div id="content" style="width:inherit; height:inherit">
