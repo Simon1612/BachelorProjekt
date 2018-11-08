@@ -13,6 +13,7 @@ using Xunit;
 
 namespace IntegrationTests
 {
+    [Collection("Sequential")]
     public class CookieControllerTests : IClassFixture<TestFixture>, IDisposable
     {
         private readonly ITestFixture _fixture;

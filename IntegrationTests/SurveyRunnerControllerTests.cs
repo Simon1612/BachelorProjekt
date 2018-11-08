@@ -11,6 +11,7 @@ using Xunit;
 
 namespace IntegrationTests
 {
+    [Collection("Sequential")]
     public class SurveyRunnerControllerTests : IClassFixture<TestFixture>, IDisposable
     {
         private readonly ITestFixture _fixture;
