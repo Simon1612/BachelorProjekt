@@ -1,5 +1,6 @@
 ﻿using DentalResearchApp.Code.Impl;
 using DentalResearchApp.Code.Interfaces;
+using MongoDB.Driver;
 
 namespace DentalResearchApp.Models.Context
 {
@@ -7,9 +8,9 @@ namespace DentalResearchApp.Models.Context
     {
         public IManagerFactory ManagerFactory { get; set; }
 
-        public Context(string connectionString, string linkDbName, string surveyDbName, string userDbName)
+        public Context(IMongoClient client, string linkDbName, string surveyDbName, string userDbName)
         {
-            ManagerFactory = new ManagerFactory(connectionString, linkDbName, surveyDbName, userDbName);
+            ManagerFactory = new ManagerFactory(client, linkDbName, surveyDbName, userDbName);
         }
     }
 }

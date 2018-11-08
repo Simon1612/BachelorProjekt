@@ -26,8 +26,6 @@ namespace DentalResearchApp.Code.Impl
 
         public async Task SendLink(string surveyName, string participantEmail, string participantId, string baseUrl)
         {
-            var surveyCollection = _db.GetCollection<SurveyLinkModel>("surveyLink_collection");
-
             var linkId = Guid.NewGuid().ToString("N");
 
             var link = new SurveyLinkModel()
@@ -38,7 +36,7 @@ namespace DentalResearchApp.Code.Impl
                 ParticipantId = participantId
             };
 
-            await surveyCollection.InsertOneAsync(link);
+            await SaveSurveyLink(link);
 
 
             //Send emails here?
@@ -54,9 +52,18 @@ namespace DentalResearchApp.Code.Impl
             mailHelper.SendMail(link.ParticipantEmail, mailSubject, mailBody);
         }
 
+        public async Task SaveSurveyLink(SurveyLinkModel surveyLink)
+        {
+            var surveyCollection = _db.GetCollection<SurveyLinkModel>("surveyLink_collection");
+
+            await surveyCollection.InsertOneAsync(surveyLink);
+        }
+
         public async Task DeleteLink(string linkId)
         {
             var collection = _db.GetCollection<SurveyLinkModel>("surveyLink_collection");
+
+            var list = await collection.AsQueryable().ToListAsync();
 
             await collection.DeleteOneAsync(x => x.LinkId == linkId);
         }

@@ -3,6 +3,7 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Identity.UI.Pages.Internal.Account;
 using Microsoft.Net.Http.Headers;
 
 namespace IntegrationTests.Helpers
@@ -30,6 +31,17 @@ namespace IntegrationTests.Helpers
 
             return response;
         }
+
+        public async Task<HttpResponseMessage> SendAsync(HttpRequestMessage request)
+        {
+            var response = await _client.SendAsync(request);
+
+            GetCookiesFromHeader(response);
+
+            return response;
+        }
+
+
 
         public async Task<HttpResponseMessage> PostAsync(string urlString, HttpContent content)
         {
