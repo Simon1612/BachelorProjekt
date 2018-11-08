@@ -12,6 +12,10 @@ section {
   margin: 1em 2em;
 }
 
+.row {
+    grid-template-rows: 3000;
+}
+
 .survey-page-header,
 .survey-page-header .sv_main {
   background-color: #e7e7e7;

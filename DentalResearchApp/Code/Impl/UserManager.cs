@@ -37,8 +37,17 @@ namespace DentalResearchApp.Code.Impl
             return user;
         }
 
+        public async Task UpdateUserCredentials(UserCredentials model)
+        {
+            var credsColl = _db.GetCollection<UserCredentials>("credentials_collection");
 
-        private async Task<UserModel> GetUserModel(string eMail)
+            var update = Builders<UserCredentials>.Update.Set(x => x.Hash, model.Hash).Set(x => x.Salt, model.Salt);
+
+            await credsColl.UpdateOneAsync(x => x.UserName == model.UserName, update);
+        }
+
+
+        public async Task<UserModel> GetUserModel(string eMail)
         {
             var userColl = _db.GetCollection<UserModel>("user_collection");
 
