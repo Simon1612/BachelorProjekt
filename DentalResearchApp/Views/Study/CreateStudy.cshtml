@@ -1,0 +1,60 @@
+﻿@*@model DentalResearchApp.Models.StudyViewModel
+    @{
+        ViewBag.Title = "Create Study";
+    }
+
+    <div class="modal-header">
+        <link rel="stylesheet" href="/css/Index.css" type="text/css" />
+        <h2 class="modal-title secondHeadline" style="text-align: center">Create Study</h2>
+    </div>
+    <div class="modal-body">
+        @using(Html.BeginForm("CreateStudy", "Study", FormMethod.Post)) {
+        <ul class="list-unstyled">
+            <li class="row">
+                <div class="col-lg-1 col-md-1 col-sm-1" style="text-align: left"></div>
+                <div class="col-lg-3 col-md-3 col-sm-3" style="text-align: left">
+                    @Html.Label("Study Name:")
+                </div>
+                <div class="col-lg-8 col-md-8 col-sm-8" style="text-align: left">
+                    @Html.TextBoxFor(x => x.StudyName, new { @class = "text", required=true, maxlength = "200", style="width: 350px"})
+                </div>
+            </li>
+            <hr />
+            <li class="row">
+                <div class="col-lg-1 col-md-1 col-sm-1" style="text-align: left"></div>
+                <div class="col-lg-3 col-md-3 col-sm-3" style="text-align: left">
+                    @Html.Label("Study Description:")
+                </div>
+                <div class="col-lg-8 col-md-8 col-sm-8" style="text-align: left">
+                    @Html.TextAreaFor(model => model.StudyDescription, new {@class = "text", maxlength = "500", style="width: 350px"})
+                </div>
+            </li>
+            <hr />
+            <li class="row">
+                <div class="col-lg-1 col-md-1 col-sm-1" style="text-align: left"></div>
+                <div class="col-lg-3 col-md-3 col-sm-3" style="text-align: left">
+                    @Html.Label("Select Patients:")
+                </div>
+                <div class="col-lg-8 col-md-8 col-sm-8" style="text-align: left">
+                    @Html.ListBoxFor(x => x.SelectedPatients, Model.PatientsList, new {style = "width: 350px" })
+                </div>
+            </li>
+            <hr />
+            <li class="row">
+                <div class="col-lg-1 col-md-1 col-sm-1" style="text-align: left"></div>
+                <div class="col-lg-3 col-md-3 col-sm-3" style="text-align: left">
+                    @Html.Label("Select Surveys:")
+                </div>
+                <div class="col-lg-8 col-md-8 col-sm-8" style="text-align: left">
+                    @Html.ListBoxFor(x => x.SelectedSession, new MultiSelectList(Model.SessionList), new {style = "width: 350px"}) <!--Tilføj property så man kan vælge flere surveys-->
+                </div>
+            </li>
+        </ul>
+        <hr/>
+            <input type="submit" class="btn btn-success" value="Create Study" id="SubmitStudyBtn"/>
+            <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+        }
+    </div>
+    <br />
+    <div class="modal-footer clearfix">
+    </div>*@

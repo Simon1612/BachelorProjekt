@@ -1,0 +1,121 @@
+﻿@*@using DentalResearchApp.Models
+@model DentalResearchApp.Models.StudyViewModel
+@{
+    ViewBag.Title = "Edit Study";
+    Layout = "~/Views/_Layout.cshtml";
+}
+
+<html>
+<head>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="../css/3rdParty/bootstrap.min.css" />
+    <script type="text/javascript" src="../js/3rdParty/jquery.min.js"></script>
+    <script src="../js/3rdParty/bootstrap.min.js"></script>
+
+    <link rel="stylesheet" href="/css/Index.css" type="text/css" />
+    <title>Dental Research App - Edit Study</title>
+</head>
+<body>
+    <h1 class="secondHeadline" style="text-align: center">Edit Study</h1>
+    <div style="text-align: center">
+        <hr />
+        <ul class="list-unstyled" style="text-align: center">
+            @using (Html.BeginForm("UpdateStudy", "Study", FormMethod.Post))
+            {
+                <li class="row">
+                    <div class="col-lg-12 col-md-12 col-sm-12" style="text-align: center">
+                        @Html.Label("Study Name: ")
+                    </div>
+                    <div class="col-lg-12 col-md-12 col-sm-12" style="text-align: center">
+                        @Html.TextBoxFor(model => model.StudyName, new { @placeholder = Model.StudyName, maxlength = "50", style = "width:500px" })
+                    </div>
+                </li>
+                <hr />
+                <li class="row">
+                    <div class="col-lg-12 col-md-12 col-sm-12" style="text-align: center">
+                        @Html.Label("Study Description")
+                    </div>
+                    <div class="col-lg-12 col-md-12 col-sm-12" style="text-align: center">
+                        @Html.TextAreaFor(model => model.StudyDescription, new { @placeholder = Model.StudyDescription, maxlength = "200", style = "width:500px" })
+                    </div>
+                </li>
+                <br/>
+                <li clas="row">
+                    <div class="col-lg-12 col-md-12 col-sm-12" style="text-align: center">
+                        <input type="submit" class="btn btn-success" value="Save Changes"/> <!--Todo: Implementer Save Changes metode-->
+                    </div>
+                </li>
+            }
+            <br/>
+            <br/>
+            <hr />
+            <li class="row">
+                <table class="customTable">
+                    <thead>
+                        <tr>
+                            <th class="customTh">@Html.Label("Patients: ")</th>
+                        </tr>
+                    </thead>
+                    @if (Model.PatientsList.Any())
+                    {
+                        <tbody>
+                            @foreach (var item in Model.PatientsList)
+                            {
+                                <tr>
+                                    <td class="customTd">
+                                        @item.Value
+                                    </td>
+                                    <td>
+                                        <button class="btn btn-danger">Remove Patient</button> <!--Todo: Tilføj Remove Patient funktionalitet og kald save changes efter-->
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    }
+                </table>
+                <br />
+                @using (Html.BeginForm("AddPatient", "Study", FormMethod.Post))
+                {
+                    @Html.TextBox("Patient Id")
+                    <button type="submit" class="btn btn-primary">Add new Patient</button>
+                }
+            </li>
+            <hr />
+            <li class="row">
+                <table class="customTable">
+                    <thead>
+                        <tr>
+                            <th class="customTh">@Html.Label("Surveys: ")</th>
+                        </tr>
+                    </thead>
+                    @if (Model.SessionList.Any())
+                    {
+                        <tbody>
+                            @foreach (var item in Model.SessionList)
+                            {
+                                <tr>
+                                    <td class="customTd">
+                                        @item.Value.SingleOrDefault()
+                                    </td>
+                                    <td>
+                                        <button class="btn btn-danger">Remove Patient</button> <!--Todo: Tilføj Remove Patient funktionalitet og kald save changes efter-->
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    }
+                </table>
+                <br />
+                @using (Html.BeginForm("AddSurvey", "Study", FormMethod.Post))
+                {
+                    @Html.Hidden("Model", Model)
+                    @Html.ListBoxFor(x => x.SelectedSession, Model.SessionList)
+                    <button type="submit" class="btn btn-primary">Add new Survey</button>
+                }
+            </li>
+        </ul>
+    </div>
+</body>
+</html>*@
+
+
