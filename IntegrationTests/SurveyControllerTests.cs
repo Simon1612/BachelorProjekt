@@ -10,6 +10,7 @@ using Xunit;
 
 namespace IntegrationTests
 {
+    [Collection("Sequential")]
     public class SurveyControllerTests : IClassFixture<TestFixture>, IDisposable
     {
         private readonly ITestFixture _fixture;
