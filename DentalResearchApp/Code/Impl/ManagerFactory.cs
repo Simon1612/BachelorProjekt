@@ -9,14 +9,16 @@ namespace DentalResearchApp.Code.Impl
         private readonly string _linkDbName;
         private readonly string _surveyDbName;
         private readonly string _userDbName;
+        private readonly string _sessionDbName;
 
 
-        public ManagerFactory(IMongoClient client, string linkDbName, string surveyDbName, string userDbName)
+        public ManagerFactory(IMongoClient client, string linkDbName, string surveyDbName, string userDbName, string sessionDbName)
         {
             _client = client;
             _linkDbName = linkDbName;
             _surveyDbName = surveyDbName;
             _userDbName = userDbName;
+            _sessionDbName = sessionDbName;
         }
 
         public ISurveyLinkManager CreateSurveyLinkManager()
@@ -39,5 +41,9 @@ namespace DentalResearchApp.Code.Impl
             return new UserManager(_client, _userDbName);
         }
 
+        public ISessionManager CreateSessionManager()
+        {
+            return new SessionManager(_client, _sessionDbName);
+        }
     }
 }

@@ -18,7 +18,7 @@ namespace UnitTests
         {
             var client = Substitute.For<IMongoClient>();
 
-            _factory = new ManagerFactory(client, "linkDbName", "surveyDbName", "userDbName");
+            _factory = new ManagerFactory(client, "linkDbName", "surveyDbName", "userDbName", "sessionDbName");
 
             var manager = _factory.CreateUserManager();
 
@@ -32,7 +32,7 @@ namespace UnitTests
         {
             var client = Substitute.For<IMongoClient>();
 
-            _factory = new ManagerFactory(client, "linkDbName", "surveyDbName", "userDbName");
+            _factory = new ManagerFactory(client, "linkDbName", "surveyDbName", "userDbName", "sessionDbName");
 
             var manager = _factory.CreateSurveyManager();
 
@@ -46,7 +46,7 @@ namespace UnitTests
         {
             var client = Substitute.For<IMongoClient>();
 
-            _factory = new ManagerFactory(client, "linkDbName", "surveyDbName", "userDbName");
+            _factory = new ManagerFactory(client, "linkDbName", "surveyDbName", "userDbName", "sessionDbName");
 
             var manager = _factory.CreateSurveyLinkManager();
 

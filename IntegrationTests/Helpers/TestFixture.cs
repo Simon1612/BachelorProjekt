@@ -30,6 +30,8 @@ namespace IntegrationTests.Helpers
         private readonly string _userDbName;
         private readonly string _surveyDbName;
         private readonly string _linkDbName;
+        private readonly string _sessionDbName;
+
 
 
         public TestFixture()
@@ -41,6 +43,7 @@ namespace IntegrationTests.Helpers
             _userDbName = "testUserDb";
             _surveyDbName = "testSurveyDb";
             _linkDbName = "testLinkDb";
+            _sessionDbName = "testSessionDb";
 
 
             var dictionary = new Dictionary<string, string>
@@ -48,6 +51,7 @@ namespace IntegrationTests.Helpers
                 ["UserDbName"] = _userDbName,
                 ["SurveyDbName"] = _surveyDbName,
                 ["LinkDbName"] = _linkDbName,
+                ["SessionDbName"] = _sessionDbName,
                 ["ConnectionString"] = connString
             };
 
@@ -62,14 +66,14 @@ namespace IntegrationTests.Helpers
 
             _testServer = new TestServer(builder);
             _mongoClient = new MongoClient(connString);
-            ManagerFactory = new ManagerFactory(_mongoClient, _linkDbName, _surveyDbName, _userDbName);
+            ManagerFactory = new ManagerFactory(_mongoClient, _linkDbName, _surveyDbName, _userDbName, _sessionDbName);
             HttpClient = new HttpClientWrapper(_testServer.CreateClient());
         }
 
 
         public void DropDatabases()
         {
-            var databaseNames = new List<string>() { _userDbName, _surveyDbName, _linkDbName };
+            var databaseNames = new List<string>() { _userDbName, _surveyDbName, _linkDbName, _sessionDbName };
 
             Parallel.ForEach(databaseNames, name => { _mongoClient.DropDatabaseAsync(name); });
         }

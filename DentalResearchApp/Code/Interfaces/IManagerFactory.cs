@@ -9,5 +9,7 @@
         ISurveyManager CreateSurveyManager();
 
         IUserManager CreateUserManager();
+
+        ISessionManager CreateSessionManager();
     }
 }

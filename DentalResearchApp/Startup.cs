@@ -40,6 +40,7 @@ namespace DentalResearchApp
             string linkDbName;
             string surveyDbName;
             string userDbName;
+            string sessionDbName;
             string connectionString;
 
             if (Environment.IsEnvironment("IntegrationTest"))
@@ -47,6 +48,7 @@ namespace DentalResearchApp
                 linkDbName = Configuration.GetSection("LinkDbName").Value;
                 surveyDbName = Configuration.GetSection("SurveyDbName").Value;
                 userDbName = Configuration.GetSection("UserDbName").Value;
+                sessionDbName = Configuration.GetSection("SessionDbName").Value;
                 connectionString = Configuration.GetSection("ConnectionString").Value;
             }
             else
@@ -54,11 +56,12 @@ namespace DentalResearchApp
                 linkDbName = Configuration.GetSection("MongoConnection:LinkDbName").Value;
                 surveyDbName = Configuration.GetSection("MongoConnection:SurveyDbName").Value;
                 userDbName = Configuration.GetSection("MongoConnection:UserDbName").Value;
+                sessionDbName = Configuration.GetSection("MongoConnection:SessionDbName").Value;
                 connectionString = Configuration.GetSection("MongoConnection:ConnectionString").Value;
             }
 
             var client = new MongoClient(connectionString);
-            IContext context = new Context(client, linkDbName, surveyDbName, userDbName);
+            IContext context = new Context(client, linkDbName, surveyDbName, userDbName, sessionDbName);
 
             services.AddSingleton(context);
         }
