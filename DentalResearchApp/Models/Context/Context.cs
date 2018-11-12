@@ -8,9 +8,9 @@ namespace DentalResearchApp.Models.Context
     {
         public IManagerFactory ManagerFactory { get; set; }
 
-        public Context(IMongoClient client, string linkDbName, string surveyDbName, string userDbName)
+        public Context(IMongoClient client, string linkDbName, string surveyDbName, string userDbName, string sessionDbName)
         {
-            ManagerFactory = new ManagerFactory(client, linkDbName, surveyDbName, userDbName);
+            ManagerFactory = new ManagerFactory(client, linkDbName, surveyDbName, userDbName, sessionDbName);
         }
     }
 }

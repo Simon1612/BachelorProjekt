@@ -27,48 +27,53 @@
     </ul>
     <hr/>
     <div class="row">
-        <h4 class="secondHeadline" style="font-weight:bold">Participants</h4>
-        <table class="customTable">
-            <thead>
-            <tr>
-                <th class="customTh">Participants</th>
-            </tr>
-            </thead>
-            @if (Model.Patients.Any())
-            {
-                <tbody>
-                @foreach (var item in Model.Patients)
+        <div class="col-lg-6 col-md-6 col-sm-6">
+            <h4 class="secondHeadline" style="font-weight: bold">Participants</h4>
+            <table class="customTable">
+                <thead>
+                <tr>
+                    <th class="customTh">Participants</th>
+                </tr>
+                </thead>
+                @if (Model.Patients.Any())
                 {
-                    <tr>
-                        <td class="customTd">
-                            @item.Id
-                        </td>
-                    </tr>
-                }
-                </tbody>}
-        </table>
-    <hr/>
-        <h4 class="secondHeadline" style="font-weight:bold">Surveys</h4>
-        <table class="customTable">
-            <thead>
-            <tr>
-                <th class="customTh">Survey Names</th>
-            </tr>
-            </thead>
-            @if (Model.Sessions.Any())
-            {
-                <tbody>
-                @foreach (var item in Model.Sessions)
+                    <tbody>
+                    @foreach (var item in Model.Patients)
+                    {
+                        <tr>
+                            <td class="customTd" id="patientId">
+                                @item.Id
+                            </td>
+                        </tr>
+                    }
+                    </tbody>}
+            </table>
+        </div>
+        <div class="col-lg-6 col-md-6 col-sm-6">
+            <h4 class="secondHeadline" style="font-weight: bold">Sessions</h4>
+            <table class="customTable">
+                <thead>
+                <tr>
+                    <th class="customTh">Session Names</th>
+                </tr>
+                </thead>
+                @if (Model.Sessions.Any())
                 {
-                    <tr>
-                        <td class="customTd">
-                            @item.Id
-                        </td>
-                    </tr>
-                }
-                </tbody>
-            }
-        </table>
+                    <tbody>
+                    @foreach (var item in Model.Sessions)
+                    {
+                        <tr>
+                            <td class="customTd">
+                                @Html.ActionLink(item,"SessionDetails","Session", new {studyId = Model.Id, sessionName = item, studyName = Model.StudyName}, null)
+                            </td>
+                        </tr>
+                    }
+                    </tbody>
+                } 
+            </table>
+            <br/>
+            @Html.ActionLink("Create new Session", "CreateSession", "Session", new {studyId = Model.Id, studyName = Model.StudyName}, new {@class="btn-sm btn-success"})
+        </div>
     </div>
 </div>
 <br/>
