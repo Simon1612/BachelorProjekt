@@ -7,7 +7,7 @@ namespace DentalResearchApp.Code.Impl
     {
         //TODO: Change to AU's mailserver.
         private string smtpServer = "smtp.gmail.com";
-        private int sslPort = 465;
+        //private int sslPort = 465;
         private int tlsPort = 587;
         private SmtpClient client;
 
