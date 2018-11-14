@@ -39,5 +39,10 @@ namespace DentalResearchApp.Code.Impl
             return new UserManager(_client, _userDbName);
         }
 
+        public IExternalDbManager CreateExternalDbManager()
+        {
+            return new ExternalDbManager();
+        }
+
     }
 }
