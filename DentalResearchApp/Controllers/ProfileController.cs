@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using DentalResearchApp.Code.Impl;
@@ -28,7 +26,7 @@ namespace DentalResearchApp.Controllers
 
             var manager = _context.ManagerFactory.CreateUserManager();
             var user = await manager.GetUserModel(email);
-            
+
 
             return View(user);
         }

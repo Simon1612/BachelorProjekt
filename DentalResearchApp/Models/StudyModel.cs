@@ -14,6 +14,6 @@ namespace DentalResearchApp.Models
         public string StudyName { get; set; }
         public string StudyDescription { get; set; }
         public List<PatientModel> Patients { get; set; }
-        public List<SessionModel> Sessions { get; set; }
+        public List<string> Sessions { get; set; }
     }
 }

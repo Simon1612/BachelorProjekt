@@ -13,5 +13,7 @@ namespace DentalResearchApp.Code.Interfaces
         IUserManager CreateUserManager();
 
         IExternalDbManager CreateExternalDbManager();
+
+        ISessionManager CreateSessionManager();
     }
 }

@@ -36,13 +36,14 @@ namespace DentalResearchApp.Controllers
         [HttpGet("StudyDetails")]
         public ActionResult StudyDetails(string id)
         {
-
+            var manager = _context.ManagerFactory.CreateSessionManager();
+            var sessions = manager.GetAllSessionsForStudy(id);
             var studyDetails = new StudyModel()
             {
                 StudyName = "A study of My Little Pony and their dental hygiene",
                 StudyDescription =
                     "Never thought i would spent that much time inside a horses mouth when i studied as a dentist",
-                Sessions = new List<SessionModel>(),
+                Sessions = sessions,
                 Patients = new List<PatientModel>()
             };
             //Todo: Populer modellen med de rigtige study Data
