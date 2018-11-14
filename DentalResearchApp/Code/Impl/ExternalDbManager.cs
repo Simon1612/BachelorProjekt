@@ -56,13 +56,13 @@ namespace DentalResearchApp.Code.Impl
             }
         }
 
-        public List<string> GetAllStudyNames()
+        public List<StudyListModel> GetAllStudyListModels()
         {
             using (var db = GetMySqlConnection())
             {
-                var query = "SELECT Name FROM bachelordb.study";
+                var query = "SELECT Name AS StudyName, id_study AS StudyId FROM bachelordb.study";
 
-                var result = db.Query<string>(query).ToList();
+                var result = db.Query<StudyListModel>(query).ToList();
 
                 return result;
             }

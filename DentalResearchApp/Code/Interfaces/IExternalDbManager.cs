@@ -5,7 +5,7 @@ namespace DentalResearchApp.Code.Interfaces
 {
     public interface IExternalDbManager
     {
-        List<string> GetAllStudyNames();
+        List<StudyListModel> GetAllStudyListModels();
         List<int> GetParticipantIds(int studyId);
         Study GetStudy(int studyId);
         List<string> GetParticipantEmails(int studyId);

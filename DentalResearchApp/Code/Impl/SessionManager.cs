@@ -44,7 +44,7 @@ namespace DentalResearchApp.Code.Impl
             await studySessionCollection.InsertOneAsync(studySession);
         }
 
-        public async Task<StudySessionModel> GetStudySession(string studyId, string sessionName)
+        public async Task<StudySessionModel> GetStudySession(int studyId, string sessionName)
         {
             var coll = _db.GetCollection<StudySessionModel>("study_session_collection");
 
@@ -53,7 +53,7 @@ namespace DentalResearchApp.Code.Impl
             return session;
         }
 
-        public List<string> GetAllSessionsForStudy(string studyId)
+        public List<string> GetAllSessionsForStudy(int studyId)
         {
             var coll = _db.GetCollection<StudySessionModel>("study_session_collection");
             var sessions = coll.AsQueryable().Where(x => x.StudyId.Equals(studyId)).Select(y => y.SessionName).ToList();

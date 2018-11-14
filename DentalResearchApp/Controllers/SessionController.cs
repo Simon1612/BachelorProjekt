@@ -14,7 +14,7 @@ namespace DentalResearchApp.Controllers
         }
 
         [HttpGet("SessionDetails")]
-        public IActionResult SessionDetails(string studyId, string sessionName, string studyName)
+        public IActionResult SessionDetails(int studyId, string sessionName, string studyName)
         {
             var manager = _context.ManagerFactory.CreateSessionManager();
             var sessionModel = manager.GetStudySession(studyId, sessionName).Result;
@@ -25,7 +25,7 @@ namespace DentalResearchApp.Controllers
         }
 
         [HttpGet("CreateSession")]
-        public IActionResult CreateSession(string studyId, string studyName)
+        public IActionResult CreateSession(int studyId, string studyName)
         {
             var sessionModel = new StudySessionModel {StudyId = studyId};
             ViewBag.studyName = studyName;

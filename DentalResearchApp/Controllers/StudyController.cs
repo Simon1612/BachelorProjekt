@@ -24,30 +24,45 @@ namespace DentalResearchApp.Controllers
         [HttpGet("AllStudies")]
         public ActionResult AllStudies()
         {
-            var allStudiesModel = new AllStudiesViewModel()
-            {
-                AllStudyNames = new List<string>() { "My Little first Study" }
-            };
-            //Todo: Populer modellen med de rigtige study names
+            var manager = _context.ManagerFactory.CreateExternalDbManager();
 
-            return View(allStudiesModel);
+            var studies = new AllStudiesViewModel{AllStudies = manager.GetAllStudyListModels()};
+
+            return View(studies);
         }
 
         [HttpGet("StudyDetails")]
-        public ActionResult StudyDetails(string id)
+        public ActionResult StudyDetails(int id)
         {
-            var manager = _context.ManagerFactory.CreateSessionManager();
-            var sessions = manager.GetAllSessionsForStudy(id);
-            var studyDetails = new StudyModel()
+            var sessionManager = _context.ManagerFactory.CreateSessionManager();
+            var extManager = _context.ManagerFactory.CreateExternalDbManager();
+            var participants = extManager.GetParticipantIds(id);
+
+
+
+            var sessions = sessionManager.GetAllSessionsForStudy(id);
+            var study = extManager.GetStudy(id);
+
+            var viewModel = new StudyDetailsViewModel
             {
-                StudyName = "A study of My Little Pony and their dental hygiene",
-                StudyDescription =
-                    "Never thought i would spent that much time inside a horses mouth when i studied as a dentist",
-                Sessions = sessions,
-                Patients = new List<PatientModel>()
+                StudyId = study.StudyId,
+                StudyDescription = study.Description,
+                StudyName = study.StudyName,
+                Participants = participants,
+                Sessions = sessions
             };
+
+
+            //var studyDetails = new StudyModel()
+            //{
+            //    StudyName = "A study of My Little Pony and their dental hygiene",
+            //    StudyDescription =
+            //        "Never thought i would spent that much time inside a horses mouth when i studied as a dentist",
+            //    Sessions = sessions,
+            //    Patients = new List<PatientModel>()
+            //};
             //Todo: Populer modellen med de rigtige study Data
-            return View(studyDetails);
+            return View(viewModel);
         }
 
         ////Todo: Find ud af om dette skal bruges
