@@ -12,7 +12,7 @@ namespace DentalResearchApp.Code.Impl
 {
     public class ExternalDbManager : IExternalDbManager
     {
-
+         
         public List<int> GetParticipantIds(int studyId)
         {
             using (var db = GetMySqlConnection())
