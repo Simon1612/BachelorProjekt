@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using DentalResearchApp.Models;
@@ -42,17 +41,26 @@ namespace DentalResearchApp.Controllers
                 })
                 .ToList();
 
-            var sessionModel = new StudySessionModel {StudyId = studyId, AllSurveys = allSurveys};
+            var sessionModel = new StudySessionViewModel {StudyId = studyId, AllSurveys = allSurveys};
             ViewBag.studyName = studyName;
 
             return View(sessionModel);
         }
 
         [HttpPost("CreateSession")]
-        public IActionResult CreateSession(StudySessionModel sessionModel)
+        public IActionResult CreateSession(StudySessionViewModel sessionModel)
         {
             var manager = _context.ManagerFactory.CreateSessionManager();
-            manager.CreateSession(sessionModel);
+
+            var studySessionModel = new StudySessionModel()
+            {
+                SessionName = sessionModel.SessionName,
+                StudyId = sessionModel.StudyId,
+                Participants = sessionModel.SelectedParticipants.ToList(),
+                Surveys = sessionModel.SelectedSurveys.ToList()
+
+            };
+            manager.CreateSession(studySessionModel);
 
             return RedirectToAction("AllStudies","Study");
         }
@@ -61,6 +69,13 @@ namespace DentalResearchApp.Controllers
         {
             var manager = _context.ManagerFactory.CreateSurveyManager();
             return Task.Run(() => manager.GetAllNames());
+        }
+
+
+        public Task<List<string>> GetAllParticipants(int studyId)
+        {
+            var manager = _context.ManagerFactory.CreateExternalDbManager();
+            return Task.Run(() => manager.GetParticipantIds(studyId));
         }
     }
 }
