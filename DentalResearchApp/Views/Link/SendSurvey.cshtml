@@ -21,25 +21,34 @@
     <br/>
     @using (Html.BeginForm("SendSurveyLink", "Link", FormMethod.Post))
     {
-        <div style="text-align: center">
-            <div>
+        <div style="text-align: center" class="form-group">
+            <div class="col-lg-1 col-md-1 col-sm-1" style="text-align: left"></div>
+            <div class="col-lg-3 col-md-3 col-sm-3" style="text-align: left">
                 @Html.LabelFor(x => x.Studies, "Select a Study: ")
-                @Html.DropDownListFor(x => x.Studies, new SelectList(Model.Studies), new { @class = "inputField", @id = "studies", @required = false, style = "width:270px" })
-            </div>
-            <br />
-            <div>
-                @Html.LabelFor(x => x.Patients, "Select Volunteers: ")
-                <br/>
-				 @Html.ListBox("Patients List", new MultiSelectList(Model.Patients), new {@class = "inputField", @ShowCheckbox = true, @Multiple = "Multiple"})
 
- 			</div>
-            <br />
-            <div>
-                @Html.LabelFor(x => x.Survey, "Select a Survey: ")
-                @Html.DropDownListFor(x => x.Survey, new SelectList(Model.Survey), new { @class = "inputField", @id = "SurveyName", @required = true, style = "width:270px" })
             </div>
-            <br />
-            <input type="submit" , value="Send Links" class="btn btn-success"/>
+            <div class="col-lg-8 col-md-8 col-sm-8" style="text-align: left">
+                @Html.DropDownListFor(x => x.Studies, new SelectList(Model.Studies), new { @class = "inputField form-control", @id = "studies", @required = false, style = "width: 350px" })
+            </div>
+            <hr/>
+            <div class="col-lg-1 col-md-1 col-sm-1" style="text-align: left"></div>
+            <div class="col-lg-3 col-md-3 col-sm-3" style="text-align: left">
+                @Html.LabelFor(x => x.Patients, "Select Volunteers: ")
+            </div>
+            <div class="col-lg-8 col-md-8 col-sm-8" style="text-align: left">
+                @Html.ListBox("Patients List", new MultiSelectList(Model.Patients), new {@class = "inputField form-control", @ShowCheckbox = true, @Multiple = "Multiple", style = "width: 350px"})
+            </div>
+            <hr/>
+            <div class="col-lg-1 col-md-1 col-sm-1" style="text-align: left"></div>
+            <div class="col-lg-3 col-md-3 col-sm-3" style="text-align: left">
+                @Html.LabelFor(x => x.Survey, "Select a Survey: ")
+            </div>
+            <hr/>
+            <div class="col-lg-8 col-md-8 col-sm-8" style="text-align: left">
+                @Html.DropDownListFor(x => x.Survey, new SelectList(Model.Survey), new {@class = "inputField form-control", @id = "SurveyName", @required = true, style = "width: 350px"})
+            </div>
+            <hr/>
+            <input type="submit" , value="Send Links" class="btn btn-success form-group"/>
         </div>
     }
 </div>

@@ -1,6 +1,11 @@
-﻿using DentalResearchApp.Models;
+﻿using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using DentalResearchApp.Models;
 using DentalResearchApp.Models.Context;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace DentalResearchApp.Controllers
 {
@@ -27,7 +32,17 @@ namespace DentalResearchApp.Controllers
         [HttpGet("CreateSession")]
         public IActionResult CreateSession(string studyId, string studyName)
         {
-            var sessionModel = new StudySessionModel {StudyId = studyId};
+            var allSurveys = new List<SelectListItem>();
+            allSurveys = GetAllSurveyNames()
+                .Result.Select(x => new SelectListItem()
+                {
+                    Text = x.ToString(),
+                    Value = x.ToString(),
+                    Selected = false
+                })
+                .ToList();
+
+            var sessionModel = new StudySessionModel {StudyId = studyId, AllSurveys = allSurveys};
             ViewBag.studyName = studyName;
 
             return View(sessionModel);
@@ -40,6 +55,12 @@ namespace DentalResearchApp.Controllers
             manager.CreateSession(sessionModel);
 
             return RedirectToAction("AllStudies","Study");
+        }
+
+        public Task<List<string>> GetAllSurveyNames()
+        {
+            var manager = _context.ManagerFactory.CreateSurveyManager();
+            return Task.Run(() => manager.GetAllNames());
         }
     }
 }

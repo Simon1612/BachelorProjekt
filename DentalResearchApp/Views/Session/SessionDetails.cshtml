@@ -27,10 +27,10 @@
                         <th class="customTh">Surveys</th>
                     </tr>
                 </thead>
-                @if (Model.Surveys.Any())
+                @if (Model.SelectedSurveys.Any())
                 {
                 <tbody>
-                    @foreach (var item in Model.Surveys)
+                    @foreach (var item in Model.AllSurveys)
                     {
                     <tr>
                         <td class="customTd">

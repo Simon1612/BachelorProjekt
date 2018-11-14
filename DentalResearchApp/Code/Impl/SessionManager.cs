@@ -26,12 +26,12 @@ namespace DentalResearchApp.Code.Impl
             {
                 SessionName = studySessionModel.SessionName,
                 StudyId = studySessionModel.StudyId,
-                Surveys = studySessionModel.Surveys,
-                Participants = studySessionModel.Participants
+                SelectedSurveys = studySessionModel.SelectedSurveys,
+                SelectedParticipants = studySessionModel.SelectedParticipants
             };
 
             var participantList = new List<ParticipantSessionModel>();
-            foreach (var participant in studySessionModel.Participants)
+            foreach (var participant in studySessionModel.SelectedParticipants)
             {
                 participantList.Add(new ParticipantSessionModel
                 {

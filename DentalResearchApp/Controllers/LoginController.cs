@@ -36,7 +36,7 @@ namespace DentalResearchApp.Controllers
             var manager = _context.ManagerFactory.CreateSignupLinkManager();
             var linkModel = await manager.GetLink(Id);
 
-            if(linkModel != null)
+            if (linkModel != null)
                 return View(model);
             else
                 return Unauthorized();
