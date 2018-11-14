@@ -1,4 +1,6 @@
-﻿namespace DentalResearchApp.Code.Interfaces
+﻿using DentalResearchApp.Code.Impl;
+
+namespace DentalResearchApp.Code.Interfaces
 {
     public interface IManagerFactory
     {
@@ -9,6 +11,8 @@
         ISurveyManager CreateSurveyManager();
 
         IUserManager CreateUserManager();
+
+        IExternalDbManager CreateExternalDbManager();
 
         ISessionManager CreateSessionManager();
     }

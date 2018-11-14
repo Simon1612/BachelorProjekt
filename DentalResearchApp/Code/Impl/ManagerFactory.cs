@@ -45,5 +45,10 @@ namespace DentalResearchApp.Code.Impl
         {
             return new SessionManager(_client, _sessionDbName);
         }
+        public IExternalDbManager CreateExternalDbManager()
+        {
+            return new ExternalDbManager();
+        }
+
     }
 }
