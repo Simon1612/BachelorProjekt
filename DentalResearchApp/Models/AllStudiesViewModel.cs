@@ -7,6 +7,6 @@ namespace DentalResearchApp.Models
 {
     public class AllStudiesViewModel
     {
-        public List<string> AllStudyNames { get; set; }
+        public List<StudyListModel> AllStudies { get; set; }
     }
 }

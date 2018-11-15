@@ -7,7 +7,7 @@ namespace DentalResearchApp.Code.Interfaces
     public interface ISessionManager
     {
         Task CreateSession(StudySessionModel studySessionModel);
-        Task<StudySessionModel> GetStudySession(string studyId, string sessionName);
-        List<string> GetAllSessionsForStudy(string studyId);
+        Task<StudySessionModel> GetStudySession(int studyId, string sessionName);
+        List<string> GetAllSessionsForStudy(int studyId);
     }
 }

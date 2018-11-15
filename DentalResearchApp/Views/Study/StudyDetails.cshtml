@@ -1,4 +1,4 @@
-﻿@model DentalResearchApp.Models.StudyModel
+﻿@model DentalResearchApp.Models.StudyDetailsViewModel
 
 <div class="modal-header">
     <link rel="stylesheet" href="/css/Index.css" type="text/css" />
@@ -35,14 +35,14 @@
                     <th class="customTh">Participants</th>
                 </tr>
                 </thead>
-                @if (Model.Patients.Any())
+                @if (Model.Participants.Any())
                 {
                     <tbody>
-                    @foreach (var item in Model.Patients)
+                    @foreach (var item in Model.Participants)
                     {
                         <tr>
                             <td class="customTd" id="patientId">
-                                @item.Id
+                                @item
                             </td>
                         </tr>
                     }
@@ -64,7 +64,7 @@
                     {
                         <tr>
                             <td class="customTd">
-                                @Html.ActionLink(item,"SessionDetails","Session", new {studyId = Model.Id, sessionName = item, studyName = Model.StudyName}, null)
+                                @Html.ActionLink(item,"SessionDetails","Session", new {studyId = Model.StudyId, sessionName = item, studyName = Model.StudyName}, null)
                             </td>
                         </tr>
                     }
@@ -72,7 +72,7 @@
                 } 
             </table>
             <br/>
-            @Html.ActionLink("Create new Session", "CreateSession", "Session", new {studyId = Model.Id, studyName = Model.StudyName}, new {@class="btn-sm btn-success"})
+            @Html.ActionLink("Create new Session", "CreateSession", "Session", new {studyId = Model.StudyId, studyName = Model.StudyName}, new {@class="btn-sm btn-success"})
         </div>
     </div>
 </div>
