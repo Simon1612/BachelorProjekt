@@ -1,9 +1,6 @@
 ﻿using DentalResearchApp.Models;
 using DentalResearchApp.Models.Context;
 using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace DentalResearchApp.Controllers
@@ -18,9 +15,13 @@ namespace DentalResearchApp.Controllers
             _context = context;
         }
 
-        public IActionResult Admin()
+        public async Task<IActionResult> Admin()
         {
-            return View();
+            var userManager = _context.ManagerFactory.CreateUserManager();
+            var users = await userManager.GetAllUsers();
+            var model = new InviteUserViewModel { UserList = users };
+
+            return View(model);
         }
 
         [HttpPost("ChangeUserRole")]

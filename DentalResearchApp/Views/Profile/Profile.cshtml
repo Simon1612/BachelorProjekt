@@ -70,9 +70,14 @@
                 </div>
             </li>
 
+
             <li class="col-lg-12 col-md-12 col-sm-12" style="text-align: center ">
 
-                    <button href="/Profile/ChangePasswordModal" data-email="@Model.Email" class="changepassword-modal btn btn-primary">Change password</button>
+                <button href="/Profile/ChangePasswordModal" data-email="@Model.Email" class="changepassword-modal btn btn-primary">Change password</button>
+            <hr />
+            </li>
+            <li class="col-lg-12 col-md-12 col-sm-12" style="text-align: center ">
+                @Html.ActionLink("Admin", "Admin", "Admin", null, new { @class = "btn-sm btn-success", style = Model.Role != DentalResearchApp.Models.Role.Administrator ? "visibility: hidden" : "visibility: visible" })
             </li>
         </ul>
         <div class="modal fade text-center" id="ChangePasswordModal" role="dialog">
