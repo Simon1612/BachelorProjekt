@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using DentalResearchApp.Models;
 using DentalResearchApp.Models.Context;
 using Microsoft.AspNetCore.Mvc;
@@ -8,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace DentalResearchApp.Controllers
 {
+    [Route("[controller]")]
     public class SessionController : Controller
     {
         private readonly IContext _context;
@@ -23,25 +23,25 @@ namespace DentalResearchApp.Controllers
             var manager = _context.ManagerFactory.CreateSessionManager();
             var sessionModel = manager.GetStudySession(studyId, sessionName).Result;
 
+
+            var sessionViewModel = new StudySessionViewModel()
+            {
+                SessionName = sessionModel.SessionName,
+                StudyId = sessionModel.StudyId,
+                AllSurveys = GetAllSurveyNamesList(),
+                SelectedSurveys = sessionModel.Surveys
+            };
+
             ViewBag.studyName = studyName;
 
-            return View(sessionModel);
+            return View(sessionViewModel);
         }
 
         [HttpGet("CreateSession")]
         public IActionResult CreateSession(int studyId, string studyName)
         {
-            var allSurveys = new List<SelectListItem>();
-            allSurveys = GetAllSurveyNames()
-                .Result.Select(x => new SelectListItem()
-                {
-                    Text = x.ToString(),
-                    Value = x.ToString(),
-                    Selected = false
-                })
-                .ToList();
 
-            var sessionModel = new StudySessionViewModel {StudyId = studyId, AllSurveys = allSurveys};
+            var sessionModel = new StudySessionViewModel {StudyId = studyId, AllSurveys = GetAllSurveyNamesList()};
             ViewBag.studyName = studyName;
 
             return View(sessionModel);
@@ -56,26 +56,42 @@ namespace DentalResearchApp.Controllers
             {
                 SessionName = sessionModel.SessionName,
                 StudyId = sessionModel.StudyId,
-                Participants = sessionModel.SelectedParticipants.ToList(),
                 Surveys = sessionModel.SelectedSurveys.ToList()
-
             };
+
             manager.CreateSession(studySessionModel);
 
             return RedirectToAction("AllStudies","Study");
         }
 
-        public Task<List<string>> GetAllSurveyNames()
+
+        [HttpPost("DeleteSession")]
+        public IActionResult DeleteSession(string sessionName, int studyId)
+        {
+
+            var sessionManager = _context.ManagerFactory.CreateSessionManager();
+
+            var studySession = sessionManager.GetStudySession(studyId, sessionName).Result;
+
+            sessionManager.DeleteSession(studySession);
+            return RedirectToAction("AllStudies", "Study");
+        }
+
+        public List<SelectListItem> GetAllSurveyNamesList()
         {
             var manager = _context.ManagerFactory.CreateSurveyManager();
-            return Task.Run(() => manager.GetAllNames());
+            var allSurveys = manager.GetAllNames()
+                .Result.Select(x => new SelectListItem()
+                {
+                    Text = x.ToString(),
+                    Value = x.ToString(),
+                    Selected = false
+                })
+                .ToList();
+
+            return allSurveys;
         }
 
 
-        public Task<List<string>> GetAllParticipants(int studyId)
-        {
-            var manager = _context.ManagerFactory.CreateExternalDbManager();
-            return Task.Run(() => manager.GetParticipantIds(studyId));
-        }
     }
 }

@@ -39,20 +39,10 @@
                 <li class="row">
                     <div class="col-lg-1 col-md-1 col-sm-1" style="text-align: left"></div>
                     <div class="col-lg-3 col-md-3 col-sm-3" style="text-align: left">
-                        @Html.Label("Select Participants:")
-                    </div>
-                    <div class="col-lg-8 col-md-8 col-sm-8" style="text-align: left">
-                        @Html.ListBoxFor(x => x.SelectedParticipants, new MultiSelectList(Model.AllParticipants ?? new List<SelectListItem>()), new { style = "width: 350px", @class = "form-control" })
-                    </div>
-                </li>
-                <hr />
-                <li class="row">
-                    <div class="col-lg-1 col-md-1 col-sm-1" style="text-align: left"></div>
-                    <div class="col-lg-3 col-md-3 col-sm-3" style="text-align: left">
                         @Html.Label("Select Surveys:")
                     </div>
                     <div class="col-lg-8 col-md-8 col-sm-8 form-group" style="text-align: left">
-                        @Html.ListBoxFor(x => x.SelectedSurveys, Model.AllSurveys, new { style = "width: 350px", multiple="multiple", @class="form-control"}) <!--Tilføj property så man kan vælge flere surveys-->
+                        @Html.ListBoxFor(x => x.SelectedSurveys, Model.AllSurveys, new { style = "width: 350px", multiple="multiple", @class="form-control"})
                     </div>
                 </li>
             </ul>
