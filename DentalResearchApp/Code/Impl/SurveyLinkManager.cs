@@ -23,7 +23,7 @@ namespace DentalResearchApp.Code.Impl
 
             return await collection.AsQueryable().FirstOrDefaultAsync(x => x.LinkId == linkId);
         }
-
+           
         public async Task SendLink(string surveyName, string participantEmail, string participantId, string baseUrl)
         {
             var linkId = Guid.NewGuid().ToString("N");
