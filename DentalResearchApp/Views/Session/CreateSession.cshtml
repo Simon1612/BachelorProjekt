@@ -1,4 +1,5 @@
-﻿@model DentalResearchApp.Models.StudySessionModel
+﻿@using DentalResearchApp.Models
+@model StudySessionViewModel
 @{
     ViewBag.Title = "Create Session";
     Layout = "~/Views/_Layout.cshtml";
@@ -31,17 +32,7 @@
                         @Html.Label("Session Name:")
                     </div>
                     <div class="col-lg-8 col-md-8 col-sm-8" style="text-align: left">
-                        @Html.TextBoxFor(x => x.SessionName, new { @class = "text", required = true, maxlength = "200", style = "width: 350px" })
-                    </div>
-                </li>
-                <hr />
-                <li class="row">
-                    <div class="col-lg-1 col-md-1 col-sm-1" style="text-align: left"></div>
-                    <div class="col-lg-3 col-md-3 col-sm-3" style="text-align: left">
-                        @Html.Label("Select Participants:")
-                    </div>
-                    <div class="col-lg-8 col-md-8 col-sm-8" style="text-align: left">
-                        @Html.ListBoxFor(x => x.Participants, new SelectList(Model.Participants ?? new List<string>()), new { style = "width: 350px" })
+                        @Html.TextBoxFor(x => x.SessionName, new { @class = "text form-control", required = true, maxlength = "200", style = "width: 350px"})
                     </div>
                 </li>
                 <hr />
@@ -50,18 +41,18 @@
                     <div class="col-lg-3 col-md-3 col-sm-3" style="text-align: left">
                         @Html.Label("Select Surveys:")
                     </div>
-                    <div class="col-lg-8 col-md-8 col-sm-8" style="text-align: left">
-                        @Html.ListBoxFor(x => x.Surveys, new SelectList(Model.Surveys ?? new List<string>()), new { style = "width: 350px" }) <!--Tilføj property så man kan vælge flere surveys-->
+                    <div class="col-lg-8 col-md-8 col-sm-8 form-group" style="text-align: left">
+                        @Html.ListBoxFor(x => x.SelectedSurveys, Model.AllSurveys, new { style = "width: 350px", multiple="multiple", @class="form-control"})
                     </div>
                 </li>
             </ul>
             <hr />
             <div style="text-align: center">
-                <input type="submit" class="btn btn-success" value="Create Session" id="SubmitSessionBtn" />
+                <input type="submit" class="btn btn-success form-group" value="Create Session" id="SubmitSessionBtn" />
                 @Html.ActionLink(Model.SessionName == null ? "Back" : "Delete", "AllStudies", "Study", null, new {@class = Model.SessionName == null ? "btn btn-primary" : "btn btn-danger"})
             </div>
         }
     </div>
-    <br />
+<br />
 </body>
 </html>

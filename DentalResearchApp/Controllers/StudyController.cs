@@ -9,7 +9,6 @@ using MongoDB.Bson;
 
 namespace DentalResearchApp.Controllers
 {
-
     [Route("[controller]")]
     public class StudyController : Controller
     {
@@ -38,8 +37,6 @@ namespace DentalResearchApp.Controllers
             var extManager = _context.ManagerFactory.CreateExternalDbManager();
             var participants = extManager.GetParticipantIds(id);
 
-
-
             var sessions = sessionManager.GetAllSessionsForStudy(id);
             var study = extManager.GetStudy(id);
 
@@ -52,35 +49,7 @@ namespace DentalResearchApp.Controllers
                 Sessions = sessions
             };
 
-
-            //var studyDetails = new StudyModel()
-            //{
-            //    StudyName = "A study of My Little Pony and their dental hygiene",
-            //    StudyDescription =
-            //        "Never thought i would spent that much time inside a horses mouth when i studied as a dentist",
-            //    Sessions = sessions,
-            //    Patients = new List<PatientModel>()
-            //};
-            //Todo: Populer modellen med de rigtige study Data
             return View(viewModel);
         }
-
-        ////Todo: Find ud af om dette skal bruges
-        //[HttpGet("EditStudy")]
-        //public ActionResult EditStudy()
-        //{
-
-        //    var study = new StudyViewModel()
-        //    {
-        //        StudyName = "A study of My Little Pony and their dental hygiene",
-        //        StudyDescription =
-        //            "Never thought i would spent that much time inside a horses mouth when i studied as a dentist",
-        //        SurveysList = new SelectList(new List<Survey>()),
-        //        PatientsList = new SelectList(new List<PatientModel>())
-        //    };
-        //    //Todo: Populer modellen med de rigtige study Data
-
-        //    return View(study);
-        //}
     }
 }
