@@ -9,6 +9,6 @@ namespace DentalResearchApp.Models
         [BsonId]
         public ObjectId Id { get; set; }
         public string ParticipantId { get; set; }
-        public string StudyId { get; set; }
+        public int StudyId { get; set; }
     }
 }

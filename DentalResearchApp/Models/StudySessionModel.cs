@@ -9,7 +9,7 @@ namespace DentalResearchApp.Models
         [BsonId]
         public ObjectId Id { get; set; }
         public string SessionName { get; set; }
-        public string StudyId { get; set; }
+        public int StudyId { get; set; }
         public List<string> Participants { get; set; }
         public List<string> Surveys { get; set; }
     }

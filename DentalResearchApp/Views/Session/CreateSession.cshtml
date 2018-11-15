@@ -24,7 +24,7 @@
     <div class="col-lg-12 col-md-12 col-sm-12">
         @using (Html.BeginForm("CreateSession", "Session", FormMethod.Post))
         {
-            @Html.Hidden(Model.StudyId)
+            @Html.Hidden("studyId", Model.StudyId)
             <ul class="list-unstyled">
                 <li class="row">
                     <div class="col-lg-1 col-md-1 col-sm-1" style="text-align: left"></div>
