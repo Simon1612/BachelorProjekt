@@ -24,27 +24,38 @@ namespace DentalResearchApp.Controllers
             return View(model);
         }
 
-        [HttpPost("ChangeUserRole")]
-        public async Task<IActionResult> ChangeUserRole(string email, int newRole)
+        [HttpGet("EditUserModal")]
+        public IActionResult EditUserModal(string userMail)
         {
             var userManager = _context.ManagerFactory.CreateUserManager();
-            var user = await userManager.GetUserModel(email);
+            var user = userManager.GetUserModel(userMail).Result;
 
-            user.Role = (Role) newRole;
+            return View(user);
+        }
+
+        [HttpPost("ChangeUserRole")]
+        public async Task<IActionResult> ChangeUserRole(string Email, int Role)
+        {
+            var userManager = _context.ManagerFactory.CreateUserManager();
+            var user = await userManager.GetUserModel(Email);
+
+            user.Role = (Role) Role;
             await userManager.UpdateUserData(user);
 
             return RedirectToAction("Admin");
         }
 
-        [HttpDelete("DeleteUser")]
-        public async Task DeleteUser(string email)
+        [HttpPost("DeleteUser")]
+        public async Task<IActionResult> DeleteUser(string email)
         {
             var userManager = _context.ManagerFactory.CreateUserManager();
 
             var user = await userManager.GetUserModel(email);
             var creds = await userManager.GetUserCredentials(email);
 
-            await userManager.DeleteUser(user, creds);
+            var a = userManager.DeleteUser(user, creds);
+
+            return RedirectToAction("Admin", controllerName: "Admin");
         }
     }
 }

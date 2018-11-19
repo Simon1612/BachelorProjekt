@@ -6,5 +6,6 @@ namespace DentalResearchApp.Models
     {
         public string Email { get; set; }
         public List<UserModel> UserList { get; set; }
+        public List<UserModel> SelectedUsers { get; set; }
     }
 }

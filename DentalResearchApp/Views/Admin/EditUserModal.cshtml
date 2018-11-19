@@ -1,0 +1,77 @@
+﻿@using DentalResearchApp.Models
+@model DentalResearchApp.Models.UserModel
+
+<div class="modal-header">
+    <link rel="stylesheet" href="/css/Index.css" type="text/css" />
+    <h2 class="modal-title secondHeadline" style="text-align: center">Edit User</h2>
+
+
+</div>
+<div class="modal-body">
+
+    @using (Html.BeginForm("ChangeUserRole", "Admin", FormMethod.Post))
+    {
+
+    <ul class="list-unstyled">
+        <li class="row">
+            <div class="col-lg-1 col-md-1 col-sm-1" style="text-align: left"></div>
+            <div class="col-lg-4 col-md-4 col-sm-4" style="text-align: left">
+                @Html.Label("First Name: " + Model.FirstName)
+            </div>
+        </li>
+        <li class="row">
+            <div class="col-lg-1 col-md-1 col-sm-1" style="text-align: left"></div>
+            <div class="col-lg-4 col-md-4 col-sm-4" style="text-align: left">
+                @Html.Label("Last Name: " + Model.LastName)
+            </div>
+        </li>
+        <li class="row">
+            <div class="col-lg-1 col-md-1 col-sm-1" style="text-align: left"></div>
+            <div class="col-lg-4 col-md-4 col-sm-4" style="text-align: left">
+                @Html.Label("Email: " + Model.Email)
+                @Html.HiddenFor(x => x.Email, Model.Email)
+            </div>
+        </li>
+        <li class="row">
+            <div class="col-lg-1 col-md-1 col-sm-1" style="text-align: left"></div>
+            <div class="col-lg-4 col-md-4 col-sm-4" style="text-align: left">
+                @Html.Label("Institution: " + Model.Institution)
+            </div>
+            <div class="col-lg-2 col-md-2 col-sm-2" style="text-align: left"></div>
+            <div class="col-lg-4 col-md-4 col-sm-4" style="text-align: right">
+                <button type="button" onclick="myFunction()" class="btn btn-danger" data-dismiss="modal" href="Admin">Delete User</button>
+            </div>
+        </li>
+        <li class="row">
+            <div class="col-lg-1 col-md-1 col-sm-1" style="text-align: left"></div>
+            <div class="col-lg-4 col-md-4 col-sm-4" style="text-align: left">
+                @Html.Label("Role: ")
+                @Html.DropDownListFor(x => x.Role, new SelectList(new List<Role>() { Role.Administrator, Role.Researcher, Role.Volunteer }), new { @class = "form-control", style = "width:270px" })
+            </div>
+        </li>
+    </ul>
+        <input type="submit" class="btn btn-success" value="Save changes" />
+        <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+    }
+    <br />
+
+    <script>
+        function myFunction() {
+            var r = window.confirm("Are you sure you want to delete user: @Model.FirstName @Model.LastName?");
+            if (r === true) {
+                var Http = new XMLHttpRequest();
+                var url = "/Admin/DeleteUser?email=@Model.Email";
+                Http.open("POST", url);
+                Http.send();
+
+                location.href = "Admin";
+                location.reload(true);
+            }
+        }
+    </script>
+</div>
+
+
+<div class="modal-footer" style="text-align: center">
+</div>
+<div class="clearfix"></div>

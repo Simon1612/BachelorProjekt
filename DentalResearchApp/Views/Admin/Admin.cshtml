@@ -22,7 +22,9 @@
         <hr />
         @using (Html.BeginForm("SendSignupLink", "Link", FormMethod.Post))
         {
-            <div class="col-lg-4, col-md-4, col-xs-3" style="text-align: right; margin-left: 82px">
+            <div class="col-lg-4, col-md-4, col-xs-4" style="text-align: center">
+            </div>
+            <div class="col-lg-3, col-md-3, col-xs-3" style="text-align: left">
                 @Html.TextBoxFor(x => x.Email, "E-mail", new { @class = "form-control", @id = "email", @placeholder = "E-mail", @required = true, @type = "email", @maxlength = "60", @style = "width: 300px" })
             </div>
             <div class="col-lg-2, col-md-2, col-xs-2" style="text-align: center">
@@ -32,37 +34,37 @@
     </div>
     <div class="col-lg-12, col-md-12, col-xs-12">
         <hr />
-        <div class="col-lg-6, col-md-6, col-xs-6">
-            <table class="customTable">
-                <thead>
+        <table class="customTable">
+            <thead>
+                <tr>
+                    <th class="customTh">Users</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.UserList)
+                {
                     <tr>
-                        <th class="customTh">Users</th>
+                        <td class="customTd">
+                            <a href="Admin/EditUserModal?userMail=@item.Email" data-userMail="@item.Email" class="editUser-modal">@item.FirstName @item.LastName</a>
+                        </td>
                     </tr>
-                </thead>
-                <tbody>
-                    @foreach (var item in Model.UserList)
-                    {
-                        <tr>
-                            <td class="customTd">
-                                <a>@item.FirstName @item.LastName - @item.Email</a>
-                            </td>
-                        </tr>
-                    }
-                </tbody>
-            </table>
-            <hr />
-        </div>
-        <div>
-            @using (Html.BeginForm("ChangeUserRole", "Admin", FormMethod.Post))
-            {
-                <input type="submit" value="Change Role" id="ChangeUserRole" class="btn btn-primary">
-            }
-            <br />
-            @using (Html.BeginForm("DeleteUser", "Admin", FormMethod.Post))
-            {
-                <input type="submit" value="Delete User" id="DeleteUser" class="btn btn-danger">
-            }
+                }
+            </tbody>
+        </table>
+        <hr />
+    </div>
+    <div class="modal fade text-center" id="EditUserModal" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+            </div>
         </div>
     </div>
+    <script type="text/javascript">
+        $('.editUser-modal').on('click', function (e) {
+            e.preventDefault();
+
+            $('#EditUserModal').modal('show').find('.modal-content').load($(this).attr('href'));
+        });
+    </script>
 </body>
 </html>
