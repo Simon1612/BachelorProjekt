@@ -34,13 +34,16 @@ namespace DentalResearchApp.Controllers
         }
 
         [HttpPost("ChangeUserRole")]
-        public async Task<IActionResult> ChangeUserRole(string Email, int Role)
+        public async Task<IActionResult> ChangeUserRole([FromForm]UserModel userModel)
         {
             var userManager = _context.ManagerFactory.CreateUserManager();
-            var user = await userManager.GetUserModel(Email);
+            var user = await userManager.GetUserModel(userModel.Email);
 
-            user.Role = (Role) Role;
-            await userManager.UpdateUserData(user);
+            if (user != null)
+            {
+                user.Role = userModel.Role;
+                await userManager.UpdateUserData(user);
+            }
 
             return RedirectToAction("Admin");
         }
