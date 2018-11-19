@@ -1,4 +1,4 @@
-﻿@*@model DentalResearchApp.Models.UserSessionsViewModel
+﻿@model DentalResearchApp.Models.UserSessionsViewModel
 @{
     ViewData["Title"] = "UserSessions";
     Layout = "~/Views/_Layout.cshtml";
@@ -34,22 +34,29 @@
                 {
                     <tr>
                         <td class="customTd">
-                            @Html.ActionLink(item, "SessionDetails", "Session", new { studyId = Model.StudyId, sessionName = item, studyName = Model.StudyName }, null)
+                            @Html.ActionLink(item.SessionId, "UserSessionDetailsModal", "UserSession", new { studyId = Model.StudyName, sessionName = item, studyName = Model.StudyName }, new { @class = "UserSessionDetails-modal" })
                         </td>
                     </tr>
                 }
+
             </tbody>
         </table>
     </div>
+    <div class="modal fade text-center" id="UserSessionDetailsModal" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+            </div>
+        </div>
+    </div>
+
 
     <script type="text/javascript">
-        $('.changepassword-modal').on('click', function (e) {
+        $('.UserSessionDetails-modal').on('click', function (e) {
             e.preventDefault();
-            var email = $(e.relatedTarget).data('email');
 
-            $('#ChangePasswordModal').modal('show').find('.modal-content').val(email).load($(this).attr('href'));
+            $('#UserSessionDetailsModal').modal('show').find('.modal-content').load($(this).attr('href'));
         });
     </script>
 </body>
 
-</html>*@
+</html>
