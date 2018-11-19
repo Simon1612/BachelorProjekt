@@ -16,7 +16,7 @@ namespace DentalResearchApp.Code.Impl
             _db = client.GetDatabase(databaseName);
         }
 
-        public async Task CreateSession(StudySessionModel studySessionModel)
+        public async Task CreateStudySession(StudySessionModel studySessionModel)
         {
             var studySessionCollection = _db.GetCollection<StudySessionModel>("study_session_collection");
 
@@ -28,6 +28,13 @@ namespace DentalResearchApp.Code.Impl
             };
 
             await studySessionCollection.InsertOneAsync(studySession);
+        }
+
+        public async Task CreateUserSession(UserSession userSessionModel)
+        {
+            var userSessionCollection = _db.GetCollection<UserSession>("user_session_collection");
+
+            await userSessionCollection.InsertOneAsync(userSessionModel);
         }
 
         public async Task<StudySessionModel> GetStudySession(int studyId, string sessionName)
@@ -50,7 +57,7 @@ namespace DentalResearchApp.Code.Impl
         {
             var coll = _db.GetCollection<StudySessionModel>("study_session_collection");
             var sessions = coll.AsQueryable().Where(x => x.StudyId.Equals(studyId));
-            if (!sessions.Equals(null))
+            if (sessions != null)
             {
                var sessionsList =  sessions.Select(y => y.SessionName).ToList();
                 return sessionsList;

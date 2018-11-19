@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using DentalResearchApp.Models;
 using DentalResearchApp.Models.Context;
 using Microsoft.AspNetCore.Mvc;
@@ -37,20 +38,19 @@ namespace DentalResearchApp.Controllers
             return View(sessionViewModel);
         }
 
-        [HttpGet("CreateSession")]
+        [HttpGet("CreateStudySession")]
         public IActionResult CreateSession(int studyId, string studyName)
         {
-
             var sessionModel = new StudySessionViewModel {StudyId = studyId, AllSurveys = GetAllSurveyNamesList()};
             ViewBag.studyName = studyName;
 
             return View(sessionModel);
         }
 
-        [HttpPost("CreateSession")]
-        public IActionResult CreateSession(StudySessionViewModel sessionModel)
+        [HttpPost("CreateStudySession")]
+        public async Task<IActionResult> CreateSession(StudySessionViewModel sessionModel)
         {
-            var manager = _context.ManagerFactory.CreateSessionManager();
+            var sessionManager = _context.ManagerFactory.CreateSessionManager();
 
             var studySessionModel = new StudySessionModel()
             {
@@ -59,7 +59,18 @@ namespace DentalResearchApp.Controllers
                 Surveys = sessionModel.SelectedSurveys.ToList()
             };
 
-            manager.CreateSession(studySessionModel);
+            await sessionManager.CreateStudySession(studySessionModel);
+
+            var studyManager = _context.ManagerFactory.CreateExternalDbManager();
+
+            var userIdList = studyManager.GetParticipantIds(sessionModel.StudyId);
+            var model = await sessionManager.GetStudySession(studySessionModel.StudyId, studySessionModel.SessionName);
+
+            Parallel.ForEach(userIdList, x => sessionManager.CreateUserSession(new UserSession()
+            {
+                ParticipantId = x,
+                StudySessionId = model.Id
+            }));
 
             return RedirectToAction("AllStudies","Study");
         }
@@ -81,7 +92,7 @@ namespace DentalResearchApp.Controllers
         {
             var manager = _context.ManagerFactory.CreateSurveyManager();
             var allSurveys = manager.GetAllNames()
-                .Result.Select(x => new SelectListItem()
+                .Result.Select(x => new SelectListItem
                 {
                     Text = x.ToString(),
                     Value = x.ToString(),
