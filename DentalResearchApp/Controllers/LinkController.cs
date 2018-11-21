@@ -57,7 +57,7 @@ namespace DentalResearchApp.Controllers
         }
 
         [HttpPost("sendSignupLink")]
-        public async Task<JsonResult> SendSignupLink([FromBody] SendSignupLinkModel model)
+        public async Task<IActionResult> SendSignupLink(InviteUserViewModel model)
         {
             var host = Request.Host.Host;
             if (host == "localhost")
@@ -66,9 +66,9 @@ namespace DentalResearchApp.Controllers
 
             var manager = _context.ManagerFactory.CreateSignupLinkManager();
 
-            await manager.SendLink(model.RecipiantEmail, baseUrl);
+            await manager.SendLink(model.Email, baseUrl);
 
-            return Json("Ok");
+            return Redirect("/Admin");
         }
     }
 }

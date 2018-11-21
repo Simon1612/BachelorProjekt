@@ -9,7 +9,10 @@ namespace DentalResearchApp.Code.Interfaces
         Task<UserModel> Authenticate(LoginModel login);
         Task<List<UserModel>> GetAllUsers();
         Task CreateUser(UserModel userModel, UserCredentials userCreds);
+        Task DeleteUser(UserModel userModel, UserCredentials userCreds);
         Task<UserModel> GetUserModel(string eMail);
         Task UpdateUserCredentials(UserCredentials model);
+        Task<UserCredentials> GetUserCredentials(string email);
+        Task UpdateUserData(UserModel userModel);
     }
 }
