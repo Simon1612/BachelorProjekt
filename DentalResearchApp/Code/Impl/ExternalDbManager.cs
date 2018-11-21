@@ -44,6 +44,13 @@ namespace DentalResearchApp.Code.Impl
             }
         }
 
+        //public string GetParticipantEmail(int studyId)
+        //{
+
+        //}
+
+
+
         public Study GetStudy(int studyId)
         {
             using (var db = GetMySqlConnection())

@@ -4,8 +4,6 @@
     Layout = "~/Views/_Layout.cshtml";
 }
 
-<h2>UserSessions</h2>
-
 <html>
 
 <head>
@@ -22,19 +20,28 @@
 <body>
     <div class="col-lg-12, col-md-12, col-xs-12">
         <h1 class="secondHeadline" style="text-align: center">User Sessions</h1>
+        
+        <h3 style="text-align: center">
+            Study Name: @Model.StudyName
+        </h3>
+        <h3 style="text-align: center; margin-top: 0px">
+            ParticipantId: @Model.ParticipantId
+        </h3>
         <hr />
         <table class="customTable">
             <thead>
                 <tr>
-                    <th class="customTh">fsdaf</th>
+                    <th class="customTh">
+                        Sessions
+                    </th>
                 </tr>
             </thead>
             <tbody>
-                @foreach (var item in Model.UserSessions)
+                @foreach (var item in Model.SessionNames)
                 {
                     <tr>
                         <td class="customTd">
-                            @Html.ActionLink(item.SessionId, "UserSessionDetailsModal", "UserSession", new { studyId = Model.StudyName, sessionName = item, studyName = Model.StudyName }, new { @class = "UserSessionDetails-modal" })
+                            @Html.ActionLink(item, "UserSessionDetailsModal", "UserSession", new { studyId = Model.StudyName, sessionName = item, studyName = Model.StudyName }, new { @class = "UserSessionDetails-modal" })
                         </td>
                     </tr>
                 }

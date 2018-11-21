@@ -18,6 +18,25 @@ namespace DentalResearchApp.Controllers
             _context = context;
         }
 
+        //[HttpPost("StartSession")]
+        //public async Task<IActionResult> StartSession(int studyId, string sessionName)
+        //{
+        //    var manager = _context.ManagerFactory.CreateSessionManager();
+        //    var studySessionModel = manager.GetStudySession(studyId, sessionName).Result;
+
+        //    var id = studySessionModel.Id;
+
+        //    var userSessions = await  manager.GetAllUserSessionsForStudySession(id);
+
+        //    foreach (var survey in studySessionModel.Surveys)
+        //    {
+                
+        //    }
+
+
+        //}
+
+
         [HttpGet("SessionDetails")]
         public IActionResult SessionDetails(int studyId, string sessionName, string studyName)
         {
@@ -41,7 +60,7 @@ namespace DentalResearchApp.Controllers
         [HttpGet("CreateStudySession")]
         public IActionResult CreateSession(int studyId, string studyName)
         {
-            var sessionModel = new StudySessionViewModel {StudyId = studyId, AllSurveys = GetAllSurveyNamesList()};
+            var sessionModel = new StudySessionViewModel { StudyId = studyId, AllSurveys = GetAllSurveyNamesList() };
             ViewBag.studyName = studyName;
 
             return View(sessionModel);
@@ -72,7 +91,7 @@ namespace DentalResearchApp.Controllers
                 StudySessionId = model.Id
             }));
 
-            return RedirectToAction("AllStudies","Study");
+            return RedirectToAction("AllStudies", "Study");
         }
 
 

@@ -19,14 +19,24 @@ namespace DentalResearchApp.Controllers
             _context = context;
         }
 
-        public IActionResult UserSessions(int participantId, int studyId)
+        public async Task<IActionResult> UserSessions(int participantId, int studyId)
         {
-            _context.ManagerFactory.CreateSessionManager();
+            var study = _context.ManagerFactory.CreateExternalDbManager().GetStudy(studyId);
 
-            var viewModel = new UserSessionsViewModel();
+            var sessionManager = _context.ManagerFactory.CreateSessionManager();
+            var sessionNames = sessionManager.GetAllStudySessionsNamesForStudy(studyId);
+            //var userSessions = await sessionManager.GetUserSessionsForStudy(studyId, participantId);
 
 
-            return View();
+            var viewModel = new UserSessionsViewModel
+            {
+                ParticipantId = participantId,
+                StudyName = study.StudyName,
+                SessionNames = sessionNames
+            };
+
+
+            return View(viewModel);
         }
 
         [HttpGet("UserSessionDetailsModal")]

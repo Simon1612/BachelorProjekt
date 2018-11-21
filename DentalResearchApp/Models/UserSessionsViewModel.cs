@@ -9,11 +9,6 @@ namespace DentalResearchApp.Models
     {
         public int ParticipantId { get; set; }
         public string StudyName { get; set; }
-        public List<UserSessionResult> UserSessions { get; set; }
-    }
-
-    public class UserSessionResult
-    {
-        public string SessionId { get; set; }
+        public List<string> SessionNames { get; set; }
     }
 }
