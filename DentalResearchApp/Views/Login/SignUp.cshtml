@@ -20,15 +20,15 @@
         @Html.Hidden("errors", Model.Errors)
         @using (Html.BeginForm("CreateUser", "login", FormMethod.Post, new { onsubmit = "return checkForm(this)"}))
         {
-            @Html.TextBoxFor(x => x.FirstName, "Firstname", new { @class = "inputField", @id = "firstName", @placeholder = "First Name", @required = true, @maxlength = "20" })
-            @Html.TextBoxFor(x => x.LastName, "Lastname", new { @class = "inputField", @id = "lastName", @placeholder = "Last Name", @required = true, @maxlength = "50" })
-            @Html.TextBoxFor(x => x.Email, "E-mail", new { @class = "inputField", @id = "email", @placeholder = "E-mail", @required = true, @type = "email", @maxlength = "60" })
-            @Html.TextBoxFor(x => x.Institution, "Institution", new { @class = "inputField", @id = "institution", @placeholder = "Institution", @required = true, @maxlength = "100" })
-            @Html.PasswordFor(x => x.Password, new { @class = "inputField", @id = "pwd1", @name = "pwd1", @placeholder = "Password", @type = "password", @required = true })
-            @Html.PasswordFor(x => x.Password, new { @class = "inputField", @id = "pwd2", @name = "pwd2", @placeholder = "Confirm Password", @type = "password", @required = true })
-            @Html.DropDownListFor(x => x.Country, new SelectList(Model.Country), new { @class = "inputField", @id = "country", @required = true, style = "width:270px" })
+            @Html.TextBoxFor(x => x.FirstName, "Firstname", new { @class = "inputField form-control", @id = "firstName", @placeholder = "First Name", @required = true, @maxlength = "20" })
+            @Html.TextBoxFor(x => x.LastName, "Lastname", new { @class = "inputField form-control", @id = "lastName", @placeholder = "Last Name", @required = true, @maxlength = "50" })
+            @Html.TextBoxFor(x => x.Email, "E-mail", new { @class = "inputField form-control", @id = "email", @placeholder = "E-mail", @required = true, @type = "email", @maxlength = "60" })
+            @Html.TextBoxFor(x => x.Institution, "Institution", new { @class = "inputField form-control", @id = "institution", @placeholder = "Institution", @required = true, @maxlength = "100" })
+            @Html.PasswordFor(x => x.Password, new { @class = "inputField form-control", @id = "pwd1", @name = "pwd1", @placeholder = "Password", @type = "password", @required = true })
+            @Html.PasswordFor(x => x.Password, new { @class = "inputField form-control", @id = "pwd2", @name = "pwd2", @placeholder = "Confirm Password", @type = "password", @required = true })
+            @Html.DropDownListFor(x => x.Country, new SelectList(Model.Country), new { @class = "inputField form-control", @id = "country", @required = true, style = "width:270px" })
             <br />
-            <input type="submit" value="Sign up" id="UserDataSubmit" style="margin-left: 140px; margin-top: 10px">
+            <input type="submit" value="Sign up" id="UserDataSubmit" class="form-group" style="margin-left: 140px; margin-top: 10px">
         }
     </div>
 <script type="text/javascript">

@@ -31,11 +31,11 @@
         </tr>
         </thead>
         <tbody>
-        @foreach (var item in Model.AllStudyNames)
+        @foreach (var item in Model.AllStudies)
         {
             <tr>
                 <td class="customTd">
-                    <a href="StudyDetails" data-studyId="@item" class="studyDetails-modal">@item</a>
+                    @Html.ActionLink(item.StudyName, "StudyDetails", "Study", new {id = item.StudyId}, new {@class = "studyDetails-modal" })
                 </td>
             </tr>
         }
@@ -59,7 +59,7 @@
         e.preventDefault();
         var studyId = $(e.relatedTarget).data('studyId');
 
-        $('#StudyDetailsModal').modal('show').find('.modal-content').val(studyId).load($(this).attr('href'));
+        $('#StudyDetailsModal').modal('show').find('.modal-content').load($(this).attr('href'));
     });
 
     $('.createStudy-modal').on('click', function(e){

@@ -7,6 +7,10 @@ namespace DentalResearchApp.Models
 {
     public class StudyDetailsViewModel
     {
-        public string Type { get; set; }
+        public int StudyId { get; set; }
+        public string StudyName { get; set; }
+        public string StudyDescription { get; set; }
+        public List<int> Participants { get; set; }
+        public List<string> Sessions { get; set; }
     }
 }

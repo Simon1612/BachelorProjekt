@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using DentalResearchApp.Code.Impl;
@@ -36,7 +37,7 @@ namespace DentalResearchApp.Controllers
             var manager = _context.ManagerFactory.CreateSignupLinkManager();
             var linkModel = await manager.GetLink(Id);
 
-            if(linkModel != null)
+            if (linkModel != null)
                 return View(model);
             else
                 return Unauthorized();
@@ -76,6 +77,44 @@ namespace DentalResearchApp.Controllers
             await signupLinkManager.DeleteLink(signupModel.LinkId);
 
             return RedirectToAction("Login");
+        }
+
+        [HttpGet("ForgotMyPasswordModal")]
+        public IActionResult ForgotMyPasswordModal()
+        {
+            return View();
+        }
+
+        [HttpGet("ForgotMyPassword")]
+        public async Task<IActionResult> ForgotMyPassword(string email)
+        {
+            var userManager = _context.ManagerFactory.CreateUserManager();
+            var user = await userManager.GetUserModel(email);
+
+            if (user != null)
+            {
+                var randomString = Path.GetRandomFileName();
+                randomString = randomString.Replace(".", "");
+
+                var salt = Salt.Create();
+                var hash = Hash.Create(randomString, salt);
+
+                var credentials = new UserCredentials() { UserName = email, Hash = hash, Salt = salt };
+                await userManager.UpdateUserCredentials(credentials);
+
+                var mailHelper = new MailHelper();
+                mailHelper.SendMail(email, "Forgotten Password",
+                    "You have asked to reset your password because it was forgotten.\n" +
+                    "Your new password is: " + randomString + "\n" +
+                    "Kind Regards\n" +
+                    "AU Dent MailBot");
+
+                ViewBag.Message = "Your password has been reset. Your new password has been sent to: " + email;
+                return View("Login");
+            }
+
+            ViewBag.Message = "No user found for email: "+ email;
+            return View("Login");
         }
     }
 }

@@ -5,6 +5,9 @@
 <html>
 <head>
     <link rel="stylesheet" href="/css/Styles.css" type="text/css">
+    @*<link rel="stylesheet" href="../css/3rdParty/bootstrap.min.css" />*@
+    <script src="~/js/3rdParty/jquery.min.js"></script>
+    @*<script src="~/js/3rdParty/bootstrap.min.js"></script>*@
 
     <meta charset="utf-8" />
     <title>Dental Research App - Log In</title>
@@ -22,21 +25,33 @@
             <br />
             <input type="submit" value="Sign in" form="loginform" style="margin-left: 140px; margin-top: 40px">
         </form>
+        <button href="/Login/ForgotMyPasswordModal" class="forgotmypassword-modal buttonForgotPswd">Forgot My Password</button>
+        <div class="modal fade text-center" id="ForgotMyPasswordModal" role="dialog">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                </div>
+            </div>
+        </div>
     </div>
-    <script src="/js/jquery.min.js"></script>
 
-    <script>
+ <script type="text/javascript">
+    if ("@ViewBag.Message" !== "")
+    {
+            window.onload = function () {
+                alert("@ViewBag.Message");
+            };
+     }
         (function ($) {
             function processForm(e) {
                 $.ajax({
-                    url: "Cookie/Login",
+                    url: "/Cookie/Login",
                     dataType: 'json',
                     type: 'post',
                     contentType: 'application/json',
                     data: JSON.stringify({ "username": $('#userName').val(), "password": $('#passWord').val() }),
                     processData: false,
                     success: function () {
-                        window.location.href = "HomePage";
+                        window.location.href = "/HomePage";
                     },
                     error: function (jqXhr, textStatus, errorThrown) {
                         console.log(errorThrown);
@@ -46,7 +61,13 @@
             }
             $('#loginform').submit(processForm);
         })(jQuery);
-    </script>
+
+    $('.forgotmypassword-modal').on('click', function (e) {
+        e.preventDefault();
+
+        $('#ForgotMyPasswordModal').modal('show').find('.modal-content').load($(this).attr('href'));
+    });
+</script>
 
 </body>
 </html>
