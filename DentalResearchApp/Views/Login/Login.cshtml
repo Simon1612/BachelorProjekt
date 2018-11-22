@@ -51,7 +51,7 @@
                     data: JSON.stringify({ "username": $('#userName').val(), "password": $('#passWord').val() }),
                     processData: false,
                     success: function () {
-                        window.location.href = "/HomePage";
+                        window.location.href = "/Study/AllStudies";
                     },
                     error: function (jqXhr, textStatus, errorThrown) {
                         console.log(errorThrown);

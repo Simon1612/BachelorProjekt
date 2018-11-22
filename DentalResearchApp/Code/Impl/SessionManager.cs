@@ -57,12 +57,17 @@ namespace DentalResearchApp.Code.Impl
         {
             var coll = _db.GetCollection<StudySessionModel>("study_session_collection");
             var sessions = coll.AsQueryable().Where(x => x.StudyId.Equals(studyId));
-            if (sessions != null)
-            {
-               var sessionsList =  sessions.Select(y => y.SessionName).ToList();
-                return sessionsList;
-            }
-            return new List<string>();
+
+            var sessionsList =  sessions.Select(y => y.SessionName).ToList();
+            return sessionsList;
+        }
+
+        public List<StudySessionModel> GetAllSessionModelsForStudy(int studyId)
+        {
+            var coll = _db.GetCollection<StudySessionModel>("study_session_collection");
+            var sessions = coll.AsQueryable().Where(x => x.StudyId.Equals(studyId)).ToList();
+
+            return sessions;
         }
 
     }

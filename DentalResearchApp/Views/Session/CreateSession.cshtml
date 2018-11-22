@@ -38,13 +38,14 @@
             <hr />
             <li class="row">
                 <div class="col-lg-1 col-md-1 col-sm-1" style="text-align: left"></div>
-                <div class="col-lg-3 col-md-3 col-sm-3" style="text-align: left">
+                <div class=" col-lg-3 col-md-3 col-sm-3"  style="text-align: left">
                     @Html.Label("Select Surveys:")
+                    <div class="popup" onmouseover="displayInfo()">
+                        <i class="glyphicon glyphicon-info-sign"></i>
+                            <span class="popuptext" id="surveyListInfoPopup">If you would like to select and add multiple surveys, simply hold down the ctrl-button while selecting in the list.</span>
+                    </div>
                 </div>
-                <div class="popup" onclick="displayInfo()">!
-                    <span class="popuptext" id="myPopup">If you would like to select and add multiple surveys, simply hold down the ctrl-button while selecting in the list.</span>
-                </div>
-                <div class="col-lg-8 col-md-8 col-sm-8 form-group" style="text-align: left">
+                <div class="col-lg-8 col-md-8 col-sm-8 form-group" style="text-align: center">
                     @Html.ListBoxFor(x => x.SelectedSurveys, Model.AllSurveys, new {style = "width: 350px", multiple = "multiple", @class = "form-control"})
                 </div>
             </li>
@@ -59,9 +60,8 @@
 
 <br />
 <script>
-    // When the user clicks on <div>, open the popup
-    function myFunction() {
-        var popup = document.getElementById("myPopup");
+    function displayInfo() {
+        var popup = document.getElementById("surveyListInfoPopup");
         popup.classList.toggle("show");
     }
 </script>
