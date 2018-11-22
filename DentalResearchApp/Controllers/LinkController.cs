@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
+using DentalResearchApp.Code.Impl;
 using DentalResearchApp.Models;
 using DentalResearchApp.Models.Context;
 using Microsoft.AspNetCore.Authorization;
@@ -41,34 +42,36 @@ namespace DentalResearchApp.Controllers
         }
 
     
-        [HttpPost("sendSurveyLink")]
-        public async Task<JsonResult> SendSurveyLink([FromBody] SendSurveyLinkModel model)
-        {
-            var host = Request.Host.Host;
-            if (host == "localhost")
-                host += ":" + Request.Host.Port;
-            var baseUrl = "https://" + host;
+        //[HttpPost("sendSurveyLink")]
+        //public async Task<JsonResult> SendSurveyLink([FromBody] SendSurveyLinkModel model)
+        //{
+        //    var baseUrl = BaseUrlHelper.GetBaseUrl(Request);
 
-            var manager = _context.ManagerFactory.CreateSurveyLinkManager();
+        //    var manager = _context.ManagerFactory.CreateSurveyLinkManager();
 
-            await manager.SendLink(model.SurveyName, model.ParticipantEmail, model.ParticipantId, baseUrl);
+        //    var link = new SurveyLinkModel
+        //    {
+        //        ParticipantId = model.ParticipantId,
+        //        ParticipantEmail = model.ParticipantEmail,
+        //        SurveyName = 
+        //    }
 
-            return Json("Ok");
-        }
+
+        //    await manager.SendLink(model.SurveyName, model.ParticipantEmail, model.ParticipantId, baseUrl);
+
+        //    return Json("Ok");
+        //}
 
         [HttpPost("sendSignupLink")]
-        public async Task<JsonResult> SendSignupLink([FromBody] SendSignupLinkModel model)
+        public async Task<IActionResult> SendSignupLink(InviteUserViewModel model)
         {
-            var host = Request.Host.Host;
-            if (host == "localhost")
-                host += ":" + Request.Host.Port;
-            var baseUrl = "https://" + host;
+            var baseUrl = BaseUrlHelper.GetBaseUrl(Request);
 
             var manager = _context.ManagerFactory.CreateSignupLinkManager();
 
-            await manager.SendLink(model.RecipiantEmail, baseUrl);
+            await manager.SendLink(model.Email, baseUrl);
 
-            return Json("Ok");
+            return Redirect("/Admin");
         }
     }
 }

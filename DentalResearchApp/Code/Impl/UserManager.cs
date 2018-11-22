@@ -33,7 +33,6 @@ namespace DentalResearchApp.Code.Impl
                 }
             }
 
-
             return user;
         }
 
@@ -46,6 +45,12 @@ namespace DentalResearchApp.Code.Impl
             await credsColl.UpdateOneAsync(x => x.UserName == model.UserName, update);
         }
 
+        public async Task<UserCredentials> GetUserCredentials(string email)
+        {
+            var credsColl = _db.GetCollection<UserCredentials>("credentials_collection");
+
+            return await credsColl.AsQueryable().FirstOrDefaultAsync(x => x.UserName == email);
+        }
 
         public async Task<UserModel> GetUserModel(string eMail)
         {
@@ -68,6 +73,29 @@ namespace DentalResearchApp.Code.Impl
 
             await userColl.InsertOneAsync(userModel);
             await credsColl.InsertOneAsync(userCreds);
+        }
+
+        public async Task DeleteUser(UserModel userModel, UserCredentials userCreds)
+        {
+            var userColl = _db.GetCollection<UserModel>("user_collection");
+            var credsColl = _db.GetCollection<UserCredentials>("credentials_collection");
+
+            await userColl.DeleteOneAsync(x => x.Id == userModel.Id);
+            await credsColl.DeleteOneAsync(x => x.Id == userCreds.Id);
+        }
+
+        public async Task UpdateUserData(UserModel userModel)
+        {
+            var userColl = _db.GetCollection<UserModel>("user_collection");
+
+            var update = Builders<UserModel>.Update.Set(x => x.Role, userModel.Role)
+                .Set(x => x.FirstName, userModel.FirstName)
+                .Set(x => x.LastName, userModel.LastName)
+                .Set(x => x.Institution, userModel.Institution)
+                .Set(x => x.Country, userModel.Country)
+                .Set(x => x.Email, userModel.Email);
+
+            await userColl.UpdateOneAsync(x => x.Id == userModel.Id, update);
         }
     }
 }

@@ -1,4 +1,4 @@
-﻿@model DentalResearchApp.Models.StudyDetailsViewModel
+﻿@*@model DentalResearchApp.Models.StudyDetailsViewModel
 
 <div class="modal-header">
     <link rel="stylesheet" href="/css/Index.css" type="text/css" />
@@ -25,27 +25,27 @@
             </div>
         </li>
     </ul>
-    <hr/>
+    <hr />
     <div class="row">
         <div class="col-lg-6 col-md-6 col-sm-6">
             <h4 class="secondHeadline" style="font-weight: bold">Participants</h4>
             <table class="customTable">
                 <thead>
-                <tr>
-                    <th class="customTh">Participants</th>
-                </tr>
+                    <tr>
+                        <th class="customTh">Participants</th>
+                    </tr>
                 </thead>
-                @if (Model.Participants.Any())
+                @if (Model.)
                 {
                     <tbody>
-                    @foreach (var item in Model.Participants)
-                    {
-                        <tr>
-                            <td class="customTd" id="patientId">
-                                @Html.ActionLink(item.ToString(), "UserSessions", "UserSession", new { studyId = Model.StudyId, participantId = item }, null)
-                            </td>
-                        </tr>
-                    }
+                        @foreach (var item in Model.Participants)
+                        {
+                            <tr>
+                                <td class="customTd" id="patientId">
+                                    @item
+                                </td>
+                            </tr>
+                        }
                     </tbody>}
             </table>
         </div>
@@ -53,31 +53,31 @@
             <h4 class="secondHeadline" style="font-weight: bold">Sessions</h4>
             <table class="customTable">
                 <thead>
-                <tr>
-                    <th class="customTh">Session Names</th>
-                </tr>
+                    <tr>
+                        <th class="customTh">Session Names</th>
+                    </tr>
                 </thead>
                 @if (Model.Sessions.Any())
                 {
                     <tbody>
-                    @foreach (var item in Model.Sessions)
-                    {
-                        <tr>
-                            <td class="customTd">
-                                @Html.ActionLink(item,"SessionDetails","Session", new {studyId = Model.StudyId, sessionName = item, studyName = Model.StudyName}, null)
-                            </td>
-                        </tr>
-                    }
+                        @foreach (var item in Model.Sessions)
+                        {
+                            <tr>
+                                <td class="customTd">
+                                    @Html.ActionLink(item, "SessionDetails", "Session", new { studyId = Model.StudyId, sessionName = item, studyName = Model.StudyName }, null)
+                                </td>
+                            </tr>
+                        }
                     </tbody>
-                } 
+                }
             </table>
-            <br/>
-            @Html.ActionLink("Create new Session", "CreateSession", "Session", new {studyId = Model.StudyId, studyName = Model.StudyName}, new {@class="btn-sm btn-success"})
+            <br />
+            @Html.ActionLink("Create new Session", "CreateSession", "Session", new { studyId = Model.StudyId, studyName = Model.StudyName }, new { @class = "btn-sm btn-success" })
         </div>
     </div>
 </div>
-<br/>
+<br />
 <div class="modal-footer" style="text-align: center">
     <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
 </div>
-<div class="clearfix"></div>
+<div class="clearfix"></div>*@

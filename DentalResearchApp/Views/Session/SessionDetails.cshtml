@@ -46,17 +46,35 @@
             }
         </table>
         <br />
+        
+        <div class="col-lg-12 col-md-12" style="text-align: center">
+
+            @using (Html.BeginForm("StartSession", "Session", HttpMethod.Post))
+            {
+                @Html.Hidden("studyId", Model.StudyId)
+                @Html.Hidden("sessionName", Model.SessionName)
+                <input type="submit" value="Start Session" class="btn btn-success" style='visibility: @(Model.IsStarted == false? "visible": "hidden")' />
+            }
+
+        </div>
+        <br/>
+        <br/>
+        <br/>
+
         <div class="col-lg-12 col-md-12 col-sm-12" style="text-align: center">
+
+            
+
             <div class="col-lg-6 col-md-6" style="text-align: right">
                 @using (Html.BeginForm("DeleteSession", "Session", HttpMethod.Post))
                 {
                     @Html.Hidden("sessionName", Model.SessionName)
                     @Html.Hidden("studyId", Model.StudyId)
-                    <input type="submit" value="Delete Session" class="btn btn-danger" />
+                    <input type="submit" value="Delete Session" class="btn btn-danger"/>
                 }
             </div>
             <div class="col-lg-6 col-md-6" style="text-align: left">
-                @Html.ActionLink("Back to Studies List", "AllStudies", "Study", null, new { @class = "btn btn-primary" })
+                @Html.ActionLink("Back to Studies List", "AllStudies", "Study", null, new {@class = "btn btn-primary"})
             </div>
         </div>
     </div>

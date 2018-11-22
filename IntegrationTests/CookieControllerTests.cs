@@ -84,19 +84,20 @@ namespace IntegrationTests
         [Fact]
         public async Task CookieController_VerifyLinkIdThatExists_CookieIsReturned()
         {
-            var linkId = "LinkId";
             var participantEmail = "test@test.dk";
-            var id = "id";
+            var id = 1;
             var surveyName = "TestSurvey";
 
 
             var linkModel = new SurveyLinkModel()
             {
-                LinkId = linkId,
                 SurveyName = surveyName,
                 ParticipantId = id,
                 ParticipantEmail = participantEmail
             };
+
+            var linkId = linkModel.LinkId;
+
 
             var linkManager = _fixture.ManagerFactory.CreateSurveyLinkManager();
             await linkManager.SaveSurveyLink(linkModel);

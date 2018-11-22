@@ -8,6 +8,6 @@ namespace DentalResearchApp.Code.Interfaces
         Task SaveSurveyLink(SurveyLinkModel surveyLink);
         Task DeleteLink(string linkId);
         Task<SurveyLinkModel> GetLink(string linkId);
-        Task SendLink(string surveyName, string participantEmail, string participantId, string baseUrl);
+        Task SendLink(SurveyLinkModel link, string baseUrl);
     }
 }
