@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using DentalResearchApp.Models;
 using DentalResearchApp.Models.Context;
 using Microsoft.AspNetCore.Mvc;
+using MongoDB.Bson;
 
 namespace DentalResearchApp.Controllers
 {
@@ -32,7 +33,8 @@ namespace DentalResearchApp.Controllers
             {
                 ParticipantId = participantId,
                 StudyName = study.StudyName,
-                SessionNames = sessionNames
+                SessionNames = sessionNames,
+                StudyId = studyId
             };
 
 
@@ -40,8 +42,12 @@ namespace DentalResearchApp.Controllers
         }
 
         [HttpGet("UserSessionDetailsModal")]
-        public IActionResult UserSessionDetailsModal() //TODO:Send identifier
+        public async Task<IActionResult> UserSessionDetailsModal(int studyId, int participantId, string sessionName)
         {
+            var manager = _context.ManagerFactory.CreateSessionManager();
+            var studySession = await manager.GetStudySession(studyId, sessionName);
+
+            var userSession = await manager.GetAllUserSessionsForStudySession(studySession.Id, participantId);
 
 
 

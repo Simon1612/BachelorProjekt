@@ -93,7 +93,7 @@ namespace IntegrationTests.Helpers
                 throw new UnauthorizedAccessException("Unable to login with user");
         }
 
-        public async Task SignInAsVolunteer(string surveyName, string linkId, string participantEmail, string participantId)
+        public async Task SignInAsVolunteer(string surveyName, string linkId, string participantEmail, int participantId)
         {
             var linkModel = new SurveyLinkModel()
             {
@@ -107,7 +107,7 @@ namespace IntegrationTests.Helpers
             await manager.SaveSurveyLink(linkModel);
 
 
-            var verifyLinkIdModel = new VerifyLinkIdModel() { LinkId = linkId };
+            var verifyLinkIdModel = new VerifyLinkIdModel() { LinkId = linkModel.LinkId };
             var content = JsonConvert.SerializeObject(verifyLinkIdModel);
 
             var request = new HttpRequestMessage

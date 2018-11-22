@@ -41,7 +41,7 @@
                 {
                     <tr>
                         <td class="customTd">
-                            @Html.ActionLink(item, "UserSessionDetailsModal", "UserSession", new { studyId = Model.StudyName, sessionName = item, studyName = Model.StudyName }, new { @class = "UserSessionDetails-modal" })
+                            @Html.ActionLink(item, "UserSessionDetailsModal", "UserSession", new { studyId = Model.StudyId, ParticipantId = Model.ParticipantId , sessionName = item, studyName = Model.StudyName }, new { @class = "UserSessionDetails-modal" })
                         </td>
                     </tr>
                 }

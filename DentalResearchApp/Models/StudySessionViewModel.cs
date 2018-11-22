@@ -7,6 +7,7 @@ namespace DentalResearchApp.Models
     {
         public string SessionName { get; set; }
         public int StudyId { get; set; }
+        public bool IsStarted { get; set; }
         public IEnumerable<string> SelectedSurveys { get; set; }
         public IEnumerable<SelectListItem> AllSurveys { get; set; }
     }

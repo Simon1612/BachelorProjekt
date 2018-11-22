@@ -3,6 +3,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using DentalResearchApp.Code.Interfaces;
 using DentalResearchApp.Models;
+using MongoDB.Bson;
 using MongoDB.Driver;
 using MongoDB.Driver.Linq;
 
@@ -23,25 +24,18 @@ namespace DentalResearchApp.Code.Impl
 
             return await collection.AsQueryable().FirstOrDefaultAsync(x => x.LinkId == linkId);
         }
-           
-        public async Task SendLink(string surveyName, string participantEmail, string participantId, string baseUrl)
-        {
-            var linkId = Guid.NewGuid().ToString("N");
 
-            var link = new SurveyLinkModel()
-            {
-                LinkId = linkId,
-                SurveyName = surveyName,
-                ParticipantEmail = participantEmail,
-                ParticipantId = participantId
-            };
+        public async Task SendLink(SurveyLinkModel link, string baseUrl)
+        {
+
+
 
             await SaveSurveyLink(link);
 
 
             //Send emails here?
             var actionUrl = "/surveyrunner/index?id=";
-            var surveyLink = baseUrl + actionUrl + linkId;
+            var surveyLink = baseUrl + actionUrl + link.LinkId;
 
             //TODO: Create and send email?
             var mailHelper = new MailHelper();
@@ -66,22 +60,6 @@ namespace DentalResearchApp.Code.Impl
             var list = await collection.AsQueryable().ToListAsync();
 
             await collection.DeleteOneAsync(x => x.LinkId == linkId);
-        }
-
-
-        public void SeedWithDefaultLinks()
-        {
-            var collection = _db.GetCollection<SurveyLinkModel>("surveyLink_collection");
-
-            var defaultLink = new SurveyLinkModel()
-            {
-                LinkId = Guid.Empty.ToString(),
-                SurveyName = "IncomeSurvey",
-                ParticipantId = Guid.NewGuid().ToString(),
-                ParticipantEmail = DateTime.Now.ToString("fffffff") + "@fakemail.com"
-            };
-
-            collection.InsertOne(defaultLink);
         }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using DentalResearchApp.Code.Impl;
 using DentalResearchApp.Models;
 using DentalResearchApp.Models.Context;
 using Microsoft.AspNetCore.Mvc;
@@ -18,23 +19,47 @@ namespace DentalResearchApp.Controllers
             _context = context;
         }
 
-        //[HttpPost("StartSession")]
-        //public async Task<IActionResult> StartSession(int studyId, string sessionName)
-        //{
-        //    var manager = _context.ManagerFactory.CreateSessionManager();
-        //    var studySessionModel = manager.GetStudySession(studyId, sessionName).Result;
+        [HttpPost("StartSession")]
+        public async Task StartSession(int studyId, string sessionName)
+        {
+            var sessionManager = _context.ManagerFactory.CreateSessionManager();
+            var externalDbManager = _context.ManagerFactory.CreateExternalDbManager();
+            var surveyLinkManager = _context.ManagerFactory.CreateSurveyLinkManager();
 
-        //    var id = studySessionModel.Id;
+            var studySessionModel = sessionManager.GetStudySession(studyId, sessionName).Result;
 
-        //    var userSessions = await  manager.GetAllUserSessionsForStudySession(id);
+            var id = studySessionModel.Id;
 
-        //    foreach (var survey in studySessionModel.Surveys)
-        //    {
-                
-        //    }
+            var userSessions = await sessionManager.GetAllUserSessionsForStudySession(id);
+            var participants = externalDbManager.GetParticipantInfo(studyId);
 
+            foreach (var survey in studySessionModel.Surveys)
+            {
 
-        //}
+                foreach (var session in userSessions)
+                {
+                    //Create surveylink wih a reference to UserSessions ObjectId
+
+                    var participantId = session.ParticipantId;
+                    var participantInfo = participants.FirstOrDefault(x => x.ParticipantId == participantId);
+
+                    var baseUrl = BaseUrlHelper.GetBaseUrl(Request);
+
+                    var link = new SurveyLinkModel
+                    {
+                        ParticipantId = participantInfo.ParticipantId,
+                        //ParticipantEmail = participantInfo.Email, //TODO
+                        ParticipantEmail = "casperstenner@gmail.com",
+                        SurveyName = survey,
+                        UserSessionId = session.Id
+                    };
+
+                    await surveyLinkManager.SendLink(link, baseUrl);
+                }
+            }
+
+            await sessionManager.SetStudySessionStarted(studyId, sessionName);
+        }
 
 
         [HttpGet("SessionDetails")]
@@ -49,7 +74,8 @@ namespace DentalResearchApp.Controllers
                 SessionName = sessionModel.SessionName,
                 StudyId = sessionModel.StudyId,
                 AllSurveys = GetAllSurveyNamesList(),
-                SelectedSurveys = sessionModel.Surveys
+                SelectedSurveys = sessionModel.Surveys,
+                IsStarted = sessionModel.IsStarted
             };
 
             ViewBag.studyName = studyName;
@@ -75,7 +101,8 @@ namespace DentalResearchApp.Controllers
             {
                 SessionName = sessionModel.SessionName,
                 StudyId = sessionModel.StudyId,
-                Surveys = sessionModel.SelectedSurveys.ToList()
+                Surveys = sessionModel.SelectedSurveys.ToList(),
+                IsStarted = false
             };
 
             await sessionManager.CreateStudySession(studySessionModel);

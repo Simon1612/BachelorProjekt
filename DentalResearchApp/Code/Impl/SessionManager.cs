@@ -27,6 +27,13 @@ namespace DentalResearchApp.Code.Impl
         }
 
 
+        public async Task<List<UserSession>> GetAllUserSessionsForStudySession(ObjectId studySessionId, int participantId)
+        {
+            var userSessionCollection = _db.GetCollection<UserSession>("user_session_collection");
+
+            return await userSessionCollection.AsQueryable().Where(x => x.StudySessionId == studySessionId && x.ParticipantId == participantId).ToListAsync();
+        }
+
         public async Task CreateStudySession(StudySessionModel studySessionModel)
         {
             var studySessionCollection = _db.GetCollection<StudySessionModel>("study_session_collection");
@@ -66,20 +73,17 @@ namespace DentalResearchApp.Code.Impl
             await studySessionCollection.DeleteOneAsync(x => x.Id == studySessionModel.Id);
         }
 
-        //public async Task<List<UserSession>> GetUserSessionsForStudy(int studyId, int participantId)
-        //{
-        //    var studySessionColl = _db.GetCollection<StudySessionModel>("study_session_collection");
-        //    var studySession = await studySessionColl.AsQueryable().Where()
-
-        //    var userSessionColl = _db.GetCollection<UserSession>("user_session_collection");
-
-        //    var userSessionsForStudy = await userSessionColl.AsQueryable().Where(x => x.StudySessionId == studySession.Id).ToListAsync();
 
 
+        public async Task SetStudySessionStarted(int studyId, string sessionName)
+        {
+            var coll = _db.GetCollection<StudySessionModel>("study_session_collection");
 
+            var update = Builders<StudySessionModel>.Update.Set(x => x.IsStarted, true);
 
-        //    return userSessionsForStudy;
-        //}
+            await coll.UpdateOneAsync(x => x.StudyId == studyId && x.SessionName == sessionName, update);
+        }
+
 
         public List<string> GetAllStudySessionsNamesForStudy(int studyId)
         {
