@@ -11,7 +11,6 @@ namespace DentalResearchApp.Code.Interfaces
         Task DeleteSession(StudySessionModel studySessionModel);
         Task<StudySessionModel> GetStudySession(int studyId, string sessionName);
         Task CreateUserSession(UserSession userSessionModel);
-        List<string> GetAllSessionsForStudy(int studyId);
         List<string> GetAllStudySessionsNamesForStudy(int studyId);
         Task<List<UserSession>> GetAllUserSessionsForStudySession(ObjectId studySessionId);
         Task SetStudySessionStarted(int studyId, string sessionName);

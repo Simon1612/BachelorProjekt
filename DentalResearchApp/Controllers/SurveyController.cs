@@ -157,6 +157,7 @@ namespace DentalResearchApp.Controllers
 
                 findResultsSurveysViewModel.SessionId = selectedSession.Id;
                 findResultsSurveysViewModel.SelectedSession = selectedSession.SessionName;
+
                 findResultsSurveysViewModel.Surveys = selectedSession.Surveys;
             }
 
@@ -183,9 +184,12 @@ namespace DentalResearchApp.Controllers
                 findResultsSurveysViewModel.Studies =
                     externalManager.GetAllStudyListModels().Select(x => x.StudyName).ToList();
 
+                findResultsSurveysViewModel.Participants = externalManager.GetParticipantIds(findResultsViewModel.StudyId);
+
                 findResultsSurveysViewModel.SessionId = selectedSession.Id;
                 findResultsSurveysViewModel.SelectedSession = selectedSession.SessionName;
                 findResultsSurveysViewModel.Surveys = selectedSession.Surveys;
+                findResultsSurveysViewModel.SelectedSurvey = findResultsViewModel.SelectedSurvey;
             }
 
             return View("FindResults", findResultsSurveysViewModel);
