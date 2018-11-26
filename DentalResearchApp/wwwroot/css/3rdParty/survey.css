@@ -271,7 +271,7 @@
                 .sv_main .sv_container .sv_body .sv_progress .sv_progress_bar {
                     height: 100%;
                     min-width: 100px;
-                    position: relative;
+                    position: auto;
                     margin-top: 2em;
                 }
 

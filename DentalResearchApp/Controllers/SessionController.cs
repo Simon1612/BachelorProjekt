@@ -20,7 +20,7 @@ namespace DentalResearchApp.Controllers
         }
 
         [HttpPost("StartSession")]
-        public async Task StartSession(int studyId, string sessionName)
+        public async Task<IActionResult> StartSession(int studyId, string sessionName)
         {
             var sessionManager = _context.ManagerFactory.CreateSessionManager();
             var externalDbManager = _context.ManagerFactory.CreateExternalDbManager();
@@ -58,6 +58,7 @@ namespace DentalResearchApp.Controllers
             }
 
             await sessionManager.SetStudySessionStarted(studyId, sessionName);
+            return RedirectToAction("AllStudies", "Study");
         }
 
 
