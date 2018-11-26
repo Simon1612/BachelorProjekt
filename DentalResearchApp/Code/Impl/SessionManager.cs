@@ -4,6 +4,8 @@ using DentalResearchApp.Code.Interfaces;
 using DentalResearchApp.Models;
 using MongoDB.Driver;
 using MongoDB.Driver.Linq;
+using System.Linq;
+using MongoDB.Bson;
 
 namespace DentalResearchApp.Code.Impl
 {
@@ -16,10 +18,26 @@ namespace DentalResearchApp.Code.Impl
             _db = client.GetDatabase(databaseName);
         }
 
-        public async Task CreateSession(StudySessionModel studySessionModel)
+
+        public async Task<List<UserSession>> GetAllUserSessionsForStudySession(ObjectId studySessionId)
+        {
+            var userSessionCollection = _db.GetCollection<UserSession>("user_session_collection");
+
+            return await userSessionCollection.AsQueryable().Where(x => x.StudySessionId == studySessionId).ToListAsync();
+        }
+
+
+        public async Task<List<UserSession>> GetAllUserSessionsForStudySession(ObjectId studySessionId, int participantId)
+        {
+            var userSessionCollection = _db.GetCollection<UserSession>("user_session_collection");
+
+            return await userSessionCollection.AsQueryable().Where(x => x.StudySessionId == studySessionId && x.ParticipantId == participantId).ToListAsync();
+        }
+
+        public async Task CreateStudySession(StudySessionModel studySessionModel)
         {
             var studySessionCollection = _db.GetCollection<StudySessionModel>("study_session_collection");
-
+            
             var studySession = new StudySessionModel
             {
                 SessionName = studySessionModel.SessionName,
@@ -28,6 +46,13 @@ namespace DentalResearchApp.Code.Impl
             };
 
             await studySessionCollection.InsertOneAsync(studySession);
+        }
+
+        public async Task CreateUserSession(UserSession userSessionModel)
+        {
+            var userSessionCollection = _db.GetCollection<UserSession>("user_session_collection");
+
+            await userSessionCollection.InsertOneAsync(userSessionModel);
         }
 
         public async Task<StudySessionModel> GetStudySession(int studyId, string sessionName)
@@ -39,6 +64,8 @@ namespace DentalResearchApp.Code.Impl
             return session;
         }
 
+
+
         public async Task DeleteSession(StudySessionModel studySessionModel)
         {
             var studySessionCollection = _db.GetCollection<StudySessionModel>("study_session_collection");
@@ -46,17 +73,28 @@ namespace DentalResearchApp.Code.Impl
             await studySessionCollection.DeleteOneAsync(x => x.Id == studySessionModel.Id);
         }
 
-        public List<string> GetAllSessionsForStudy(int studyId)
+
+
+        public async Task SetStudySessionStarted(int studyId, string sessionName)
+        {
+            var coll = _db.GetCollection<StudySessionModel>("study_session_collection");
+
+            var update = Builders<StudySessionModel>.Update.Set(x => x.IsStarted, true);
+
+            await coll.UpdateOneAsync(x => x.StudyId == studyId && x.SessionName == sessionName, update);
+        }
+
+
+        public List<string> GetAllStudySessionsNamesForStudy(int studyId)
         {
             var coll = _db.GetCollection<StudySessionModel>("study_session_collection");
             var sessions = coll.AsQueryable().Where(x => x.StudyId.Equals(studyId));
-            if (!sessions.Equals(null))
+            if (sessions != null)
             {
                var sessionsList =  sessions.Select(y => y.SessionName).ToList();
                 return sessionsList;
             }
             return new List<string>();
         }
-
     }
 }

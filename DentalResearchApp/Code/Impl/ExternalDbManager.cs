@@ -44,6 +44,24 @@ namespace DentalResearchApp.Code.Impl
             }
         }
 
+        public List<ParticipantInfo> GetParticipantInfo(int studyId)
+        {
+            using (var db = GetMySqlConnection())
+            {
+                var query =
+                    "SELECT bachelordb.participant.email AS Email, bachelordb.participant.id_participant as ParticipantId FROM bachelordb.participant " +
+                    "INNER JOIN bachelordb.studyparticipant " +
+                    "ON bachelordb.studyparticipant.id_participant = bachelordb.participant.id_participant " +
+                    $"WHERE id_study = {studyId}";
+
+                var result = db.Query<ParticipantInfo>(query).ToList();
+
+                return result;
+            }
+        }
+
+
+
         public Study GetStudy(int studyId)
         {
             using (var db = GetMySqlConnection())

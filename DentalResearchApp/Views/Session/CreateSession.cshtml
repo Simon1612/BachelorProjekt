@@ -21,38 +21,50 @@
         <h4 style="text-align: center">Current Study: @ViewBag.studyName</h4>
         <hr/>
     </div>
-    <div class="col-lg-12 col-md-12 col-sm-12">
-        @using (Html.BeginForm("CreateSession", "Session", FormMethod.Post))
-        {
-            @Html.Hidden("studyId", Model.StudyId)
-            <ul class="list-unstyled">
-                <li class="row">
-                    <div class="col-lg-1 col-md-1 col-sm-1" style="text-align: left"></div>
-                    <div class="col-lg-3 col-md-3 col-sm-3" style="text-align: left">
-                        @Html.Label("Session Name:")
-                    </div>
-                    <div class="col-lg-8 col-md-8 col-sm-8" style="text-align: left">
-                        @Html.TextBoxFor(x => x.SessionName, new { @class = "text form-control", required = true, maxlength = "200", style = "width: 350px"})
-                    </div>
-                </li>
-                <hr />
-                <li class="row">
-                    <div class="col-lg-1 col-md-1 col-sm-1" style="text-align: left"></div>
-                    <div class="col-lg-3 col-md-3 col-sm-3" style="text-align: left">
-                        @Html.Label("Select Surveys:")
-                    </div>
-                    <div class="col-lg-8 col-md-8 col-sm-8 form-group" style="text-align: left">
-                        @Html.ListBoxFor(x => x.SelectedSurveys, Model.AllSurveys, new { style = "width: 350px", multiple="multiple", @class="form-control"})
-                    </div>
-                </li>
-            </ul>
+<div class="col-lg-12 col-md-12 col-sm-12">
+    @using (Html.BeginForm("CreateSession", "Session", FormMethod.Post))
+    {
+        @Html.Hidden("studyId", Model.StudyId)
+        <ul class="list-unstyled">
+            <li class="row">
+                <div class="col-lg-1 col-md-1 col-sm-1" style="text-align: left"></div>
+                <div class="col-lg-3 col-md-3 col-sm-3" style="text-align: left">
+                    @Html.Label("Session Name:")
+                </div>
+                <div class="col-lg-8 col-md-8 col-sm-8" style="text-align: left">
+                    @Html.TextBoxFor(x => x.SessionName, new { @class = "text form-control", required = true, maxlength = "200", style = "width: 350px"})
+                </div>
+            </li>
             <hr />
-            <div style="text-align: center">
-                <input type="submit" class="btn btn-success form-group" value="Create Session" id="SubmitSessionBtn" />
-                @Html.ActionLink(Model.SessionName == null ? "Back" : "Delete", "AllStudies", "Study", null, new {@class = Model.SessionName == null ? "btn btn-primary" : "btn btn-danger"})
-            </div>
-        }
-    </div>
+            <li class="row">
+                <div class="col-lg-1 col-md-1 col-sm-1" style="text-align: left"></div>
+                <div class="col-lg-3 col-md-3 col-sm-3" style="text-align: left">
+                    @Html.Label("Select Surveys:")
+                </div>
+                <div class="popup" onclick="displayInfo()">!
+                    <span class="popuptext" id="myPopup">If you would like to select and add multiple surveys, simply hold down the ctrl-button while selecting in the list.</span>
+                </div>
+                <div class="col-lg-8 col-md-8 col-sm-8 form-group" style="text-align: left">
+                    @Html.ListBoxFor(x => x.SelectedSurveys, Model.AllSurveys, new {style = "width: 350px", multiple = "multiple", @class = "form-control"})
+                </div>
+            </li>
+        </ul>
+        <hr />
+        <div style="text-align: center">
+            <input type="submit" class="btn btn-success form-group" value="Create Session" id="SubmitSessionBtn" />
+            @Html.ActionLink(Model.SessionName == null ? "Back" : "Delete", "AllStudies", "Study", null, new {@class = Model.SessionName == null ? "btn btn-primary" : "btn btn-danger"})
+        </div>
+    }
+</div>
+
 <br />
+<script>
+    // When the user clicks on <div>, open the popup
+    function myFunction() {
+        var popup = document.getElementById("myPopup");
+        popup.classList.toggle("show");
+    }
+</script>
+
 </body>
 </html>

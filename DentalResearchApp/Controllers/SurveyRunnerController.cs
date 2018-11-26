@@ -58,12 +58,18 @@ namespace DentalResearchApp.Controllers
             var participantId = HttpContext.User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.NameIdentifier && x.Type != null).Value;
             var linkId = HttpContext.User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.Uri && x.Type != null).Value;
 
+
+            //Get link model
+            var linkManager = _context.ManagerFactory.CreateSurveyLinkManager();
+            var linkModel = await linkManager.GetLink(linkId);
+
             var result = new SurveyResult
             {
                 SurveyName = model.PostId,
                 JsonResult = model.SurveyResult,
-                ParticipantId = participantId,
+                ParticipantId = int.Parse(participantId),
                 TimeStamp = DateTime.Now,
+                UserSessionId = linkModel.UserSessionId
             };
 
             //Save result to DB
@@ -74,7 +80,6 @@ namespace DentalResearchApp.Controllers
             await HttpContext.SignOutAsync();
             
             //Delete link from DB
-            var linkManager = _context.ManagerFactory.CreateSurveyLinkManager();
             await linkManager.DeleteLink(linkId);
 
 

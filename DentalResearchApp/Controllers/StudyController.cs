@@ -37,7 +37,7 @@ namespace DentalResearchApp.Controllers
             var extManager = _context.ManagerFactory.CreateExternalDbManager();
             var participants = extManager.GetParticipantIds(id);
 
-            var sessions = sessionManager.GetAllSessionsForStudy(id);
+            var sessions = sessionManager.GetAllStudySessionsNamesForStudy(id);
             var study = extManager.GetStudy(id);
 
             var viewModel = new StudyDetailsViewModel

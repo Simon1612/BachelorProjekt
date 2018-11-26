@@ -45,7 +45,7 @@ namespace IntegrationTests
         public async Task SurveyRunnerController_GetSurveyWithCookie_ReturnsSurvey()
         {
             var surveyName = "TestSurvey";
-            await _fixture.SignInAsVolunteer(surveyName, "asdf", "asdf", "asdf");
+            await _fixture.SignInAsVolunteer(surveyName, "asdf," ,"asdf", 1);
 
             var surveyManager = _fixture.ManagerFactory.CreateSurveyManager();
             await surveyManager.CreateSurvey(surveyName);
@@ -72,7 +72,7 @@ namespace IntegrationTests
             var surveyName = "TestSurvey";
             var claimedSurveyName = "I am special";
 
-            await _fixture.SignInAsVolunteer(claimedSurveyName, "asdf", "asdf", "asdf");
+            await _fixture.SignInAsVolunteer(claimedSurveyName, "asdf", "asdf", 1);
 
             var request = new HttpRequestMessage
             {
@@ -91,7 +91,7 @@ namespace IntegrationTests
         {
             var linkId = "LinkId";
             var participantEmail = "test@test.dk";
-            var participantId = "id";
+            var participantId = 1;
             var surveyName = "TestSurvey";
 
             var result = "{}";

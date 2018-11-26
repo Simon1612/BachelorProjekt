@@ -7,9 +7,11 @@ using MongoDB.Bson.Serialization.Attributes;
 
 namespace DentalResearchApp.Models
 {
-    public class PatientModel
+    public class UserSession
     {
         [BsonId]
         public ObjectId Id { get; set; }
+        public int ParticipantId { get; set; }
+        public ObjectId StudySessionId { get; set; }
     }
 }
