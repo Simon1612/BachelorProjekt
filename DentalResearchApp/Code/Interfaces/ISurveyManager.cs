@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using DentalResearchApp.Models;
+using MongoDB.Bson;
 
 namespace DentalResearchApp.Code.Interfaces
 {
@@ -23,5 +24,6 @@ namespace DentalResearchApp.Code.Interfaces
         Task CreateSurvey(string surveyName);
 
         Task<List<string>> GetAllNames();
+        Task<List<string>> GetResultsForUserSessionSurvey(int participantId, ObjectId userSessionId, string surveyName);
     }
 }

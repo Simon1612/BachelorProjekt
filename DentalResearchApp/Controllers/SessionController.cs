@@ -48,7 +48,7 @@ namespace DentalResearchApp.Controllers
                     var link = new SurveyLinkModel
                     {
                         ParticipantId = participantInfo.ParticipantId,
-                        //ParticipantEmail = participantInfo.Email, //TODO
+                        //ParticipantEmail = participantInfo.Email, //TODO: FIX
                         ParticipantEmail = "casperstenner@gmail.com",
                         SurveyName = survey,
                         UserSessionId = session.Id

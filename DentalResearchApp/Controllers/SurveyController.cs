@@ -4,6 +4,7 @@ using DentalResearchApp.Models;
 using DentalResearchApp.Models.Context;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using MongoDB.Bson;
 
 namespace DentalResearchApp.Controllers
 {
@@ -88,6 +89,18 @@ namespace DentalResearchApp.Controllers
         {
             var manager = _context.ManagerFactory.CreateSurveyManager();
             var survey = await manager.GetResults(postId);
+
+            return Json(survey);
+        }
+
+        [HttpGet("GetResultsForUserSession")]
+        public async Task<JsonResult> GetResultsForUserSession(int participantId, string userSessionId, string surveyName)
+        {
+            var manager = _context.ManagerFactory.CreateSurveyManager();
+
+            var asdf = new ObjectId(userSessionId);
+               
+            var survey = await manager.GetResultsForUserSessionSurvey(participantId, asdf, surveyName);
 
             return Json(survey);
         }
