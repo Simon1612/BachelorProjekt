@@ -20,7 +20,7 @@ namespace DentalResearchApp.Controllers
             _context = context;
         }
 
-        public async Task<IActionResult> UserSessions(int participantId, int studyId)
+        public IActionResult UserSessions(int participantId, int studyId)
         {
             var study = _context.ManagerFactory.CreateExternalDbManager().GetStudy(studyId);
 

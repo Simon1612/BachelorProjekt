@@ -5,15 +5,15 @@
 <html>
 <head>
     <link rel="stylesheet" href="/css/Styles.css" type="text/css">
-    @*<link rel="stylesheet" href="../css/3rdParty/bootstrap.min.css" />*@
+    <link rel="stylesheet" href="~/css/3rdParty/bootstrap.min.css" />
     <script src="~/js/3rdParty/jquery.min.js"></script>
-    @*<script src="~/js/3rdParty/bootstrap.min.js"></script>*@
+    <script src="~/js/3rdParty/bootstrap.min.js"></script>
 
     <meta charset="utf-8" />
     <title>Dental Research App - Log In</title>
 
 </head>
-<body>
+<body class="login">
     <br />
     <h1 class="mainHeadline" style="padding-bottom:0px; margin-bottom:0px;">Department of Dentistry and Oral Health Aarhus<br /> Dental Research App</h1>
     <br />
@@ -23,9 +23,9 @@
             <input type="text" placeholder="Username" name="userName" class="inputField" id="userName" />
             <input type="password" placeholder="Password" name="passWord" class="inputField" id="passWord" style="margin-left: 5px" />
             <br />
-            <input type="submit" value="Sign in" form="loginform" style="margin-left: 140px; margin-top: 40px">
+            <Button type="submit" form="loginform" class="btn btn-success" style="margin-top: 20px; margin-bottom: 20px; text-align: center">Sign in</Button>
         </form>
-        <button href="/Login/ForgotMyPasswordModal" class="forgotmypassword-modal buttonForgotPswd">Forgot My Password</button>
+        <button href="/Login/ForgotMyPasswordModal" class="forgotmypassword-modal btn btn-primary">Forgot My Password</button>
         <div class="modal fade text-center" id="ForgotMyPasswordModal" role="dialog">
             <div class="modal-dialog">
                 <div class="modal-content">
@@ -62,7 +62,7 @@
             $('#loginform').submit(processForm);
         })(jQuery);
 
-    $('.forgotmypassword-modal').on('click', function (e) {
+     $('.forgotmypassword-modal').on('click', function (e) {
         e.preventDefault();
 
         $('#ForgotMyPasswordModal').modal('show').find('.modal-content').load($(this).attr('href'));

@@ -8,11 +8,11 @@
 <html>
 <head>
     <meta charset="utf-8" />
-    <link rel="stylesheet" href="../css/3rdParty/bootstrap.min.css" />
-    <script type="text/javascript" src="../js/3rdParty/jquery.min.js"></script>
-    <script src="../js/3rdParty/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="~/css/3rdParty/bootstrap.min.css" />
+    <script type="text/javascript" src="~/js/3rdParty/jquery.min.js"></script>
+    <script src="~/js/3rdParty/bootstrap.min.js"></script>
 
-    <link rel="stylesheet" href="/css/Index.css" type="text/css" />
+    <link rel="stylesheet" href="~/css/Index.css" type="text/css" />
     <title>Dental Research App - Create Session</title>
 </head>
 <body>
@@ -40,13 +40,12 @@
                 <div class="col-lg-1 col-md-1 col-sm-1" style="text-align: left"></div>
                 <div class=" col-lg-3 col-md-3 col-sm-3"  style="text-align: left">
                     @Html.Label("Select Surveys:")
-                    <div class="popup" onmouseover="displayInfo()">
-                        <i class="glyphicon glyphicon-info-sign"></i>
+                    <div class="popup" onmouseover="displayInfo()"> <img src="~/img/tooltipIcon.png" style="max-width: 70%; max-height: 70%"/>
                             <span class="popuptext" id="surveyListInfoPopup">If you would like to select and add multiple surveys, simply hold down the ctrl-button while selecting in the list.</span>
                     </div>
                 </div>
                 <div class="col-lg-8 col-md-8 col-sm-8 form-group" style="text-align: center">
-                    @Html.ListBoxFor(x => x.SelectedSurveys, Model.AllSurveys, new {style = "width: 350px", multiple = "multiple", @class = "form-control"})
+                    @Html.ListBoxFor(x => x.SelectedSurveys, Model.AllSurveys, new {style = "width: 350px", multiple = "multiple", required = true, @class = "form-control"})
                 </div>
             </li>
         </ul>

@@ -8,11 +8,11 @@
 <head>
     <meta charset="utf-8" />
 
-    <link rel="stylesheet" href="../css/3rdParty/bootstrap.min.css" />
-    <script type="text/javascript" src="../js/3rdParty/jquery.min.js"></script>
-    <script src="../js/3rdParty/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="~/css/3rdParty/bootstrap.min.css" />
+    <script type="text/javascript" src="~/js/3rdParty/jquery.min.js"></script>
+    <script src="~/js/3rdParty/bootstrap.min.js"></script>
 
-    <link rel="stylesheet" href="/css/Index.css" type="text/css" />
+    <link rel="stylesheet" href="~/css/Index.css" type="text/css" />
     <title>Dental Research App - Find Results</title>
 </head>
 <body>
@@ -20,97 +20,107 @@
             <h1 class="secondHeadline" style="text-align: center">Find Results</h1>
             <hr />
         </div>
-        <div class="col-lg-12 col-md-12 col-xs-12">
-            <ul class="list-unstyled">
+<div class="col-lg-12 col-md-12 col-xs-12">
+    <ul class="list-unstyled">
+        <li class="row">
+            @using (Html.BeginForm("FindSessions", "Survey", FormMethod.Post))
+            {
+                <div class="col-lg-1 col-md-1 col-sm-1" style="text-align: left">
+                </div>
+                <div class="col-lg-3 col-md-3 col-sm-3" style="text-align: right; margin-top: 8px">
+                    @Html.Label("Select a Study:")
+                </div>
+                <div class="col-lg-4 col-md-4 col-sm-4" style="text-align: left">
+                    @Html.DropDownListFor(x => x.SelectedStudy, new SelectList(Model.Studies), new { @class = "form-control" })
+                </div>
+                <div class="col-lg-4 col-md-4 col-sm-4" style="text-align: left">
+                    <input type="submit" id="GetSessionsBtn" value="Select" class="btn btn-primary" />
+                </div>
+            }
+        </li>
+        <hr />
+
+        @if (Model.SelectedStudy != null)
+        {
+            if(Model.Sessions.Count == 0)
+            {
+                <script type="text/javascript">
+                    window.alert("There are currently no sessions relating to the selected study, please select another one.");
+                </script>
+            } else { 
                 <li class="row">
-                    @using (Html.BeginForm("FindResultSessions", "Survey", FormMethod.Post))
+                    @using (Html.BeginForm("FindParticipants", "Survey", FormMethod.Post))
                     {
                         <div class="col-lg-1 col-md-1 col-sm-1" style="text-align: left">
+                            @Html.HiddenFor(x => x.StudyId, Model.StudyId)
+                            @Html.HiddenFor(x => x.SelectedStudy, Model.SelectedStudy)
                         </div>
                         <div class="col-lg-3 col-md-3 col-sm-3" style="text-align: right; margin-top: 8px">
-                            @Html.Label("Select a Study:")
+                            @Html.Label("Select a Session:")
                         </div>
                         <div class="col-lg-4 col-md-4 col-sm-4" style="text-align: left">
-                            @Html.DropDownListFor(x => x.SelectedStudy, new SelectList(Model.Studies), new { @class = "form-control" })
+                            @Html.DropDownListFor(x => x.SelectedSession, new SelectList(Model.Sessions), new { @class = "form-control" })
                         </div>
                         <div class="col-lg-4 col-md-4 col-sm-4" style="text-align: left">
-                            <input type="submit" id="GetSessionsBtn" value="Select" class="btn btn-primary" />
+                            <input type="submit" id="GetParticipants" value="Select" class="btn btn-primary" />
                         </div>
                     }
                 </li>
                 <hr />
+            }
+        }
 
-                @if (Model.SelectedStudy != null)
-                {
-                    <li class="row">
-                        @using (Html.BeginForm("FindResultsParticipants", "Survey", FormMethod.Post))
-                        {
-                            <div class="col-lg-1 col-md-1 col-sm-1" style="text-align: left">
-                                @Html.HiddenFor(x => x.StudyId, Model.StudyId)
-                                @Html.HiddenFor(x => x.SelectedStudy, Model.SelectedStudy)
-                                @Html.HiddenFor(x => x.Sessions, Model.Sessions)
-                                @Html.HiddenFor(x => x.Studies, Model.Studies)
-                            </div>
-                            <div class="col-lg-3 col-md-3 col-sm-3" style="text-align: right; margin-top: 8px">
-                                @Html.Label("Select a Session:")
-                            </div>
-                            <div class="col-lg-4 col-md-4 col-sm-4" style="text-align: left">
-                                @Html.DropDownListFor(x => x.SelectedSession, new SelectList(Model.Sessions), new { @class = "form-control" })
-                            </div>
-                            <div class="col-lg-4 col-md-4 col-sm-4" style="text-align: left">
-                                <input type="submit" id="GetParticipants" value="Select" class="btn btn-primary" />
-                            </div>
-                        }
-                    </li>
-                    <hr />
-
-                    if (Model.SelectedSession != null)
+        @if (Model.SelectedSession != null)
+        {
+            if (Model.Participants.Count == 0)
+            {
+                <script type="text/javascript">
+                    window.alert(
+                        "There are currently no participants relating to the selected study and session, please select another session.");
+                </script>
+            }
+            else
+            {
+                <li class="row">
+                    @using(Html.BeginForm("ShowFindResults", "Survey", FormMethod.Post))
                     {
-                        using (Html.BeginForm("FindResultSurveys", "Survey", FormMethod.Post))
-                        {
-                            <li class="row">
-                                <div class="col-lg-4 col-md-4 col-sm-4" style="text-align: right; margin-top: 4px">
-                                    @Html.HiddenFor(x => x.StudyId, Model.StudyId)
-                                    @Html.HiddenFor(x => x.SelectedStudy, Model.SelectedStudy)
-                                    @Html.HiddenFor(x => x.SelectedSession, Model.SelectedSession)
-                                    @Html.HiddenFor(x => x.Surveys, Model.Surveys)
-                                    @Html.HiddenFor(x => x.SessionId, Model.SessionId)
-                                    @Html.HiddenFor(x => x.Sessions, Model.Sessions)
-                                    @Html.HiddenFor(x => x.Studies, Model.Studies)
-                                    @Html.HiddenFor(x => x.Participants, Model.Participants)
-                                    @Html.Label("Select a Survey:")
-                                   
-                                </div>
-                                <div class="col-lg-3 col-md-3 col-sm-3" style="text-align: right">
-                                    @Html.DropDownListFor(x => x.SelectedSurvey, new SelectList(Model.Surveys), new {@class = "form-control"})
-                                </div>
-                                <div class="col-lg-2 col-md-2 col-sm-2" style="text-align: right; margin-top: 4px">
-                                    @Html.Label("Select a Participant:")
-                                </div>
-                                <div class="col-lg-1 col-md-1 col-sm-1" style="text-align: right">
-                                    @Html.DropDownListFor(x => x.SelectedParticipant, new SelectList(Model.Participants), new { @class = "form-control" })
-                                </div>
-                                <div class="col-lg-2 col-md-2 col-sm-2" style="text-align: left">
-                                    <input type="submit" id="ShowFindResultsBtn" value="Select" class="btn btn-primary" />
-                                </div>
-                            </li>
-                        }
-                        <hr />
-                        if (Model.SelectedSurvey != null)
-                        {
-                            <li class="row">
-                                <div class="col-lg-12 col-md-12 col-sm-12" style="text-align: center">
-                                    <a href="/Survey/Results?id=@Model.SelectedSurvey" class="btn btn-success">Find Results</a>
-                                </div>
-                            </li>
-                            <hr />
-                        }
+                        @Html.HiddenFor(x => x.StudyId, Model.StudyId)
+                        @Html.HiddenFor(x => x.SelectedStudy, Model.SelectedStudy)
+                        @Html.HiddenFor(x => x.SelectedSession, Model.SelectedSession)
+                        @Html.HiddenFor(x => x.SessionId, Model.SessionId)
+                        @Html.HiddenFor(x => x.Surveys, Model.Surveys)
+
+                        <div class="col-lg-4 col-md-4 col-sm-4" style="text-align: right; margin-top: 4px">
+                            @Html.Label("Select a Survey:")
+                        </div>
+                        <div class="col-lg-3 col-md-3 col-sm-3" style="text-align: right">
+                            @Html.DropDownListFor(x => x.SelectedSurvey, new SelectList(Model.Surveys), new {@class = "form-control"})
+                        </div>
+                        <div class="col-lg-2 col-md-2 col-sm-2" style="text-align: right; margin-top: 4px">
+                            @Html.Label("Select a Participant:")
+                        </div>
+                        <div class="col-lg-1 col-md-1 col-sm-1" style="text-align: right">
+                            @Html.DropDownListFor(x => x.SelectedParticipant, new SelectList(Model.Participants), new {@class = "form-control"})
+                        </div>
+                        <div class="col-lg-2 col-md-2 col-sm-2" style="text-align: left">
+                            <input type="submit" id="ShowFindResultsBtn" value="Select" class="btn btn-primary"/>
+                        </div>
                     }
-
-                }
-
-            </ul>
-        </div>
+                </li>
+                <hr/>
+            }
+        }
+        @if (Model.SelectedSurvey != null && Model.SelectedParticipant != 0)
+        {
+            <li class="row">
+                <div class="col-lg-12 col-md-12 col-sm-12" style="text-align: center">
+                    <a href="/Survey/Results?id=@Model.SelectedSurvey" class="btn btn-success">Find Results</a>
+                </div>
+            </li>
+            <hr/>
+        }
+    </ul>
+</div>
 </body>
 </html>
     
