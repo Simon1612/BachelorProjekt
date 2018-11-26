@@ -42,7 +42,7 @@ namespace DentalResearchApp.Controllers
         }
 
         [HttpGet("UserSessionDetailsModal")]
-        public async Task<IActionResult> UserSessionDetailsModal(int studyId, int participantId, string sessionName)
+        public async Task<IActionResult> UserSessionDetailsModal(int studyId, int participantId, string sessionName, string studyName)
         {
             var manager = _context.ManagerFactory.CreateSessionManager();
             var studySession = await manager.GetStudySession(studyId, sessionName);
@@ -51,7 +51,23 @@ namespace DentalResearchApp.Controllers
 
 
 
-            return View();
+            var resultList = new List<ResultLink>();
+
+            foreach (var survey in studySession.Surveys)
+            {
+                resultList.Add(new ResultLink{SurveyName = survey, UserSessionId = userSession.First().Id});
+            }
+
+
+            var viewModel = new UserSessionDetailsViewModel
+            {
+                StudyName = studyName,
+                ParticipantId = participantId,
+                SessionName = sessionName,
+                ResultLinks = resultList
+            };
+
+            return View(viewModel);
         }
     }
 }

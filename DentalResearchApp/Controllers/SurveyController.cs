@@ -95,7 +95,19 @@ namespace DentalResearchApp.Controllers
             return Json(survey);
         }
 
-        [HttpGet("FindResults")]
+        [HttpGet("GetResultsForUserSession")]
+        public async Task<JsonResult> GetResultsForUserSession(int participantId, string userSessionId, string surveyName)
+        {
+            var manager = _context.ManagerFactory.CreateSurveyManager();
+
+            var asdf = new ObjectId(userSessionId);
+               
+            var survey = await manager.GetResultsForUserSessionSurvey(participantId, asdf, surveyName);
+
+            return Json(survey);
+        }
+
+		[HttpGet("FindResults")]
         public IActionResult FindResults()
         {
             var externalManager = _context.ManagerFactory.CreateExternalDbManager();
@@ -136,58 +148,6 @@ namespace DentalResearchApp.Controllers
         {
             var externalManager = _context.ManagerFactory.CreateExternalDbManager();
             var sessionManager = _context.ManagerFactory.CreateSessionManager();
-
-            var selectedSession = await sessionManager.GetStudySession(findResultsViewModel.StudyId, findResultsViewModel.SelectedSession);
-            var findParticipantsViewModel = new FindResultsViewModel();
-            if (selectedSession != null)
-            {
-                findParticipantsViewModel.Studies =
-                    externalManager.GetAllStudyListModels().Select(x => x.StudyName).ToList();
-                findParticipantsViewModel.StudyId = findResultsViewModel.StudyId;
-                findParticipantsViewModel.SelectedStudy = findResultsViewModel.SelectedStudy;
-
-                findParticipantsViewModel.Sessions = sessionManager
-                    .GetAllSessionModelsForStudy(findResultsViewModel.StudyId)
-                    .Select(x => x.SessionName).ToList();
-                findParticipantsViewModel.SessionId = selectedSession.Id;
-                findParticipantsViewModel.SelectedSession = selectedSession.SessionName;
-
-
-                findParticipantsViewModel.Participants = externalManager.GetParticipantIds(findResultsViewModel.StudyId).ToList();
-                findParticipantsViewModel.Surveys = selectedSession.Surveys;
-            }
-
-            return View("FindResults", findParticipantsViewModel);
-        }
-
-        [HttpPost("ShowFindResults")]
-        public async Task<IActionResult> ShowFindResults([FromForm]FindResultsViewModel findResultsViewModel)
-        {
-            var externalManager = _context.ManagerFactory.CreateExternalDbManager();
-            var sessionManager = _context.ManagerFactory.CreateSessionManager();
-
-            var selectedSession = await sessionManager.GetStudySession(findResultsViewModel.StudyId, findResultsViewModel.SelectedSession);
-            var findResultsFinalViewModel = new FindResultsViewModel();
-            if (selectedSession != null)
-            {
-                findResultsFinalViewModel.StudyId = findResultsViewModel.StudyId;
-                findResultsFinalViewModel.SelectedStudy = findResultsViewModel.SelectedStudy;
-                findResultsFinalViewModel.Studies = externalManager.GetAllStudyListModels().Select(x => x.StudyName).ToList();
-
-                findResultsFinalViewModel.Sessions = sessionManager
-                    .GetAllSessionModelsForStudy(findResultsViewModel.StudyId)
-                    .Select(x => x.SessionName).ToList();
-                findResultsFinalViewModel.SessionId = selectedSession.Id;
-                findResultsFinalViewModel.SelectedSession = selectedSession.SessionName;
-
-                findResultsFinalViewModel.Participants = externalManager.GetParticipantIds(findResultsViewModel.StudyId).ToList();
-                findResultsFinalViewModel.SelectedParticipant = findResultsViewModel.SelectedParticipant;
-
-                findResultsFinalViewModel.Surveys = selectedSession.Surveys;
-                findResultsFinalViewModel.SelectedSurvey = findResultsViewModel.SelectedSurvey;
-            }
-
-            return View("FindResults", findResultsFinalViewModel);
-        }
-    }
+		}
+}    }
 }
