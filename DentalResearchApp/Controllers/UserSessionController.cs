@@ -4,12 +4,13 @@ using System.Linq;
 using System.Threading.Tasks;
 using DentalResearchApp.Models;
 using DentalResearchApp.Models.Context;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using MongoDB.Bson;
 
 namespace DentalResearchApp.Controllers
 {
-    [Route("[controller]")]
+    [Route("[controller]"), Authorize(Roles = "Administrator, Researcher")]
     public class UserSessionController : Controller
     {
 
