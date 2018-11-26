@@ -15,5 +15,6 @@ namespace DentalResearchApp.Code.Interfaces
         Task<List<UserSession>> GetAllUserSessionsForStudySession(ObjectId studySessionId);
         Task SetStudySessionStarted(int studyId, string sessionName);
         Task<List<UserSession>> GetAllUserSessionsForStudySession(ObjectId studySessionId, int participantId);
+        List<StudySessionModel> GetAllSessionModelsForStudy(int studyId);
     }
 }

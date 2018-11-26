@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using DentalResearchApp.Models;
 using DentalResearchApp.Models.Context;
@@ -18,6 +19,7 @@ namespace DentalResearchApp.Controllers
         {
             _context = context;
         }
+
         [HttpGet]
         public ActionResult Index()
         {
@@ -29,7 +31,7 @@ namespace DentalResearchApp.Controllers
         {
             return View();
         }
-        
+
         [HttpGet("SurveyResults")]
         public async Task<ActionResult> SurveyResults()
         {
@@ -99,10 +101,109 @@ namespace DentalResearchApp.Controllers
             var manager = _context.ManagerFactory.CreateSurveyManager();
 
             var asdf = new ObjectId(userSessionId);
-               
+
             var survey = await manager.GetResultsForUserSessionSurvey(participantId, asdf, surveyName);
 
             return Json(survey);
+        }
+
+        [HttpGet("FindResults")]
+        public IActionResult FindResults()
+        {
+            var externalManager = _context.ManagerFactory.CreateExternalDbManager();
+
+            var findResultsViewModel = new FindResultsViewModel()
+            {
+                Studies = externalManager.GetAllStudyListModels().Select(x => x.StudyName).ToList()
+            };
+
+            return View(findResultsViewModel);
+        }
+
+        [HttpPost("FindSessions")]
+        public IActionResult FindSessions([FromForm]FindResultsViewModel findResultsViewModel)
+        {
+            var externalManager = _context.ManagerFactory.CreateExternalDbManager();
+            var sessionManager = _context.ManagerFactory.CreateSessionManager();
+
+            var selectedStudy = externalManager
+                .GetAllStudyListModels().SingleOrDefault(x => x.StudyName == findResultsViewModel.SelectedStudy);
+
+            var findResultsSessionsModel = new FindResultsViewModel();
+            if (selectedStudy != null)
+            {
+                findResultsSessionsModel.StudyId = selectedStudy.StudyId;
+                findResultsSessionsModel.SelectedStudy = selectedStudy.StudyName;
+                findResultsSessionsModel.Sessions = sessionManager
+                    .GetAllSessionModelsForStudy(selectedStudy.StudyId)
+                    .Select(x => x.SessionName).ToList();
+                findResultsSessionsModel.Studies = externalManager.GetAllStudyListModels().Select(x => x.StudyName).ToList();
+            }
+
+            return View("FindResults", findResultsSessionsModel);
+        }
+
+        [HttpPost("FindParticipants")]
+        public async Task<IActionResult> FindParticipants([FromForm]FindResultsViewModel findResultsViewModel)
+        {
+            var externalManager = _context.ManagerFactory.CreateExternalDbManager();
+            var sessionManager = _context.ManagerFactory.CreateSessionManager();
+
+            var selectedSession = await sessionManager.GetStudySession(findResultsViewModel.StudyId, findResultsViewModel.SelectedSession);
+            var findParticipantsViewModel = new FindResultsViewModel();
+            if (selectedSession != null)
+            {
+                findParticipantsViewModel.Studies =
+                    externalManager.GetAllStudyListModels().Select(x => x.StudyName).ToList();
+                findParticipantsViewModel.StudyId = findResultsViewModel.StudyId;
+                findParticipantsViewModel.SelectedStudy = findResultsViewModel.SelectedStudy;
+
+                findParticipantsViewModel.Sessions = sessionManager
+                    .GetAllSessionModelsForStudy(findResultsViewModel.StudyId)
+                    .Select(x => x.SessionName).ToList();
+                findParticipantsViewModel.SessionId = selectedSession.Id;
+                findParticipantsViewModel.SelectedSession = selectedSession.SessionName;
+
+
+                findParticipantsViewModel.Participants = externalManager.GetParticipantIds(findResultsViewModel.StudyId).ToList();
+                findParticipantsViewModel.Surveys = selectedSession.Surveys;
+            }
+
+            return View("FindResults", findParticipantsViewModel);
+        }
+
+        [HttpPost("ShowFindResults")]
+        public async Task<IActionResult> ShowFindResults([FromForm]FindResultsViewModel findResultsViewModel)
+        {
+            var externalManager = _context.ManagerFactory.CreateExternalDbManager();
+            var sessionManager = _context.ManagerFactory.CreateSessionManager();
+
+            var selectedSession = await sessionManager.GetStudySession(findResultsViewModel.StudyId, findResultsViewModel.SelectedSession);
+            var findResultsFinalViewModel = new FindResultsViewModel();
+            if (selectedSession != null)
+            {
+                findResultsFinalViewModel.StudyId = findResultsViewModel.StudyId;
+                findResultsFinalViewModel.SelectedStudy = findResultsViewModel.SelectedStudy;
+                findResultsFinalViewModel.Studies = externalManager.GetAllStudyListModels().Select(x => x.StudyName).ToList();
+
+                findResultsFinalViewModel.Sessions = sessionManager
+                    .GetAllSessionModelsForStudy(findResultsViewModel.StudyId)
+                    .Select(x => x.SessionName).ToList();
+                findResultsFinalViewModel.SessionId = selectedSession.Id;
+                findResultsFinalViewModel.SelectedSession = selectedSession.SessionName;
+
+                findResultsFinalViewModel.Participants = externalManager.GetParticipantIds(findResultsViewModel.StudyId).ToList();
+                findResultsFinalViewModel.SelectedParticipant = findResultsViewModel.SelectedParticipant;
+
+                findResultsFinalViewModel.Surveys = selectedSession.Surveys;
+                findResultsFinalViewModel.SelectedSurvey = findResultsViewModel.SelectedSurvey;
+
+                findResultsFinalViewModel.UserSessionId =
+                     sessionManager.GetAllUserSessionsForStudySession(findResultsFinalViewModel.SessionId,
+                        findResultsViewModel.SelectedParticipant).Result.Select(x => x.Id).SingleOrDefault();
+            }
+
+            return View("FindResults", findResultsFinalViewModel);
         }
     }
 }

@@ -15,10 +15,11 @@ section {
 
 .survey-page-header,
 .survey-page-header .sv_main {
-    background-color: #e7e7e7;
+    background-color: white;
 }
 
 .survey-page-header-content {
+    background-color: white;
     max-width: 80%;
     margin: auto;
     padding: 1.5em;
@@ -103,8 +104,12 @@ section {
 .customTable {
     border: 4px solid #47748b;
     margin: 0 auto 0 auto;
-    padding: 20px 0px 120px 0px;
+    padding: 20px 0 120px 0;
     width: 70%;
+}
+
+.customTd:hover {
+    background-color: grey;
 }
 
 .customTd {
@@ -118,6 +123,7 @@ section {
     height: 50px;
     text-align: center
 }
+
 
 p {
     font-family: 'Poppins', sans-serif;
@@ -153,7 +159,7 @@ a, a:hover, a:focus {
     padding: 20px;
 }
 
-#sidebar ul.components {
+#sidebar .components {
     padding: 20px 0;
     border-bottom: 1px solid #47748b;
 }
@@ -181,8 +187,8 @@ a, a:hover, a:focus {
 }
 
 ul ul a {
-    font-size: 0.9em !important;
-    padding-left: 30px !important;
+    font-size: 0.9em;
+    padding-left: 30px;
     color: #fff;
     background: #7386d5;
 }
@@ -199,7 +205,6 @@ a[data-toggle="collapse"] {
     transform: translateY(-50%);
 }
 
-/* Til håndtering af mindre skærme*/
 @media (max-width: 768px) {
     #sidebar {
         margin-left: -250px;
@@ -208,4 +213,62 @@ a[data-toggle="collapse"] {
         #sidebar.active {
             margin-left: 0;
         }
+}
+
+.popup {
+    position: sticky;
+    display: inline-block;
+    cursor: pointer;
+}
+
+    .popup .popuptext {
+        visibility: hidden;
+        width: 160px;
+        background-color: #555;
+        color: #fff;
+        text-align: center;
+        border-radius: 6px;
+        padding: 8px 0;
+        position: absolute;
+        z-index: 1;
+        bottom: 125%;
+        left: 50%;
+        margin-left: -80px;
+    }
+
+        .popup .popuptext:after {
+            content: "";
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            margin-left: -5px;
+            border-width: 5px;
+            border-style: solid;
+            border-color: #555 transparent transparent transparent;
+        }
+
+    .popup .show {
+        visibility: visible;
+        -webkit-animation: fadeIn 1s;
+        animation: fadeIn 1s
+    }
+
+@-webkit-keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
 }

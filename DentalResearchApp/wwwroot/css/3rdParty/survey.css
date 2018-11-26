@@ -7,7 +7,7 @@
     position: fixed;
     bottom: 3px;
     right: 10px;
-    background-color: cadetblue;
+    background-color: #3498db;
     padding: 1px;
     font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
     font-size: 14px;
@@ -24,7 +24,7 @@
     word-spacing: normal;
     word-wrap: normal;
     white-space: normal;
-    background-color: #fff;
+    background-color: #3498db;
     -webkit-background-clip: padding-box;
     background-clip: padding-box;
     border: 1px solid #ccc;
@@ -39,7 +39,7 @@
     padding: 8px 14px;
     margin: 0;
     font-size: 14px;
-    background-color: #f7f7f7;
+    background-color: white;
     border-bottom: 1px solid #ebebeb;
     border-radius: 5px 5px 0 0;
 }
@@ -70,7 +70,7 @@
     }
 
 .sv_main {
-    background-color: #f4f4f4;
+    background-color: white;
 }
 
     .sv_main hr {
@@ -80,12 +80,12 @@
     .sv_main input[type="button"],
     .sv_main button {
         color: white;
-        background-color: #1ab394;
+        background-color: #3498db;
     }
 
         .sv_main input[type="button"]:hover,
         .sv_main button:hover {
-            background-color: #179d82;
+            background-color: #3498db;
         }
 
     .sv_main .sv_q_other input,
@@ -95,7 +95,7 @@
     .sv_main select,
     .sv_main textarea {
         border: 1px solid #e7e7e7;
-        color: #6d7072;
+        color: black;
         background-color: white;
     }
 
@@ -105,7 +105,7 @@
         .sv_main input[type="text"]:focus,
         .sv_main select:focus,
         .sv_main textarea:focus {
-            border: 1px solid #1ab394;
+            border: 1px solid #3498db;
         }
 
     .sv_main .sv_select_wrapper {
@@ -113,36 +113,36 @@
     }
 
         .sv_main .sv_select_wrapper:before {
-            background-color: #1ab394;
+            background-color: #3498db;
         }
 
     .sv_main .sv_header {
-        color: #6d7072;
+        color: black;
     }
 
     .sv_main .sv_custom_header {
-        background-color: #e7e7e7;
+        background-color: white;
     }
 
     .sv_main .sv_container {
-        color: #6d7072;
+        color: black;
     }
 
     .sv_main .sv_body {
         background-color: white;
-        border-top: 2px solid #1ab394;
+        border: 2px solid #3498db;
     }
 
     .sv_main .sv_progress {
-        background-color: #e7e7e7;
+        background-color: white;
     }
 
     .sv_main .sv_progress_bar {
-        background-color: #1ab394;
+        background-color: #3498db;
     }
 
     .sv_main .sv_p_root > .sv_row {
-        border-bottom: 1px solid #e7e7e7;
+        border-bottom: 1px solid white;
     }
 
         .sv_main .sv_p_root > .sv_row:nth-child(odd) {
@@ -150,12 +150,12 @@
         }
 
         .sv_main .sv_p_root > .sv_row:nth-child(even) {
-            background-color: #f4f4f4;
+            background-color: white;
         }
 
     .sv_main .sv_q_erbox:not([style*="display: none"]):not([style*="display:none"]) {
         border: 1px solid #ed5565;
-        background-color: #fcdfe2;
+        background-color: white;
         color: #ed5565;
     }
 
@@ -174,34 +174,34 @@
     .sv_main table.sv_q_matrix tr,
     .sv_main table.sv_q_matrix_dropdown tr,
     .sv_main table.sv_q_matrix_dynamic tr {
-        border-bottom: 1px solid #e7e7e7;
+        border-bottom: 1px solid white;
     }
 
     .sv_main .sv_q_m_cell_selected {
         color: white;
-        background-color: #179d82;
+        background-color: #3498db;
     }
 
     .sv_main .sv_q_rating_item.active .sv_q_rating_item_text {
-        background-color: #179d82;
-        border-color: #179d82;
+        background-color: #3498db;
+        border-color: #3498db;
         color: white;
     }
 
     .sv_main .sv_q_rating_item .sv_q_rating_item_text {
-        border: 1px solid #e7e7e7;
+        border: 1px solid white;
     }
 
         .sv_main .sv_q_rating_item .sv_q_rating_item_text:hover {
-            border: 1px solid #179d82;
+            border: 1px solid #3498db;
         }
 
     .sv_main .sv_q_imgsel.checked label > div {
-        background-color: #1ab394;
+        background-color: #3498db;
     }
 
     .sv_main .sv_q_file_remove:hover {
-        color: #1ab394;
+        color: #3498db;
     }
 
 .sv_main {
@@ -271,7 +271,7 @@
                 .sv_main .sv_container .sv_body .sv_progress .sv_progress_bar {
                     height: 100%;
                     min-width: 100px;
-                    position: relative;
+                    position: auto;
                     margin-top: 2em;
                 }
 
@@ -367,7 +367,6 @@
                     .sv_main .sv_container .sv_body .sv_p_root .sv_q .sv_select_wrapper select {
                         display: block;
                         background: transparent;
-                        appearance: none;
                         -webkit-appearance: none;
                         -moz-appearance: none;
                         padding-right: 2.5em;
@@ -421,7 +420,7 @@
                     white-space: nowrap;
                     text-overflow: ellipsis;
                     padding: 4px;
-                    border: 1px solid lightgray;
+                    border: 1px solid white;
                     border-radius: 4px;
                 }
 
