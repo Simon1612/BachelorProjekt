@@ -3,6 +3,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using DentalResearchApp.Code.Interfaces;
 using DentalResearchApp.Models;
+using MongoDB.Bson;
 using MongoDB.Driver;
 using MongoDB.Driver.Linq;
 
@@ -101,6 +102,22 @@ namespace DentalResearchApp.Code.Impl
 
             return resultList;
         }
+
+        public async Task<List<string>> GetResultsForUserSessionSurvey(int participantId, ObjectId userSessionId, string surveyName)
+        {
+            var coll = _db.GetCollection<SurveyResult>("surveyResult_collection");
+            var results = await coll.FindAsync(x => x.SurveyName == surveyName && x.UserSessionId == userSessionId && x.ParticipantId == participantId);
+
+            var resultList = new List<string>();
+
+            foreach (var result in results.ToList())
+            {
+                resultList.Add(result.JsonResult);
+            }
+
+            return resultList;
+        }
+
 
         public async Task<List<string>> GetAllNames()
         {

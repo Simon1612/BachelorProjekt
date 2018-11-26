@@ -11,7 +11,8 @@ namespace DentalResearchApp.Models
 
         public string SurveyName { get; set; }
         public string JsonResult { get; set; }
-        public string ParticipantId { get; set; }
+        public int ParticipantId { get; set; }
         public DateTime TimeStamp { get; set; }
+        public ObjectId UserSessionId { get; set; }
     }
 }

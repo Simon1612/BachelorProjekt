@@ -11,5 +11,6 @@ namespace DentalResearchApp.Models
         public string SessionName { get; set; }
         public int StudyId { get; set; }
         public List<string> Surveys { get; set; }
+        public bool IsStarted { get; set; }
     }
 }

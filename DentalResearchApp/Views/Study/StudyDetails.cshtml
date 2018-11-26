@@ -42,7 +42,7 @@
                     {
                         <tr>
                             <td class="customTd" id="patientId">
-                                @item
+                                @Html.ActionLink(item.ToString(), "UserSessions", "UserSession", new { studyId = Model.StudyId, participantId = item }, null)
                             </td>
                         </tr>
                     }

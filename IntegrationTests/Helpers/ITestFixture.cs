@@ -14,7 +14,7 @@ namespace IntegrationTests.Helpers
         Task SeedWithUsers();
         Task SignInAsAdmin();
         Task SignInAsResearcher();
-        Task SignInAsVolunteer(string surveyName, string linkId, string participantEmail, string participantId);
+        Task SignInAsVolunteer(string surveyName, string linkId, string participantEmail, int participantId);
         UserModel GetResearcherUserModel();
         UserModel GetAdminUserModel();
     }
