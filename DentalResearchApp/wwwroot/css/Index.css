@@ -6,90 +6,91 @@ body {
 }
 
 section {
-  margin: 2em 0;
+    margin: 2em 0;
 }
+
 .page-link {
-  margin: 1em 2em;
+    margin: 1em 2em;
 }
 
 .survey-page-header,
 .survey-page-header .sv_main {
-  background-color: #e7e7e7;
+    background-color: #e7e7e7;
 }
 
 .survey-page-header-content {
-  max-width: 80%;
-  margin: auto;
-  padding: 1.5em;
+    max-width: 80%;
+    margin: auto;
+    padding: 1.5em;
 }
 
-.survey-page-header-content a {
-  color: white;
-  text-decoration: unset;
-}
+    .survey-page-header-content a {
+        color: white;
+        text-decoration: unset;
+    }
 
 .sv_main.sv_frame .sv_container .sv_header {
-  padding-top: 2em;
+    padding-top: 2em;
 }
 
 .svd_container .sv_custom_header {
-  display: none;
+    display: none;
 }
 
 .sv_main.sv_frame .svd_container .sv_container {
-  max-width: none;
-  padding: unset;
+    max-width: none;
+    padding: unset;
 }
 
 .surveys-list table thead td {
-  font-weight: bold;
+    font-weight: bold;
 }
 
 .surveys-list table td:nth-child(2) {
-  width: 50%;
+    width: 50%;
 }
 
 .sv_button_link {
-  color: #1ab394;
-  width: 100px;
-  display: inline-block;
-  padding: 6px 12px;
-  cursor: pointer;
-  text-align: center;
+    color: #1ab394;
+    width: 100px;
+    display: inline-block;
+    padding: 6px 12px;
+    cursor: pointer;
+    text-align: center;
 }
 
-.sv_button_link:hover,
-.sv_button_link:visited:hover {
-  background-color: #1ab394;
-  border-color: #1ab394;
-  color: #fff;
-  border-radius: 2px;
-  text-decoration: none;
-}
+    .sv_button_link:hover,
+    .sv_button_link:visited:hover {
+        background-color: #1ab394;
+        border-color: #1ab394;
+        color: #fff;
+        border-radius: 2px;
+        text-decoration: none;
+    }
 
-.sv_button_link:visited {
-  color: #1ab394;
-}
+    .sv_button_link:visited {
+        color: #1ab394;
+    }
 
-.sv_button_link.sv_button_delete {
-  color: #ec2626;
-}
+    .sv_button_link.sv_button_delete {
+        color: #ec2626;
+    }
 
-.sv_button_link.sv_button_delete:hover {
-  background-color: #ec2626;
-  color: #fff;
-}
+        .sv_button_link.sv_button_delete:hover {
+            background-color: #ec2626;
+            color: #fff;
+        }
 
 #resultsTable td {
-  cursor: pointer;
+    cursor: pointer;
 }
 
 .sv_body {
-  overflow: scroll;
+    overflow: scroll;
 }
 
 .fork_me_on_github img {
-  z-index: 1;
+    z-index: 1;
 }
 
 .customTable left {
@@ -98,12 +99,14 @@ section {
     text-align: left;
     width: 50%;
 }
+
 .customTable {
     border: 4px solid #47748b;
     margin: 0 auto 0 auto;
     padding: 20px 0px 120px 0px;
     width: 70%;
 }
+
 .customTd {
     border: 2px solid #47748b;
     height: 40px;
@@ -115,7 +118,6 @@ section {
     height: 50px;
     text-align: center
 }
-
 
 p {
     font-family: 'Poppins', sans-serif;
@@ -196,7 +198,6 @@ a[data-toggle="collapse"] {
     right: 20px;
     transform: translateY(-50%);
 }
-
 
 /* Til håndtering af mindre skærme*/
 @media (max-width: 768px) {

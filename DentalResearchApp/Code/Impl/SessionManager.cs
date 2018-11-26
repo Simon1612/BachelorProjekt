@@ -55,8 +55,8 @@ namespace DentalResearchApp.Code.Impl
                var sessionsList =  sessions.Select(y => y.SessionName).ToList();
                 return sessionsList;
             }
+
             return new List<string>();
         }
-
     }
 }

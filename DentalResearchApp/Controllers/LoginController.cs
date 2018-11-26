@@ -24,6 +24,17 @@ namespace DentalResearchApp.Controllers
             return View();
         }
 
+        [HttpGet("Logout")]
+        public IActionResult Logout()
+        {
+            foreach (var cookie in Request.Cookies.Keys)
+            {
+                Response.Cookies.Delete(cookie);
+            }
+
+            return RedirectToAction("Login");
+        }
+
         [HttpGet("Signup")]
         public async Task<IActionResult> SignUp(string Id)
         {

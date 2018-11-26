@@ -181,5 +181,31 @@ namespace IntegrationTests.Helpers
             await userManager.CreateUser(researcher, researcherCredentials);
             await userManager.CreateUser(admin, adminCredentials);
         }
+
+        public UserModel GetResearcherUserModel()
+        {
+            return new UserModel()
+            {
+                Email = "researcher@test.test",
+                FirstName = "researcher",
+                LastName = "researcher",
+                Role = Role.Researcher,
+                Country = "test",
+                Institution = "test"
+            };
+        }
+
+        public UserModel GetAdminUserModel()
+        {
+            return new UserModel()
+            {
+                Email = "admin@test.test",
+                FirstName = "admin",
+                LastName = "admin",
+                Role = Role.Administrator,
+                Country = "test",
+                Institution = "test"
+            };
+        }
     }
 }

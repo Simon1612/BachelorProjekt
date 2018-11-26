@@ -51,8 +51,10 @@ namespace DentalResearchApp.Code.Impl
             //TODO: Create and send email?
             var mailHelper = new MailHelper();
 
-            var mailSubject = "Some not-so-random subject here";
-            var mailBody = $"Some text and then a link: {surveyLink}";
+            var mailSubject = "Signup Invitation - Department of Dentistry and Oral Health";
+            var mailBody = $"You have been invited to sign up for Department of Dentistry and Oral Health's survey tool.\n" +
+                $"Follow this link to sign up: {surveyLink}\n\n" +
+                $"Best regards Department of Dentistry and Oral Health,\n Vennelyst Blvd. 9,\n 8000 Aarhus C";
 
             mailHelper.SendMail(link.RecipiantEmail, mailSubject, mailBody);
         }

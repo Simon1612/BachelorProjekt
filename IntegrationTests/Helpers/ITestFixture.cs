@@ -1,5 +1,6 @@
 ﻿using System.Threading.Tasks;
 using DentalResearchApp.Code.Interfaces;
+using DentalResearchApp.Models;
 
 namespace IntegrationTests.Helpers
 {
@@ -14,5 +15,7 @@ namespace IntegrationTests.Helpers
         Task SignInAsAdmin();
         Task SignInAsResearcher();
         Task SignInAsVolunteer(string surveyName, string linkId, string participantEmail, string participantId);
+        UserModel GetResearcherUserModel();
+        UserModel GetAdminUserModel();
     }
 }
