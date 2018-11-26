@@ -27,6 +27,7 @@
             @Html.PasswordFor(x => x.Password, new { @class = "inputField form-control", @id = "pwd1", @name = "pwd1", @placeholder = "Password", @type = "password", @required = true })
             @Html.PasswordFor(x => x.Password, new { @class = "inputField form-control", @id = "pwd2", @name = "pwd2", @placeholder = "Confirm Password", @type = "password", @required = true })
             @Html.DropDownListFor(x => x.Country, new SelectList(Model.Country), new { @class = "inputField form-control", @id = "country", @required = true, style = "width:270px" })
+            @Html.Hidden("LinkId", Context.Request.QueryString.ToString().Substring(4, Context.Request.QueryString.ToString().Length - 4))
             <br />
             <input type="submit" value="Sign up" id="UserDataSubmit" class="form-group" style="margin-left: 140px; margin-top: 10px">
         }

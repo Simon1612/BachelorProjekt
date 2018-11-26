@@ -89,9 +89,7 @@ namespace DentalResearchApp.Code.Impl
         {
             var coll = _db.GetCollection<StudySessionModel>("study_session_collection");
             var sessions = coll.AsQueryable().Where(x => x.StudyId.Equals(studyId));
-
-            var sessionsList =  sessions.Select(y => y.SessionName).ToList();
-            return sessionsList;
+            return new List<string>();
         }
 
         public List<StudySessionModel> GetAllSessionModelsForStudy(int studyId)

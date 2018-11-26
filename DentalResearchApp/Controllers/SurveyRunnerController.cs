@@ -12,7 +12,7 @@ using MongoDB.Driver;
 
 namespace DentalResearchApp.Controllers
 {
-    [Route("[controller]"), Authorize(Roles = nameof(Role.Volunteer))]
+    [Route("[controller]"), Authorize]
     public class SurveyRunnerController : Controller
     {
         private readonly IContext _context;
@@ -39,10 +39,18 @@ namespace DentalResearchApp.Controllers
         [HttpGet("getSurvey")]
         public async Task<ActionResult<string>> GetSurvey(string surveyId)
         {
-            var surveyNameFromCookie = HttpContext.User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.Name && x.Type != null).Value;
+            //Get users role
+            var usersRoleString = HttpContext.User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.Role && x.Type != null).Value;
+            Enum.TryParse(usersRoleString, out Role usersRole);
 
-            if (surveyNameFromCookie != surveyId) //Participant is trying to change the name of survey in url?
-                return BadRequest();
+            //Only post results if users is a volunteer
+            if (usersRole != Role.Administrator && usersRole != Role.Researcher)
+            {
+                var surveyNameFromCookie = HttpContext.User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.Name && x.Type != null).Value;
+
+                if (surveyNameFromCookie != surveyId) //Participant is trying to change the name of survey in url?
+                    return BadRequest();
+            }
 
             var manager = _context.ManagerFactory.CreateSurveyManager();
             var survey = await manager.GetSurvey(surveyId);
@@ -54,34 +62,41 @@ namespace DentalResearchApp.Controllers
         [HttpPost("post")]
         public async Task<JsonResult> PostResult([FromBody]PostSurveyResultModel model)
         {
-            //Get ids from cookie!
-            var participantId = HttpContext.User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.NameIdentifier && x.Type != null).Value;
-            var linkId = HttpContext.User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.Uri && x.Type != null).Value;
+            //Get users role
+            var usersRoleString = HttpContext.User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.Role && x.Type != null).Value;
+            Enum.TryParse(usersRoleString, out Role usersRole);
 
-
-            //Get link model
-            var linkManager = _context.ManagerFactory.CreateSurveyLinkManager();
-            var linkModel = await linkManager.GetLink(linkId);
-
-            var result = new SurveyResult
+            //Only post results if users is a volunteer
+            if (usersRole == Role.Volunteer)
             {
-                SurveyName = model.PostId,
-                JsonResult = model.SurveyResult,
-                ParticipantId = int.Parse(participantId),
-                TimeStamp = DateTime.Now,
-                UserSessionId = linkModel.UserSessionId
-            };
+                //Get ids from cookie!
+                var participantId = HttpContext.User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.NameIdentifier && x.Type != null).Value;
+                var linkId = HttpContext.User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.Uri && x.Type != null).Value;
 
-            //Save result to DB
-            var surveyManager = _context.ManagerFactory.CreateSurveyManager();
-            await surveyManager.SaveSurveyResult(result);
 
-            //This kills the cookie
-            await HttpContext.SignOutAsync();
-            
-            //Delete link from DB
-            await linkManager.DeleteLink(linkId);
+                //Get link model
+                var linkManager = _context.ManagerFactory.CreateSurveyLinkManager();
+                var linkModel = await linkManager.GetLink(linkId);
 
+                var result = new SurveyResult
+                {
+                    SurveyName = model.PostId,
+                    JsonResult = model.SurveyResult,
+                    ParticipantId = int.Parse(participantId),
+                    TimeStamp = DateTime.Now,
+                    UserSessionId = linkModel.UserSessionId
+                };
+
+                //Save result to DB
+                var surveyManager = _context.ManagerFactory.CreateSurveyManager();
+                await surveyManager.SaveSurveyResult(result);
+
+                //This kills the cookie
+                await HttpContext.SignOutAsync();
+
+                //Delete link from DB
+                await linkManager.DeleteLink(linkId);
+            }
 
             return Json("Ok");
         }
