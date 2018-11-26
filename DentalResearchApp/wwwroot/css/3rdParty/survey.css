@@ -95,7 +95,7 @@
     .sv_main select,
     .sv_main textarea {
         border: 1px solid #e7e7e7;
-        color: white;
+        color: black;
         background-color: white;
     }
 
@@ -420,7 +420,7 @@
                     white-space: nowrap;
                     text-overflow: ellipsis;
                     padding: 4px;
-                    border: 1px solid lightgray;
+                    border: 1px solid white;
                     border-radius: 4px;
                 }
 

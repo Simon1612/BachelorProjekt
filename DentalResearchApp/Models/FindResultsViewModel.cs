@@ -18,5 +18,7 @@ namespace DentalResearchApp.Models
 
         public List<int> Participants { get; set; }
         public int SelectedParticipant { get; set; }
+
+        public ObjectId UserSessionId { get; set; }
     }
 }

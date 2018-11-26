@@ -52,9 +52,7 @@
                         {
                             <tr>
                                 <td class="customTd" id="patientId">
-                                    @*@Html.ActionLink(item.SurveyName, "GetResultsForUserSession", "Survey", new {ParticipantId = Model.ParticipantId, UserSessionId = item.UserSessionId, SurveyName = item.SurveyName})*@
                                     @Html.ActionLink(item.SurveyName, "Results", "Survey", new { participantId = Model.ParticipantId, userSessionId = item.UserSessionId, id = item.SurveyName }, null)
-                                    @*@Html.ActionLink(item.SurveyName, "Results", "Survey", new {id = item.SurveyName })*@
                                 </td>
                             </tr>
                         }

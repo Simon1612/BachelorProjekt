@@ -14,10 +14,11 @@ section {
 
 .survey-page-header,
 .survey-page-header .sv_main {
-  background-color: #e7e7e7;
+  background-color: white;
 }
 
 .survey-page-header-content {
+    background-color: white;
   max-width: 80%;
   margin: auto;
   padding: 1.5em;

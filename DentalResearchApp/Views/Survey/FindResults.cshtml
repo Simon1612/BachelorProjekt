@@ -112,12 +112,11 @@
         }
         @if (Model.SelectedSurvey != null && Model.SelectedParticipant != 0)
         {
-            <li class="row">
-                <div class="col-lg-12 col-md-12 col-sm-12" style="text-align: center">
-                    <a href="/Survey/Results?id=@Model.SelectedSurvey" class="btn btn-success">Find Results</a>
+            <br />
+            <br />
+                <div style="text-align: center">
+                    @Html.ActionLink("Find Results", "Results", "Survey", new { participantId = Model.SelectedParticipant, userSessionId = Model.UserSessionId, id = Model.SelectedSurvey}, new {@class = "btn btn-success form-control"})
                 </div>
-            </li>
-            <hr/>
         }
     </ul>
 </div>
