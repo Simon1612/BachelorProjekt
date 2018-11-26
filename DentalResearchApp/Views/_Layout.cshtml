@@ -18,15 +18,15 @@
             <div class="" style="text-align: center">
                 <h4>Tandlægehøjskolen Aarhus</h4>
             </div>
-            <hr/>
+            <hr />
             <ul class="list-unstyled">
                 <li>
                     @Html.ActionLink("Home", "HomePage", "HomePage")
                 </li>
             </ul>
-            <hr/>
+            <hr />
             <ul class="list-unstyled">
-                    <li>
+                <li>
                     <a href="#surveySubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Surveys <span class="caret"></span></a>
                     <ul class="collapse list-unstyled" id="surveySubmenu">
                         <li>
@@ -37,7 +37,7 @@
                     </ul>
                 </li>
             </ul>
-            <hr/>
+            <hr />
             <ul class="list-unstyled">
                 <li>
                     @Html.ActionLink("Studies", "AllStudies", "Study")
@@ -46,10 +46,15 @@
                     @Html.ActionLink("Find Results", "FindResults", "Results")
                 </li>
             </ul>
-            <hr/>
+            <hr />
             <ul class="list-unstyled">
                 <li>
                     @Html.ActionLink("Profile", "Profile", "Profile")
+                </li>
+            </ul>   
+            <ul class="list-unstyled">
+                <li>
+                    @Html.ActionLink("Logout", "Logout", "Login")
                 </li>
             </ul>
         </nav>

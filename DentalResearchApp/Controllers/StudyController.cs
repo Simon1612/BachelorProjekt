@@ -1,15 +1,11 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using DentalResearchApp.Models;
+﻿using DentalResearchApp.Models;
 using DentalResearchApp.Models.Context;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using MongoDB.Bson;
 
 namespace DentalResearchApp.Controllers
 {
-    [Route("[controller]")]
+    [Route("[controller]"), Authorize(Roles = "Administrator, Researcher")]
     public class StudyController : Controller
     {
 

@@ -1,5 +1,6 @@
 ﻿using DentalResearchApp.Models;
 using DentalResearchApp.Models.Context;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 
@@ -7,6 +8,7 @@ namespace DentalResearchApp.Controllers
 {
     [Route("[controller]")]
     [ApiController]
+    [Authorize(Roles = "Administrator")]
     public class AdminController : Controller
     {
         private readonly IContext _context;
