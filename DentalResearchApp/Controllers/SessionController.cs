@@ -4,12 +4,13 @@ using System.Threading.Tasks;
 using DentalResearchApp.Code.Impl;
 using DentalResearchApp.Models;
 using DentalResearchApp.Models.Context;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace DentalResearchApp.Controllers
 {
-    [Route("[controller]")]
+    [Route("[controller]"), Authorize(Roles = "Administrator, Researcher")]
     public class SessionController : Controller
     {
         private readonly IContext _context;
