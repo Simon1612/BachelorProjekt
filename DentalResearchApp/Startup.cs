@@ -8,6 +8,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using MongoDB.Driver;
+using Swashbuckle;
+using Swashbuckle.AspNetCore.Swagger;
 
 namespace DentalResearchApp
 {
@@ -64,6 +66,11 @@ namespace DentalResearchApp
             IContext context = new Context(client, linkDbName, surveyDbName, userDbName, sessionDbName);
 
             services.AddSingleton(context);
+
+            services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("v1", new Info { Title = "Dental Research App", Version = "v1" });
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -77,7 +84,16 @@ namespace DentalResearchApp
             {
                 app.UseHsts();
             }
-            
+
+            app.UseSwagger();
+
+            // Enable middleware to serve swagger-ui (HTML, JS, CSS, etc.), 
+            // specifying the Swagger JSON endpoint.
+            app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "Dental Research App v1");
+            });
+
             app.UseStaticFiles();
             app.UseHttpsRedirection();
             app.UseAuthentication();

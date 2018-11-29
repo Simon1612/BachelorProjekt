@@ -134,6 +134,7 @@ namespace DentalResearchApp.Controllers
             return RedirectToAction("AllStudies", "Study");
         }
 
+        [ApiExplorerSettings(IgnoreApi = true)]
         public List<SelectListItem> GetAllSurveyNamesList()
         {
             var manager = _context.ManagerFactory.CreateSurveyManager();
