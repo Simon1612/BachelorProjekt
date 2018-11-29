@@ -41,27 +41,6 @@ namespace DentalResearchApp.Controllers
             return View(sendSurveyModel);
         }
 
-    
-        //[HttpPost("sendSurveyLink")]
-        //public async Task<JsonResult> SendSurveyLink([FromBody] SendSurveyLinkModel model)
-        //{
-        //    var baseUrl = BaseUrlHelper.GetBaseUrl(Request);
-
-        //    var manager = _context.ManagerFactory.CreateSurveyLinkManager();
-
-        //    var link = new SurveyLinkModel
-        //    {
-        //        ParticipantId = model.ParticipantId,
-        //        ParticipantEmail = model.ParticipantEmail,
-        //        SurveyName = 
-        //    }
-
-
-        //    await manager.SendLink(model.SurveyName, model.ParticipantEmail, model.ParticipantId, baseUrl);
-
-        //    return Json("Ok");
-        //}
-
         [HttpPost("sendSignupLink")]
         public async Task<IActionResult> SendSignupLink(InviteUserViewModel model)
         {
