@@ -43,6 +43,7 @@ namespace DentalResearchApp.Controllers
             return View(surveyResultsViewModel);
         }
 
+        [ApiExplorerSettings(IgnoreApi = true)]
         public Task<List<string>> GetAllSurveyNames()
         {
             var manager = _context.ManagerFactory.CreateSurveyManager();
