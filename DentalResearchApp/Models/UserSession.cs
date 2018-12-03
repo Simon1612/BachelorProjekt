@@ -13,5 +13,21 @@ namespace DentalResearchApp.Models
         public ObjectId Id { get; set; }
         public int ParticipantId { get; set; }
         public ObjectId StudySessionId { get; set; }
+
+        public UserModel UserModel
+        {
+            get => default(UserModel);
+            set
+            {
+            }
+        }
+
+        public ResultLink ResultLink
+        {
+            get => default(ResultLink);
+            set
+            {
+            }
+        }
     }
 }

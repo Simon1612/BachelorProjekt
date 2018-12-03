@@ -12,5 +12,21 @@ namespace DentalResearchApp.Models
         public int StudyId { get; set; }
         public List<string> Surveys { get; set; }
         public bool IsStarted { get; set; }
+
+        public Survey Survey
+        {
+            get => default(Survey);
+            set
+            {
+            }
+        }
+
+        public Study Study
+        {
+            get => default(Study);
+            set
+            {
+            }
+        }
     }
 }
