@@ -13,5 +13,6 @@ namespace DentalResearchApp.Models
         public Role Role { get; set; }
         public string Institution { get; set; }
         public string Country { get; set; }
+
     }
 }

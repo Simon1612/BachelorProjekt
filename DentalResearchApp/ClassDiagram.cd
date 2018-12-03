@@ -1,0 +1,118 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="DentalResearchApp.Models.LoginModel">
+    <Position X="0.5" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAQAAAAAIAAAAAAACAAAAAAAAAAA=</HashCode>
+      <FileName>Models\LoginModel.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="UserCredentials" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="DentalResearchApp.Models.ParticipantInfo">
+    <Position X="8" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAACAAAAAAAAAAAAAAAAAAAAAAAIAAAAAAAAA=</HashCode>
+      <FileName>Models\ParticipantInfo.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DentalResearchApp.Models.ParticipantSessionModel">
+    <Position X="10.75" Y="1.5" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAACQAAAAAAAAAAAAAAAAAAAAAAAAAAAAIAAAAAAAAA=</HashCode>
+      <FileName>Models\ParticipantSessionModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DentalResearchApp.Models.PostSurveyResultModel">
+    <Position X="11.25" Y="9.25" Width="2.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAACEA=</HashCode>
+      <FileName>Models\PostSurveyResultModel.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="SurveyResult1" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="DentalResearchApp.Models.SignupLinkModel">
+    <Position X="0.75" Y="9.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAAAAAAAAAAAAAAAABAAgAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Models\SignupLinkModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DentalResearchApp.Models.SignUpModel">
+    <Position X="3.5" Y="9.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAEAAACAAAQAAUAAAAAAAAAIgAAACAAAAAAAAAAg=</HashCode>
+      <FileName>Models\SignUpModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DentalResearchApp.Models.Study">
+    <Position X="11.25" Y="4" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAQAAAEQAgAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAA=</HashCode>
+      <FileName>Models\Study.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="ParticipantSessionModel" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="DentalResearchApp.Models.StudySessionModel">
+    <Position X="11.25" Y="6.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACQAAAAAAAAAAAAAAAAAAAAABAAAAAAAABABAAAAA=</HashCode>
+      <FileName>Models\StudySessionModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DentalResearchApp.Models.Survey">
+    <Position X="8.5" Y="6.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAgA=</HashCode>
+      <FileName>Models\Survey.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DentalResearchApp.Models.SurveyLinkModel">
+    <Position X="7.25" Y="3.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAAAAQAIAAAAAAAAAAAAgAAAAAIACAAAAAAA=</HashCode>
+      <FileName>Models\SurveyLinkModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DentalResearchApp.Models.SurveyResult">
+    <Position X="8.25" Y="8.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACACCAAAAAQAIAAAAAAAAAAAAAAAAAAIAAAAAAAAA=</HashCode>
+      <FileName>Models\SurveyResult.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DentalResearchApp.Models.UserCredentials">
+    <Position X="0.5" Y="6.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AABCAAAAAAIAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAA=</HashCode>
+      <FileName>Models\UserCredentials.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DentalResearchApp.Models.UserModel">
+    <Position X="3.5" Y="6.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAEAAACAAAAAAUAAAAAAAAAIAAAAAAAAAAAAAAAg=</HashCode>
+      <FileName>Models\UserModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DentalResearchApp.Models.UserSession">
+    <Position X="6" Y="6.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAAIAAAAAAAAAAAAAAAAAAAAAAIAAAAAAAAA=</HashCode>
+      <FileName>Models\UserSession.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DentalResearchApp.Models.ResultLink">
+    <Position X="6" Y="9" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAQAIAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Models\UserSessionDetailsViewModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>
