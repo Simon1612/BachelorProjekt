@@ -20,12 +20,9 @@
   <Class Name="DentalResearchApp.Models.ParticipantSessionModel">
     <Position X="10.75" Y="1.5" Width="2.25" />
     <TypeIdentifier>
-      <HashCode>AAACQAAAAAAAAAAAAAAAAAAAAAAAAAAAAKAAAAAAAAA=</HashCode>
+      <HashCode>AAACQAAAAAAAAAAAAAAAAAAAAAAAAAAAAIAAAAAAAAA=</HashCode>
       <FileName>Models\ParticipantSessionModel.cs</FileName>
     </TypeIdentifier>
-    <ShowAsAssociation>
-      <Property Name="ParticipantInfo" />
-    </ShowAsAssociation>
   </Class>
   <Class Name="DentalResearchApp.Models.PostSurveyResultModel">
     <Position X="11.25" Y="9.25" Width="2.75" />
@@ -47,13 +44,9 @@
   <Class Name="DentalResearchApp.Models.SignUpModel">
     <Position X="3.5" Y="9.25" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAACAEAAACAQAQAAUCAAAAAAAAIgAAACAAAAAAAAAAg=</HashCode>
+      <HashCode>AAACAEAAACAAAQAAUAAAAAAAAAIgAAACAAAAAAAAAAg=</HashCode>
       <FileName>Models\SignUpModel.cs</FileName>
     </TypeIdentifier>
-    <ShowAsAssociation>
-      <Property Name="UserModel" />
-      <Property Name="SignupLinkModel" />
-    </ShowAsAssociation>
   </Class>
   <Class Name="DentalResearchApp.Models.Study">
     <Position X="11.25" Y="4" Width="1.5" />
@@ -68,13 +61,9 @@
   <Class Name="DentalResearchApp.Models.StudySessionModel">
     <Position X="11.25" Y="6.25" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAACQAAAAAAAAAAAAAAABAAAAABAAAAAAACBABAAAAA=</HashCode>
+      <HashCode>AAACQAAAAAAAAAAAAAAAAAAAAABAAAAAAAABABAAAAA=</HashCode>
       <FileName>Models\StudySessionModel.cs</FileName>
     </TypeIdentifier>
-    <ShowAsAssociation>
-      <Property Name="Survey" />
-      <Property Name="Study" />
-    </ShowAsAssociation>
   </Class>
   <Class Name="DentalResearchApp.Models.Survey">
     <Position X="8.5" Y="6.5" Width="1.5" />
@@ -85,40 +74,17 @@
   </Class>
   <Class Name="DentalResearchApp.Models.SurveyLinkModel">
     <Position X="7.25" Y="3.75" Width="1.5" />
-    <AssociationLine Name="Survey" Type="DentalResearchApp.Models.Survey" FixedFromPoint="true" FixedToPoint="true">
-      <Path>
-        <Point X="8.75" Y="4.688" />
-        <Point X="9.188" Y="4.688" />
-        <Point X="9.188" Y="6.5" />
-      </Path>
-    </AssociationLine>
-    <AssociationLine Name="UserSession" Type="DentalResearchApp.Models.UserSession" FixedFromPoint="true" FixedToPoint="true">
-      <Path>
-        <Point X="7.25" Y="4.75" />
-        <Point X="6.562" Y="4.75" />
-        <Point X="6.562" Y="6.75" />
-      </Path>
-    </AssociationLine>
     <TypeIdentifier>
-      <HashCode>AAACAAAAAAAAQAIAAAAAAAAAAAAgBAAAAKCCAAAAAAA=</HashCode>
+      <HashCode>AAACAAAAAAAAQAIAAAAAAAAAAAAgAAAAAIACAAAAAAA=</HashCode>
       <FileName>Models\SurveyLinkModel.cs</FileName>
     </TypeIdentifier>
-    <ShowAsAssociation>
-      <Property Name="ParticipantInfo" />
-      <Property Name="Survey" />
-      <Property Name="UserSession" />
-    </ShowAsAssociation>
   </Class>
   <Class Name="DentalResearchApp.Models.SurveyResult">
     <Position X="8.25" Y="8.75" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAACACCAAAAAQAIAAAAAAAAAAAAAAAAABICAAAAAAAA=</HashCode>
+      <HashCode>AAACACCAAAAAQAIAAAAAAAAAAAAAAAAAAIAAAAAAAAA=</HashCode>
       <FileName>Models\SurveyResult.cs</FileName>
     </TypeIdentifier>
-    <ShowAsAssociation>
-      <Property Name="Survey" />
-      <Property Name="ResultLink" />
-    </ShowAsAssociation>
   </Class>
   <Class Name="DentalResearchApp.Models.UserCredentials">
     <Position X="0.5" Y="6.75" Width="1.5" />
@@ -130,23 +96,16 @@
   <Class Name="DentalResearchApp.Models.UserModel">
     <Position X="3.5" Y="6.25" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAACAEAAACAAAAAAUAAAAAAIAAIAAAAAAAAAAAAAAAg=</HashCode>
+      <HashCode>AAACAEAAACAAAAAAUAAAAAAAAAIAAAAAAAAAAAAAAAg=</HashCode>
       <FileName>Models\UserModel.cs</FileName>
     </TypeIdentifier>
-    <ShowAsAssociation>
-      <Property Name="UserCredentials" />
-    </ShowAsAssociation>
   </Class>
   <Class Name="DentalResearchApp.Models.UserSession">
     <Position X="6" Y="6.75" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAACAAAAAAIQAAAAAAAAAAAAAAAAAAAABIAAAAAAAAA=</HashCode>
+      <HashCode>AAACAAAAAAIAAAAAAAAAAAAAAAAAAAAAAIAAAAAAAAA=</HashCode>
       <FileName>Models\UserSession.cs</FileName>
     </TypeIdentifier>
-    <ShowAsAssociation>
-      <Property Name="UserModel" />
-      <Property Name="ResultLink" />
-    </ShowAsAssociation>
   </Class>
   <Class Name="DentalResearchApp.Models.ResultLink">
     <Position X="6" Y="9" Width="1.5" />

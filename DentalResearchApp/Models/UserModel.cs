@@ -14,12 +14,5 @@ namespace DentalResearchApp.Models
         public string Institution { get; set; }
         public string Country { get; set; }
 
-        public UserCredentials UserCredentials
-        {
-            get => default(UserCredentials);
-            set
-            {
-            }
-        }
     }
 }

@@ -17,21 +17,5 @@ namespace DentalResearchApp.Models
         public string Password { get; set; }
         public string LinkId { get; set; }
         public bool Errors { get; set; }
-
-        public UserModel UserModel
-        {
-            get => default(UserModel);
-            set
-            {
-            }
-        }
-
-        public SignupLinkModel SignupLinkModel
-        {
-            get => default(SignupLinkModel);
-            set
-            {
-            }
-        }
     }
 }

@@ -14,21 +14,5 @@ namespace DentalResearchApp.Models
         public int ParticipantId { get; set; }
         public DateTime TimeStamp { get; set; }
         public ObjectId UserSessionId { get; set; }
-
-        public Survey Survey
-        {
-            get => default(Survey);
-            set
-            {
-            }
-        }
-
-        public ResultLink ResultLink
-        {
-            get => default(ResultLink);
-            set
-            {
-            }
-        }
     }
 }
