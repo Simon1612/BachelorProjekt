@@ -23,6 +23,7 @@ namespace DentalResearchApp.Controllers
         }
 
         [Authorize]
+        [HttpGet]
         public IActionResult SurveyRunner()
         {
             return View();

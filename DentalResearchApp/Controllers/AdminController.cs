@@ -17,6 +17,7 @@ namespace DentalResearchApp.Controllers
             _context = context;
         }
 
+        [HttpGet]
         public async Task<IActionResult> Admin()
         {
             var userManager = _context.ManagerFactory.CreateUserManager();

@@ -20,6 +20,7 @@ namespace DentalResearchApp.Controllers
             _context = context;
         }
 
+        [HttpGet]
         public IActionResult UserSessions(int participantId, int studyId)
         {
             var study = _context.ManagerFactory.CreateExternalDbManager().GetStudy(studyId);

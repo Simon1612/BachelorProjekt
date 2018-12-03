@@ -20,6 +20,7 @@ namespace DentalResearchApp.Controllers
             _context = context;
         }
 
+        [HttpGet]
         public async Task<IActionResult> Profile()
         {
             var email = HttpContext.User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.Email).Value;
