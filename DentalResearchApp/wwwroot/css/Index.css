@@ -108,11 +108,21 @@ section {
     width: 70%;
 }
 
+.customTable td a {
+    display: block;
+    width: 100%;
+}
 .customTd:hover {
     background-color: grey;
 }
 
 .customTd {
+    border: 2px solid #47748b;
+    height: 40px;
+    text-align: center
+}
+
+.customTd2 {
     border: 2px solid #47748b;
     height: 40px;
     text-align: center
