@@ -30,7 +30,8 @@
                 @Html.HiddenFor(x => x.Email, Model.Email)
             </div>
             <div class="col-lg-4 col-md-4 col-sm-4" style="text-align: left">
-                @Html.Label("Email: " + Model.Email)
+                @Html.Label("Email: ")
+                @Html.DisplayFor(x => x.Email)
             </div>
         </li>
         <li class="row">
@@ -47,7 +48,7 @@
             <div class="col-lg-1 col-md-1 col-sm-1" style="text-align: left"></div>
             <div class="col-lg-4 col-md-4 col-sm-4" style="text-align: left">
                 @Html.Label("Role: ")
-                @Html.DropDownListFor(x => x.Role, new SelectList(new List<Role>() { Role.Administrator, Role.Researcher, Role.Volunteer }), new { @class = "form-control", style = "width:270px" })
+                @Html.DropDownListFor(x => x.Role, new SelectList(new List<Role>() { Role.Administrator, Role.Researcher }), new { @class = "form-control", style = "width:270px" })
             </div>
         </li>
     </ul>

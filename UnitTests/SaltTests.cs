@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using DentalResearchApp.Code.Impl;
 using Xunit;
@@ -11,10 +12,17 @@ namespace UnitTests
         [Fact]
         public void Salt_Create_UniqueSaltCreated()
         {
-            var salt1 = Salt.Create();
-            var salt2 = Salt.Create();
+            var saltCount = 100;
+            var listOfSalt = new List<byte[]>();
 
-            Assert.NotEqual(salt1, salt2);
+            for (int i = 0; i < saltCount; i++)
+            {
+                listOfSalt.Add(Salt.Create());
+            }
+
+            var uniqueSalts = listOfSalt.ToHashSet();
+
+            Assert.Equal(100, uniqueSalts.Count);
         }
     }
 }
