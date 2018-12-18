@@ -13,5 +13,5 @@ namespace DentalResearchApp.Models
         public string LinkId { get; set; } = Guid.NewGuid().ToString("N");
         public string SurveyName { get; set; }
         public ObjectId UserSessionId { get; set; }
-          }
+    }
 }

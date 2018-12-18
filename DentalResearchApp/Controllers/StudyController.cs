@@ -17,7 +17,7 @@ namespace DentalResearchApp.Controllers
         }
 
         [HttpGet("AllStudies")]
-        public ActionResult AllStudies()
+        public IActionResult AllStudies()
         {
             var manager = _context.ManagerFactory.CreateExternalDbManager();
 
@@ -27,7 +27,7 @@ namespace DentalResearchApp.Controllers
         }
 
         [HttpGet("StudyDetails")]
-        public ActionResult StudyDetails(int id)
+        public IActionResult StudyDetails(int id)
         {
             var sessionManager = _context.ManagerFactory.CreateSessionManager();
             var extManager = _context.ManagerFactory.CreateExternalDbManager();

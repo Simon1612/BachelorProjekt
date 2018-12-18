@@ -21,19 +21,19 @@ namespace DentalResearchApp.Controllers
         }
 
         [HttpGet]
-        public ActionResult Index()
+        public IActionResult Index()
         {
             return View();
         }
 
         [HttpGet("results")]
-        public ActionResult Results()
+        public IActionResult Results()
         {
             return View();
         }
 
         [HttpGet("SurveyResults")]
-        public async Task<ActionResult> SurveyResults()
+        public async Task<IActionResult> SurveyResults()
         {
             var surveyResultsViewModel = new SurveyResultsViewModel
             {
@@ -126,6 +126,10 @@ namespace DentalResearchApp.Controllers
         {
             var externalManager = _context.ManagerFactory.CreateExternalDbManager();
             var sessionManager = _context.ManagerFactory.CreateSessionManager();
+            if (findResultsViewModel == null)
+            {
+                return RedirectToAction("FindResults");
+            }
 
             var selectedStudy = externalManager
                 .GetAllStudyListModels().SingleOrDefault(x => x.StudyName == findResultsViewModel.SelectedStudy);
@@ -150,6 +154,11 @@ namespace DentalResearchApp.Controllers
             var externalManager = _context.ManagerFactory.CreateExternalDbManager();
             var sessionManager = _context.ManagerFactory.CreateSessionManager();
 
+            if (findResultsViewModel == null)
+            {
+                return RedirectToAction("FindResults");
+            }
+
             var selectedSession = await sessionManager.GetStudySession(findResultsViewModel.StudyId, findResultsViewModel.SelectedSession);
             var findParticipantsViewModel = new FindResultsViewModel();
             if (selectedSession != null)
@@ -173,11 +182,22 @@ namespace DentalResearchApp.Controllers
             return View("FindResults", findParticipantsViewModel);
         }
 
+        [HttpGet("ShowFindResults")]
+        public IActionResult ShowFindResults()
+        {
+            return RedirectToAction("FindResults");
+        }
+
         [HttpPost("ShowFindResults")]
         public async Task<IActionResult> ShowFindResults([FromForm]FindResultsViewModel findResultsViewModel)
         {
             var externalManager = _context.ManagerFactory.CreateExternalDbManager();
             var sessionManager = _context.ManagerFactory.CreateSessionManager();
+
+            if (findResultsViewModel == null)
+            {
+                return RedirectToAction("FindResults");
+            }
 
             var selectedSession = await sessionManager.GetStudySession(findResultsViewModel.StudyId, findResultsViewModel.SelectedSession);
             var findResultsFinalViewModel = new FindResultsViewModel();
