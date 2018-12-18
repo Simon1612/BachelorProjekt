@@ -72,24 +72,25 @@ namespace DentalResearchApp.Controllers
         public async Task<JsonResult> Create(string name)
         {
             var manager = _context.ManagerFactory.CreateSurveyManager();
-            await manager.CreateSurvey(name);
 
-            return Json("Ok");
-        }
-
-
-        [HttpGet("delete")]
-        public async Task<JsonResult> Delete(string id)
-        {
+            await manager.CreateSurvey(name);                           
+                                                                        
+            return Json("Ok");                                          
+        }                                                               
+                                                                        
+                                                                        
+        [HttpGet("delete")]                                             
+        public async Task<JsonResult> Delete(string id)                 
+        {                                                               
             var manager = _context.ManagerFactory.CreateSurveyManager();
-            await manager.DeleteSurvey(id);
-
-            return Json("Ok");
-        }
-
-        [HttpGet("getResults")]
-        public async Task<JsonResult> GetResults(string postId)
-        {
+            await manager.DeleteSurvey(id);                             
+                                                                        
+            return Json("Ok");                                          
+        }                                                               
+                                                                        
+        [HttpGet("getResults")]                                         
+        public async Task<JsonResult> GetResults(string postId)         
+        {                                                               
             var manager = _context.ManagerFactory.CreateSurveyManager();
             var survey = await manager.GetResults(postId);
 
